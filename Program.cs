@@ -49,7 +49,7 @@ namespace UITestingConsole
 
 		private static void ChangeSystemLanguage()
 		{
-			ps.AddCommand("powershell - command 'Set-WinUserLanguageList -LanguageList en-US -Force'").Invoke();
+			ps.AddScript("powershell - command 'Set-WinUserLanguageList -LanguageList en-US -Force'").Invoke();
 		}
 	}
 }
