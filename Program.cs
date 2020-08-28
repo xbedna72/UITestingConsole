@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Management.Automation;
@@ -17,6 +18,7 @@ namespace UITestingConsole
 	class Program
 	{
 		public static PowerShell ps;
+		public static Process driver;
 		private static string project_dir = "C:\\Projekty\\PMS2.0-LW\\src";
 		private static string project_file = "PMS2.0.sln";
 
@@ -44,6 +46,15 @@ namespace UITestingConsole
 			}
 
 			PullAndRebuild(project_dir+"\\"+project_file);
+
+			if (BranchContol(test_dir) < 0)
+			{
+				return;
+			}
+
+			PullAndRebuild(test_dir + "\\" + test_file);
+
+			RunDeveloperCmd();
 			Console.ReadLine();
 		}
 
@@ -96,7 +107,8 @@ namespace UITestingConsole
 			ps.Invoke();
 		}
 
-
-
+		private static void RunDeveloperCmd(){
+			//driver.
+		}
 	}
 }
