@@ -41,11 +41,12 @@ namespace UITestingConsole
 				ChangeSystemLanguage();
 			}
 
-			if (BranchContol(project_dir) < 0) {
+			if (BranchContol(project_dir) < 0)
+			{
 				return;
 			}
 
-			PullAndRebuild(project_dir+"\\"+project_file);
+			PullAndRebuild(project_dir + "\\" + project_file);
 
 			if (BranchContol(test_dir) < 0)
 			{
@@ -55,6 +56,11 @@ namespace UITestingConsole
 			PullAndRebuild(test_dir + "\\" + test_file);
 
 			RunDeveloperCmd();
+			RunTests();
+
+			ps.AddScript("powershell -command 'Stop-Process -Name WinAppDriver -Force'");
+			ps.Invoke();
+			Console.WriteLine("Press any key and end Console.....");
 			Console.ReadLine();
 		}
 
@@ -69,6 +75,10 @@ namespace UITestingConsole
 			{
 				return false;
 			}
+		}
+
+		~Program(){
+			
 		}
 
 		private static void ChangeSystemLanguage()
@@ -108,7 +118,28 @@ namespace UITestingConsole
 		}
 
 		private static void RunDeveloperCmd(){
-			//driver.
+			Console.WriteLine("DeveloperOpenning");
+			Process.Start("C:\\Program Files (x86)\\Windows Application Driver\\WinAppDriver.exe");
+		}
+
+		private static void RunTests()
+		{
+			ProcessStartInfo info = new ProcessStartInfo();
+			info.FileName = "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\Common7\\Tools\\VsDevCmd.bat";
+			info.RedirectStandardError = true;
+			info.RedirectStandardOutput = true;
+			info.UseShellExecute = false;
+			info.Arguments = "cd C:\\Projekty\\PMS2.0-LW\\src\\UITests\\AppiumUITests\\AppiumUITests\\bin\\Debug && vstest.console.exe " +
+			"C:\\Projekty\\PMS2.0-LW\\src\\UITests\\AppiumUITests\\AppiumUITests\\bin\\Debug\\AppiumUITests.dll " +
+			"/TestAdapterPath:C:\\Projekty\\PMS2.0-LW\\src\\UITests\\AppiumUITests\\AppiumUITests\\bin\\Debug";
+
+			Process process = new Process();
+			process.StartInfo = info;
+			Console.WriteLine("Starting tests");
+			process.Start();
+			while(!process.StandardOutput.EndOfStream){
+				Console.WriteLine(process.StandardOutput.ReadLine());
+			}
 		}
 	}
 }
