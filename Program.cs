@@ -57,9 +57,9 @@ namespace UITestingConsole
 
 			RunDeveloperCmd();
 			RunTests();
-
 			ps.AddScript("powershell -command 'Stop-Process -Name WinAppDriver -Force'");
 			ps.Invoke();
+
 			Console.WriteLine("Press any key and end Console.....");
 			Console.ReadLine();
 		}
@@ -75,10 +75,6 @@ namespace UITestingConsole
 			{
 				return false;
 			}
-		}
-
-		~Program(){
-			
 		}
 
 		private static void ChangeSystemLanguage()
@@ -125,20 +121,21 @@ namespace UITestingConsole
 		private static void RunTests()
 		{
 			ProcessStartInfo info = new ProcessStartInfo();
-			info.FileName = "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\Common7\\Tools\\VsDevCmd.bat";
+			info.FileName = "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\Common7\\Tools\\LaunchDevCmd.bat";
 			info.RedirectStandardError = true;
 			info.RedirectStandardOutput = true;
 			info.UseShellExecute = false;
-			info.Arguments = "cd C:\\Projekty\\PMS2.0-LW\\src\\UITests\\AppiumUITests\\AppiumUITests\\bin\\Debug && vstest.console.exe " +
-			"C:\\Projekty\\PMS2.0-LW\\src\\UITests\\AppiumUITests\\AppiumUITests\\bin\\Debug\\AppiumUITests.dll " +
+			info.Arguments = "cd C:\\Projekty\\PMS2.0-LW\\src\\UITests\\AppiumUITests\\AppiumUITests\\bin\\Debug &" +
+			"vstest.console.exe C:\\Projekty\\PMS2.0-LW\\src\\UITests\\AppiumUITests\\AppiumUITests\\bin\\Debug\\AppiumUITests.dll " +
 			"/TestAdapterPath:C:\\Projekty\\PMS2.0-LW\\src\\UITests\\AppiumUITests\\AppiumUITests\\bin\\Debug";
-
 			Process process = new Process();
 			process.StartInfo = info;
+
 			Console.WriteLine("Starting tests");
 			process.Start();
-			while(!process.StandardOutput.EndOfStream){
-				Console.WriteLine(process.StandardOutput.ReadLine());
+			process.WaitForExit();
+			while (!process.StandardOutput.EndOfStream){
+				Console.WriteLine(process.StandardOutput.ReadToEnd());
 			}
 		}
 	}
