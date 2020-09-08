@@ -35,7 +35,6 @@ namespace UITestingConsole
 				return;
 			}
 
-			Console.WriteLine(InputLanguage.CurrentInputLanguage.Culture.Name);
 			if (InputLanguage.CurrentInputLanguage.Culture.Name != "en-US")
 			{
 				ChangeSystemLanguage();
