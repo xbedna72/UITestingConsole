@@ -18,7 +18,6 @@ namespace UITestingConsole
 	class Program
 	{
 		public static PowerShell ps;
-		public static Process driver;
 		private static string project_dir = "C:\\Projekty\\PMS2.0-LW\\src";
 		private static string project_file = "PMS2.0.sln";
 
@@ -59,7 +58,7 @@ namespace UITestingConsole
 			ps.AddScript("powershell -command 'Stop-Process -Name WinAppDriver -Force'");
 			ps.Invoke();
 
-			Console.WriteLine("Press any key and end Console.....");
+			Console.WriteLine("Press any key to close window.....");
 			Console.ReadLine();
 		}
 
@@ -124,9 +123,9 @@ namespace UITestingConsole
 			info.RedirectStandardError = true;
 			info.RedirectStandardOutput = true;
 			info.UseShellExecute = false;
-			info.Arguments = "cd C:\\Projekty\\PMS2.0-LW\\src\\UITests\\AppiumUITests\\AppiumUITests\\bin\\Debug &" +
-			"vstest.console.exe C:\\Projekty\\PMS2.0-LW\\src\\UITests\\AppiumUITests\\AppiumUITests\\bin\\Debug\\AppiumUITests.dll " +
-			"/TestAdapterPath:C:\\Projekty\\PMS2.0-LW\\src\\UITests\\AppiumUITests\\AppiumUITests\\bin\\Debug";
+			info.Arguments = "cd C:\\Projekty\\PMS2.0-LW\\src\\UITests\\src\\AppiumUITests\\bin\\Debug &" +
+			"vstest.console.exe C:\\Projekty\\PMS2.0-LW\\src\\UITests\\src\\AppiumUITests\\bin\\Debug\\AppiumUITests.dll " +
+			"/TestAdapterPath:C:\\Projekty\\PMS2.0-LW\\src\\UITests\\src\\AppiumUITests\\bin\\Debug";
 			Process process = new Process();
 			process.StartInfo = info;
 
