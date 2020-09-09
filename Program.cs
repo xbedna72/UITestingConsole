@@ -34,24 +34,24 @@ namespace UITestingConsole
 				return;
 			}
 
-			if (InputLanguage.CurrentInputLanguage.Culture.Name != "en-US")
-			{
-				ChangeSystemLanguage();
-			}
+			//if (InputLanguage.CurrentInputLanguage.Culture.Name != "en-US")
+			//{
+			//	ChangeSystemLanguage();
+			//}
 
-			if (BranchContol(project_dir) < 0)
-			{
-				return;
-			}
+			//if (BranchContol(project_dir) < 0)
+			//{
+			//	return;
+			//}
 
-			PullAndRebuild(project_dir + "\\" + project_file);
+			//PullAndRebuild(project_dir + "\\" + project_file);
 
-			if (BranchContol(test_dir) < 0)
-			{
-				return;
-			}
+			//if (BranchContol(test_dir) < 0)
+			//{
+			//	return;
+			//}
 
-			PullAndRebuild(test_dir + "\\" + test_file);
+			//PullAndRebuild(test_dir + "\\" + test_file);
 
 			RunDeveloperCmd();
 			RunTests();
@@ -123,7 +123,7 @@ namespace UITestingConsole
 			info.RedirectStandardError = true;
 			info.RedirectStandardOutput = true;
 			info.UseShellExecute = false;
-			info.Arguments = "cd C:\\Projekty\\PMS2.0-LW\\src\\UITests\\src\\AppiumUITests\\bin\\Debug &" +
+			info.Arguments = "cd C:\\Projekty\\PMS2.0-LW\\src\\UITests\\src\\AppiumUITests\\bin\\Debug " +
 			"vstest.console.exe C:\\Projekty\\PMS2.0-LW\\src\\UITests\\src\\AppiumUITests\\bin\\Debug\\AppiumUITests.dll " +
 			"/TestAdapterPath:C:\\Projekty\\PMS2.0-LW\\src\\UITests\\src\\AppiumUITests\\bin\\Debug";
 			Process process = new Process();
