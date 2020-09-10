@@ -23,9 +23,18 @@ namespace UITestingConsole
 
 		private static string test_dir = "C:\\Projekty\\PMS2.0-LW\\src\\UITests\\src";
 		private static string test_file = "AppiumUITests.sln";
-		static void Main()
+		static void Main(string[] args)
 		{
 			Console.WriteLine("UI testing routine___" + DateTime.Now + "__");
+
+			if (ParseSettingInfo(args))
+			{
+
+			}
+			else
+			{
+				Console.WriteLine("Unable to open SettingFile. Process ends silently...");
+			}
 
 			if (!Constructor())
 			{
@@ -133,14 +142,15 @@ namespace UITestingConsole
 			cmd.StandardInput.WriteLine("cd C:\\Projekty\\PMS2.0-LW\\src\\UITests\\src\\AppiumUITests\\bin\\Debug &&" +
 			" vstest.console.exe C:\\Projekty\\PMS2.0-LW\\src\\UITests\\src\\AppiumUITests\\bin\\Debug\\AppiumUITests.dll" +
 			" /TestAdapterPath:C:\\Projekty\\PMS2.0-LW\\src\\UITests\\src\\AppiumUITests\\bin\\Debug" +
-			" /Logger:trx;LogFileName=C:\\Tools\\output.trx;verbosity=detailed") ;
+			" /Logger:trx;LogFileName=C:\\Tools\\output.trx;verbosity=detailed");
 			cmd.StandardInput.Flush();
 			cmd.StandardInput.Close();
 
 			Console.WriteLine(cmd.StandardOutput.ReadToEnd());
 		}
 
-		private static void EndProcesses() {
+		private static void EndProcesses()
+		{
 			ps.AddScript("powershell -command 'Stop-Process -Name WinAppDriver -Force'");
 			ps.Invoke();
 
@@ -151,6 +161,12 @@ namespace UITestingConsole
 				ps.AddScript("powershell -command 'Stop-Process -Name FullTest -Force'");
 				ps.Invoke();
 			}
+		}
+
+		private static bool ParseSettingInfo(string[] arguments)
+		{
+			
+			return false;
 		}
 	}
 }
