@@ -27,17 +27,18 @@ namespace UITestingConsole
 		{
 			Console.WriteLine("UI testing routine___" + DateTime.Now + "__");
 
-			if (!Constructor()) {
+			if (!Constructor())
+			{
 				Console.WriteLine("Unable to open PowerShell command line." +
 				"Press any key to ");
 				Console.ReadLine();
 				return;
 			}
 
-			//if (InputLanguage.CurrentInputLanguage.Culture.Name != "en-US")
-			//{
-			//	ChangeSystemLanguage();
-			//}
+			if (InputLanguage.CurrentInputLanguage.Culture.Name != "en-US")
+			{
+				ChangeSystemLanguage();
+			}
 
 			//if (BranchContol(project_dir) < 0)
 			//{
@@ -55,9 +56,7 @@ namespace UITestingConsole
 
 			RunDeveloperCmd();
 			RunTests();
-			ps.AddScript("powershell -command 'Stop-Process -Name WinAppDriver -Force'");
-			ps.Invoke();
-
+			EndProcesses();
 			Console.WriteLine("Press any key to close window.....");
 			Console.ReadLine();
 		}
@@ -81,7 +80,8 @@ namespace UITestingConsole
 			ps.AddScript("powershell - command 'Set-WinUserLanguageList -LanguageList en-US -Force'").Invoke();
 		}
 
-		private static int BranchContol(string project_dir) {
+		private static int BranchContol(string project_dir)
+		{
 			Console.WriteLine("Starting Branch control");
 
 			ps.AddScript("cd " + project_dir);
@@ -90,9 +90,11 @@ namespace UITestingConsole
 			Collection<PSObject> results = ps.Invoke();
 			foreach (var branch in results)
 			{
-				if (Regex.IsMatch(branch.ToString(), "\\*\\s.+")) {
+				if (Regex.IsMatch(branch.ToString(), "\\*\\s.+"))
+				{
 					Match match = Regex.Match(branch.ToString(), "\\* Feature#7990");
-					if (!match.Success) {
+					if (!match.Success)
+					{
 						ps.AddScript("git checkout Feature#7990");
 						ps.Invoke();
 					}
@@ -104,36 +106,50 @@ namespace UITestingConsole
 			return -1;
 		}
 
-		private static void PullAndRebuild(string file) {
+		private static void PullAndRebuild(string file)
+		{
 			ps.AddScript("git pull");
 			ps.Invoke();
-			ps.AddScript("C:\\WINDOWS\\Microsoft.NET\\Framework\\v4.0.30319\\MSBuild.exe "+file+" /property:Configuration=Release");
+			ps.AddScript("C:\\WINDOWS\\Microsoft.NET\\Framework\\v4.0.30319\\MSBuild.exe " + file + " /property:Configuration=Release");
 			ps.Invoke();
 		}
 
-		private static void RunDeveloperCmd(){
+		private static void RunDeveloperCmd()
+		{
 			Console.WriteLine("DeveloperOpenning");
 			Process.Start("C:\\Program Files (x86)\\Windows Application Driver\\WinAppDriver.exe");
 		}
 
 		private static void RunTests()
 		{
-			ProcessStartInfo info = new ProcessStartInfo();
-			info.FileName = "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\Common7\\Tools\\LaunchDevCmd.bat";
-			info.RedirectStandardError = true;
-			info.RedirectStandardOutput = true;
-			info.UseShellExecute = false;
-			info.Arguments = "cd C:\\Projekty\\PMS2.0-LW\\src\\UITests\\src\\AppiumUITests\\bin\\Debug " +
-			"vstest.console.exe C:\\Projekty\\PMS2.0-LW\\src\\UITests\\src\\AppiumUITests\\bin\\Debug\\AppiumUITests.dll " +
-			"/TestAdapterPath:C:\\Projekty\\PMS2.0-LW\\src\\UITests\\src\\AppiumUITests\\bin\\Debug";
-			Process process = new Process();
-			process.StartInfo = info;
+			Process cmd = new Process();
+			cmd.StartInfo.FileName = "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\Common7\\Tools\\LaunchDevCmd.bat\"";
+			cmd.StartInfo.RedirectStandardInput = true;
+			cmd.StartInfo.RedirectStandardOutput = true;
+			cmd.StartInfo.RedirectStandardError = true;
+			cmd.StartInfo.UseShellExecute = false;
+			cmd.Start();
 
-			Console.WriteLine("Starting tests");
-			process.Start();
-			process.WaitForExit();
-			while (!process.StandardOutput.EndOfStream){
-				Console.WriteLine(process.StandardOutput.ReadToEnd());
+			cmd.StandardInput.WriteLine("cd C:\\Projekty\\PMS2.0-LW\\src\\UITests\\src\\AppiumUITests\\bin\\Debug &&" +
+			" vstest.console.exe C:\\Projekty\\PMS2.0-LW\\src\\UITests\\src\\AppiumUITests\\bin\\Debug\\AppiumUITests.dll" +
+			" /TestAdapterPath:C:\\Projekty\\PMS2.0-LW\\src\\UITests\\src\\AppiumUITests\\bin\\Debug" +
+			" /Logger:trx;LogFileName=C:\\Tools\\output.trx;verbosity=detailed") ;
+			cmd.StandardInput.Flush();
+			cmd.StandardInput.Close();
+
+			Console.WriteLine(cmd.StandardOutput.ReadToEnd());
+		}
+
+		private static void EndProcesses() {
+			ps.AddScript("powershell -command 'Stop-Process -Name WinAppDriver -Force'");
+			ps.Invoke();
+
+			Process[] process_array = Process.GetProcessesByName("FullTest");
+
+			if (process_array.Length != 0)
+			{
+				ps.AddScript("powershell -command 'Stop-Process -Name FullTest -Force'");
+				ps.Invoke();
 			}
 		}
 	}
