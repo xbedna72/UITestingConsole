@@ -1,0 +1,14 @@
+The file contains paths and names of files needed for test execution.
+Do not overwrite this file unless necessary.
+When configuring this file, please use formate of strings as following:
+ParametrName: _(your_path/name_of_file)_
+
+ProjectDirectory: _C:\\Projekty\\PMS2.0-LW\\src_
+ProjectName: _PMS2.0.sln_
+TestDirectory: _C:\\Projekty\\PMS2.0-LW\\src\\UITests\\src_
+TestName: _AppiumUITests.sln_
+
+DriverName: _WinAppDriver.exe_
+DriverDirectory: _C:\\Program Files (x86)\\Windows Application Driver_
+
+Branch: _dev_

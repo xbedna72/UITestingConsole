@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Management.Automation;
 using System.Reflection.Emit;
@@ -18,22 +19,25 @@ namespace UITestingConsole
 	class Program
 	{
 		public static PowerShell ps;
-		private static string project_dir = "C:\\Projekty\\PMS2.0-LW\\src";
-		private static string project_file = "PMS2.0.sln";
+		private static string project_dir = string.Empty;
+		private static string project_name = string.Empty;
 
-		private static string test_dir = "C:\\Projekty\\PMS2.0-LW\\src\\UITests\\src";
-		private static string test_file = "AppiumUITests.sln";
+		private static string test_dir = string.Empty;
+		private static string test_name = string.Empty;
+
+		private static string driver_name = string.Empty;
+		private static string driver_dir = string.Empty;
+		private static string working_branch = string.Empty;
 		static void Main(string[] args)
 		{
 			Console.WriteLine("UI testing routine___" + DateTime.Now + "__");
 
-			if (ParseSettingInfo(args))
+			if (!ParseSettingInfo())
 			{
-
-			}
-			else
-			{
-				Console.WriteLine("Unable to open SettingFile. Process ends silently...");
+				Console.WriteLine("Unable to open SettingFile. Process end silently...");
+				Console.WriteLine("Press any key to close window.....");
+				Console.ReadLine();
+				return;
 			}
 
 			if (!Constructor())
@@ -42,11 +46,6 @@ namespace UITestingConsole
 				"Press any key to ");
 				Console.ReadLine();
 				return;
-			}
-
-			if (InputLanguage.CurrentInputLanguage.Culture.Name != "en-US")
-			{
-				ChangeSystemLanguage();
 			}
 
 			//if (BranchContol(project_dir) < 0)
@@ -99,9 +98,9 @@ namespace UITestingConsole
 			Collection<PSObject> results = ps.Invoke();
 			foreach (var branch in results)
 			{
-				if (Regex.IsMatch(branch.ToString(), "\\*\\s.+"))
+				if (Regex.IsMatch(branch.ToString(), @"\*\s.+"))
 				{
-					Match match = Regex.Match(branch.ToString(), "\\* Feature#7990");
+					Match match = Regex.Match(branch.ToString(), @"\* Feature#7990");
 					if (!match.Success)
 					{
 						ps.AddScript("git checkout Feature#7990");
@@ -119,20 +118,20 @@ namespace UITestingConsole
 		{
 			ps.AddScript("git pull");
 			ps.Invoke();
-			ps.AddScript("C:\\WINDOWS\\Microsoft.NET\\Framework\\v4.0.30319\\MSBuild.exe " + file + " /property:Configuration=Release");
+			ps.AddScript(@"C:\WINDOWS\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe " + file + " /property:Configuration=Release");
 			ps.Invoke();
 		}
 
 		private static void RunDeveloperCmd()
 		{
 			Console.WriteLine("DeveloperOpenning");
-			Process.Start("C:\\Program Files (x86)\\Windows Application Driver\\WinAppDriver.exe");
+			Process.Start(@"C:\Program Files (x86)\Windows Application Driver\WinAppDriver.exe");
 		}
 
 		private static void RunTests()
 		{
 			Process cmd = new Process();
-			cmd.StartInfo.FileName = "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\Common7\\Tools\\LaunchDevCmd.bat\"";
+			cmd.StartInfo.FileName = @"C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\Tools\LaunchDevCmd.bat";
 			cmd.StartInfo.RedirectStandardInput = true;
 			cmd.StartInfo.RedirectStandardOutput = true;
 			cmd.StartInfo.RedirectStandardError = true;
@@ -163,10 +162,55 @@ namespace UITestingConsole
 			}
 		}
 
-		private static bool ParseSettingInfo(string[] arguments)
+		private static bool ParseSettingInfo()
 		{
-			
-			return false;
+			var curDir = Directory.GetCurrentDirectory();
+			string settingsFilePath = Regex.Replace(curDir, @"\\bin\\Debug", @"\settings.file.txt");
+
+			string[] content = System.IO.File.ReadAllLines(settingsFilePath);
+			string[] splited_string;
+			foreach(string line in content){
+				if (Regex.IsMatch(line, @"ProjectDirectory:\s.*"))
+				{
+					splited_string = Regex.Split(line, @"\s_");
+					project_dir = splited_string[1];
+					project_dir = Regex.Replace(project_dir, @"_", @"");
+				}
+				else if (Regex.IsMatch(line, @"ProjectName:\s.*"))
+				{
+					splited_string = Regex.Split(line, @"\s_");
+					project_name = splited_string[1];
+					project_name = Regex.Replace(project_name, @"_", @"");
+				}
+				else if (Regex.IsMatch(line, @"TestDirectory:\s.*")) {
+					splited_string = Regex.Split(line, @"\s_");
+					test_dir = splited_string[1];
+					test_dir = Regex.Replace(test_dir, @"_", @"");
+				}
+				else if(Regex.IsMatch(line, @"TestName:\s.*")){
+					splited_string = Regex.Split(line, @"\s_");
+					test_name = splited_string[1];
+					test_name = Regex.Replace(test_name, @"_", @"");
+				}
+				else if(Regex.IsMatch(line, @"DriverName:\s.*")){
+					splited_string = Regex.Split(line, @"\s_");
+					driver_name = splited_string[1];
+					driver_name = Regex.Replace(driver_name, @"_", @"");
+				}
+				else if(Regex.IsMatch(line, @"DriverDirectory:\s.*")){
+					splited_string = Regex.Split(line, @"\s_");
+					driver_dir = splited_string[1];
+					driver_dir = Regex.Replace(driver_dir, @"_", @"");
+				}
+				else if(Regex.IsMatch(line, @"WorkingBranch:\s.*")){
+					splited_string = Regex.Split(line, @"\s_");
+					working_branch = splited_string[1];
+					working_branch = Regex.Replace(working_branch, @"_", @"");
+				}
+			}
+
+			return working_branch != string.Empty && driver_dir != string.Empty && driver_name != string.Empty && test_name != string.Empty
+			&& test_dir != string.Empty && project_name != string.Empty && project_dir != string.Empty;
 		}
 	}
 }
