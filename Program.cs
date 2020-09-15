@@ -53,14 +53,14 @@ namespace UITestingConsole
 			//	return;
 			//}
 
-			//PullAndRebuild(project_dir + "\\" + project_file);
+			//PullAndRebuild(project_dir + "\\" + project_name);
 
 			//if (BranchContol(test_dir) < 0)
 			//{
 			//	return;
 			//}
 
-			//PullAndRebuild(test_dir + "\\" + test_file);
+			//PullAndRebuild(test_dir + "\\" + test_name);
 
 			RunDeveloperCmd();
 			RunTests();
@@ -82,12 +82,6 @@ namespace UITestingConsole
 			}
 		}
 
-		private static void ChangeSystemLanguage()
-		{
-			Console.WriteLine("Language changed");
-			ps.AddScript("powershell - command 'Set-WinUserLanguageList -LanguageList en-US -Force'").Invoke();
-		}
-
 		private static int BranchContol(string project_dir)
 		{
 			Console.WriteLine("Starting Branch control");
@@ -100,10 +94,10 @@ namespace UITestingConsole
 			{
 				if (Regex.IsMatch(branch.ToString(), @"\*\s.+"))
 				{
-					Match match = Regex.Match(branch.ToString(), @"\* Feature#7990");
+					Match match = Regex.Match(branch.ToString(), @"\* " + working_branch);
 					if (!match.Success)
 					{
-						ps.AddScript("git checkout Feature#7990");
+						ps.AddScript("git checkout " + working_branch);
 						ps.Invoke();
 					}
 					return 0;
@@ -125,7 +119,7 @@ namespace UITestingConsole
 		private static void RunDeveloperCmd()
 		{
 			Console.WriteLine("DeveloperOpenning");
-			Process.Start(@"C:\Program Files (x86)\Windows Application Driver\WinAppDriver.exe");
+			Process.Start(driver_dir + @"\" + driver_name);
 		}
 
 		private static void RunTests()
@@ -141,7 +135,7 @@ namespace UITestingConsole
 			cmd.StandardInput.WriteLine("cd C:\\Projekty\\PMS2.0-LW\\src\\UITests\\src\\AppiumUITests\\bin\\Debug &&" +
 			" vstest.console.exe C:\\Projekty\\PMS2.0-LW\\src\\UITests\\src\\AppiumUITests\\bin\\Debug\\AppiumUITests.dll" +
 			" /TestAdapterPath:C:\\Projekty\\PMS2.0-LW\\src\\UITests\\src\\AppiumUITests\\bin\\Debug" +
-			" /Logger:trx;LogFileName=C:\\Tools\\output.trx;verbosity=detailed");
+			" /Logger:trx;LogFileName=C:\\Tools\\UITestingConsole\\Results\\output.trx;verbosity=detailed");
 			cmd.StandardInput.Flush();
 			cmd.StandardInput.Close();
 
@@ -165,11 +159,12 @@ namespace UITestingConsole
 		private static bool ParseSettingInfo()
 		{
 			var curDir = Directory.GetCurrentDirectory();
-			string settingsFilePath = Regex.Replace(curDir, @"\\bin\\Debug", @"\settings.file.txt");
+			string settingsFilePath = Regex.Replace(curDir, @"\\bin\\Debug", @"\setting.file.txt");
 
 			string[] content = System.IO.File.ReadAllLines(settingsFilePath);
 			string[] splited_string;
-			foreach(string line in content){
+			foreach (string line in content)
+			{
 				if (Regex.IsMatch(line, @"ProjectDirectory:\s.*"))
 				{
 					splited_string = Regex.Split(line, @"\s_");
@@ -182,34 +177,45 @@ namespace UITestingConsole
 					project_name = splited_string[1];
 					project_name = Regex.Replace(project_name, @"_", @"");
 				}
-				else if (Regex.IsMatch(line, @"TestDirectory:\s.*")) {
+				else if (Regex.IsMatch(line, @"TestDirectory:\s.*"))
+				{
 					splited_string = Regex.Split(line, @"\s_");
 					test_dir = splited_string[1];
 					test_dir = Regex.Replace(test_dir, @"_", @"");
 				}
-				else if(Regex.IsMatch(line, @"TestName:\s.*")){
+				else if (Regex.IsMatch(line, @"TestName:\s.*"))
+				{
 					splited_string = Regex.Split(line, @"\s_");
 					test_name = splited_string[1];
 					test_name = Regex.Replace(test_name, @"_", @"");
 				}
-				else if(Regex.IsMatch(line, @"DriverName:\s.*")){
+				else if (Regex.IsMatch(line, @"DriverName:\s.*"))
+				{
 					splited_string = Regex.Split(line, @"\s_");
 					driver_name = splited_string[1];
 					driver_name = Regex.Replace(driver_name, @"_", @"");
 				}
-				else if(Regex.IsMatch(line, @"DriverDirectory:\s.*")){
+				else if (Regex.IsMatch(line, @"DriverDirectory:\s.*"))
+				{
 					splited_string = Regex.Split(line, @"\s_");
 					driver_dir = splited_string[1];
 					driver_dir = Regex.Replace(driver_dir, @"_", @"");
 				}
-				else if(Regex.IsMatch(line, @"WorkingBranch:\s.*")){
+				else if (Regex.IsMatch(line, @"WorkingBranch:\s.*"))
+				{
 					splited_string = Regex.Split(line, @"\s_");
 					working_branch = splited_string[1];
 					working_branch = Regex.Replace(working_branch, @"_", @"");
 				}
+
+				//Implicitně se při nezadání pracovní branch volí dev.
+				if (working_branch == string.Empty)
+				{
+					working_branch = "dev";
+				}
 			}
 
-			return working_branch != string.Empty && driver_dir != string.Empty && driver_name != string.Empty && test_name != string.Empty
+			return driver_dir != string.Empty && driver_name != string.Empty && test_name != string.Empty
 			&& test_dir != string.Empty && project_name != string.Empty && project_dir != string.Empty;
 		}
 	}

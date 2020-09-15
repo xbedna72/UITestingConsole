@@ -1,4 +1,4 @@
-The file contains paths and names of files needed for test execution.
+﻿The file contains paths and names of files needed for test execution.
 Do not overwrite this file unless necessary.
 When configuring this file, please use formate of strings as following:
 ParametrName: _(your_path/name_of_file)_
