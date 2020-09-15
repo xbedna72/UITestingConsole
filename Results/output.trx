@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="12b39f24-ab76-425d-bf04-b02870519a77" name="mbednarova@CZ01L0142 2020-09-15 08:54:41" runUser="ATSNA\mbednarova" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2020-09-15T08:54:41.3423936+02:00" queuing="2020-09-15T08:54:41.3423936+02:00" start="2020-09-15T08:54:14.2296566+02:00" finish="2020-09-15T08:55:45.7995902+02:00" />
+  <TestSettings name="default" id="dd2b99e2-2663-4b3c-96ed-78cbd0907c68">
+    <Deployment runDeploymentRoot="mbednarova_CZ01L0142_2020-09-15_08_54_41" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="c2cd5a71-c163-4673-8c15-0e5e9e745a3d" testId="26ec3042-1856-b7a1-a718-175b5ed6af64" testName="Test32" computerName="CZ01L0142" duration="00:00:07.7107717" startTime="2020-09-15T08:54:41.3354475+02:00" endTime="2020-09-15T08:54:49.0468946+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="c2cd5a71-c163-4673-8c15-0e5e9e745a3d">
+      <Output>
+        <StdOut>LeftClick on Button "miWM" at (27,8)&#xD;
+LeftClick on MenuItem "miWMImport" at (52,12)&#xD;
+LeftClick on MenuItem "miWMImportProduct" at (119,14)&#xD;
+LeftClick on DataItem "Číslo dokladu row0" at (46,13)&#xD;
+LeftClick on Button "Zavřít" at (41,11)&#xD;
+LeftClick on Edit "Editovat prvek" at (33,9)&#xD;
+Failed to find element using xpath: /Pane[@ClassName="#32769"][@Name="Počítač 1"]/Window[@Name="Production Management System"][@AutomationId="fmMainBase"]/Pane[starts-with(@ClassName,"WindowsForms10")][@Name="Testovací verze"]/Window[@AutomationId="fmWMImportProduct"]/Tab[@AutomationId="tcList"]/Pane[@Name="Seznam dokladů"][@AutomationId="tpList"]/Pane[@AutomationId="ucWMDocuments"]/Pane[@Name="panelTab"][@AutomationId="panelTab"]/Table[@AutomationId="gridDocuments"]/Edit[starts-with(@ClassName,"WindowsForms10")][@Name="Editovat prvek"]/Edit[starts-with(@ClassName,"WindowsForms10")][@Name="Editovat prvek"]</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="96cdfc08-8e0c-441e-a7a9-843381c65e1c" testId="28dfbbda-24e3-07c9-9bea-7c90ecee92af" testName="TestMethod1" computerName="CZ01L0142" duration="00:00:46.4617272" startTime="2020-09-15T08:54:49.0468946+02:00" endTime="2020-09-15T08:55:35.5090522+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="96cdfc08-8e0c-441e-a7a9-843381c65e1c">
+      <Output>
+        <StdOut>LeftClick on Button "Zavřít" at (10,12)</StdOut>
+        <ErrorInfo>
+          <Message>Test method UnitTestMessages.TestMessages.TestMethod1 threw exception: &#xD;
+OpenQA.Selenium.WebDriverException: An element could not be located on the page using the given search parameters.</Message>
+          <StackTrace>    v OpenQA.Selenium.Remote.RemoteWebDriver.UnpackAndThrowOnError(Response errorResponse)&#xD;
+   v OpenQA.Selenium.Remote.RemoteWebDriver.Execute(String driverCommandToExecute, Dictionary`2 parameters)&#xD;
+   v OpenQA.Selenium.Appium.AppiumDriver`1.Execute(String driverCommandToExecute, Dictionary`2 parameters)&#xD;
+   v OpenQA.Selenium.Remote.RemoteWebDriver.FindElement(String mechanism, String value)&#xD;
+   v OpenQA.Selenium.Appium.AppiumDriver`1.FindElement(String by, String value)&#xD;
+   v OpenQA.Selenium.Appium.AppiumDriver`1.FindElementByAccessibilityId(String selector)&#xD;
+   v UnitTestMessages.TestMessages.TestMethod1() v C:\Projekty\PMS2.0-LW\src\UITests\src\AppiumUITests\TestMessages.cs:řádek 176&#xD;
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="ddb39bf5-b9c6-43c7-8f6d-d13d748cf8cd" testId="8a7e132e-13a6-19ec-8f47-aaf843861341" testName="TestCreateMaterializedCardMethod" computerName="CZ01L0142" duration="00:00:18.7676880" startTime="2020-09-15T08:54:14.5278599+02:00" endTime="2020-09-15T08:54:41.3224791+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ddb39bf5-b9c6-43c7-8f6d-d13d748cf8cd">
+      <Output>
+        <StdOut>LeftClick on Button "miLIMS" at (26,5)&#xD;
+LeftClick on MenuItem "miAdmMaterialCards" at (114,13)&#xD;
+LeftClick on Button "Nová karta" at (47,8)&#xD;
+LeftClick on Edit "" at (14,4)&#xD;
+LeftClick on Pane "" at (344,12)&#xD;
+LeftClick on Pane "panelCommonUp" at (819,28)&#xD;
+LeftClick on Text "" at (140,8)&#xD;
+LeftClick on Text "" at (176,10)&#xD;
+LeftClick on Pane "" at (76,12)&#xD;
+LeftClick on Button "OK" at (16,10)&#xD;
+LeftClick on Button "Ukončit" at (17,4)&#xD;
+Failed to find element using xpath: /Pane[@ClassName="#32769"][@Name="Počítač 1"]/Window[@Name="Production Management System"][@AutomationId="fmMainBase"]/Pane[starts-with(@ClassName,"WindowsForms10")][@Name="Testovací verze"]/Window[@AutomationId="fmAdmMaterialCards"]/Tab[@AutomationId="tcList"]/Pane[starts-with(@ClassName,"WindowsForms10")][@Name="149463"]/Pane[@AutomationId="ucAdmMaterialCard"]/Pane[@Name="buttonsContainer1"][starts-with(@AutomationId,"buttonsContainer")]/Pane[starts-with(@ClassName,"WindowsForms10")]/Button[@Name="Ukončit"][@AutomationId="btnFinish_Click"]&#xD;
+Failed to create Material card</StdOut>
+      </Output>
+    </UnitTestResult>
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="TestCreateMaterializedCardMethod" storage="c:\projekty\pms2.0-lw\src\uitests\src\appiumuitests\bin\debug\appiumuitests.dll" id="8a7e132e-13a6-19ec-8f47-aaf843861341">
+      <Execution id="ddb39bf5-b9c6-43c7-8f6d-d13d748cf8cd" />
+      <TestMethod codeBase="C:\Projekty\PMS2.0-LW\src\UITests\src\AppiumUITests\bin\Debug\AppiumUITests.dll" adapterTypeName="executor://mstestadapter/v2" className="TestCreateMaterializeCard.UnitTestMaterializeCard" name="TestCreateMaterializedCardMethod" />
+    </UnitTest>
+    <UnitTest name="TestMethod1" storage="c:\projekty\pms2.0-lw\src\uitests\src\appiumuitests\bin\debug\appiumuitests.dll" id="28dfbbda-24e3-07c9-9bea-7c90ecee92af">
+      <Execution id="96cdfc08-8e0c-441e-a7a9-843381c65e1c" />
+      <TestMethod codeBase="C:\Projekty\PMS2.0-LW\src\UITests\src\AppiumUITests\bin\Debug\AppiumUITests.dll" adapterTypeName="executor://mstestadapter/v2" className="UnitTestMessages.TestMessages" name="TestMethod1" />
+    </UnitTest>
+    <UnitTest name="Test32" storage="c:\projekty\pms2.0-lw\src\uitests\src\appiumuitests\bin\debug\appiumuitests.dll" id="26ec3042-1856-b7a1-a718-175b5ed6af64">
+      <Execution id="c2cd5a71-c163-4673-8c15-0e5e9e745a3d" />
+      <TestMethod codeBase="C:\Projekty\PMS2.0-LW\src\UITests\src\AppiumUITests\bin\Debug\AppiumUITests.dll" adapterTypeName="executor://mstestadapter/v2" className="TestEditMaterializeCard.UnitTestCreateOrder" name="Test32" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="26ec3042-1856-b7a1-a718-175b5ed6af64" executionId="c2cd5a71-c163-4673-8c15-0e5e9e745a3d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="28dfbbda-24e3-07c9-9bea-7c90ecee92af" executionId="96cdfc08-8e0c-441e-a7a9-843381c65e1c" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="8a7e132e-13a6-19ec-8f47-aaf843861341" executionId="ddb39bf5-b9c6-43c7-8f6d-d13d748cf8cd" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Výsledky neuvedené v seznamu" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="Všechny načtené výsledky" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Failed">
+    <Counters total="3" executed="3" passed="2" failed="1" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+  </ResultSummary>
+</TestRun>

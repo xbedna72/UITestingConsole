@@ -30,7 +30,7 @@ namespace UITestingConsole
 		private static string working_branch = string.Empty;
 		static void Main(string[] args)
 		{
-			Console.WriteLine("UI testing routine___" + DateTime.Now + "__");
+			Console.WriteLine("UI testing routine___" + DateTime.Now.ToString() + "___");
 
 			if (!ParseSettingInfo())
 			{
@@ -132,10 +132,10 @@ namespace UITestingConsole
 			cmd.StartInfo.UseShellExecute = false;
 			cmd.Start();
 
-			cmd.StandardInput.WriteLine("cd C:\\Projekty\\PMS2.0-LW\\src\\UITests\\src\\AppiumUITests\\bin\\Debug &&" +
-			" vstest.console.exe C:\\Projekty\\PMS2.0-LW\\src\\UITests\\src\\AppiumUITests\\bin\\Debug\\AppiumUITests.dll" +
-			" /TestAdapterPath:C:\\Projekty\\PMS2.0-LW\\src\\UITests\\src\\AppiumUITests\\bin\\Debug" +
-			" /Logger:trx;LogFileName=C:\\Tools\\UITestingConsole\\Results\\output.trx;verbosity=detailed");
+			cmd.StandardInput.WriteLine(@"cd C:\\Projekty\\PMS2.0-LW\\src\\UITests\\src\\AppiumUITests\\bin\\Debug &&" +
+			@" vstest.console.exe C:\\Projekty\\PMS2.0-LW\\src\\UITests\\src\\AppiumUITests\\bin\\Debug\\AppiumUITests.dll" +
+			@" /TestAdapterPath:C:\\Projekty\\PMS2.0-LW\\src\\UITests\\src\\AppiumUITests\\bin\\Debug" +
+			@" /Logger:trx;LogFileName=C:\\Tools\\Results\\output.trx;verbosity=detailed");
 			cmd.StandardInput.Flush();
 			cmd.StandardInput.Close();
 
