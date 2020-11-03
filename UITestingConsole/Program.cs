@@ -27,9 +27,7 @@ namespace UITestingConsole
 
 			if (File.Exists(currDir))
 			{
-				using (new Parser(currDir, settingStringsObject)){
-
-				}
+				
 			}
 			else
 			{
