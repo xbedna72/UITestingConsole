@@ -1,4 +1,8 @@
+using NUnit.Framework;
+using OpenQA.Selenium.Appium;
+using OpenQA.Selenium.Appium.Windows;
 using System;
+using System.IO;
 using Xunit;
 
 namespace TestManager
@@ -9,24 +13,12 @@ namespace TestManager
 
 		protected static WindowsDriver<WindowsElement> desktopSession;
 		protected static WindowsDriver<WindowsElement> root;
-		protected static ActionLibrary library = null;
-
-		////public void SetAppPath()
-		////{
-		////    string currentPath = Environment.CurrentDirectory;
-		////    string[] output = Regex.Split(currentPath, "(\\PMS2-LW\\\\src\\)");
-		////}
 
 		public static void Setup(TestContext context)
 		{
 			if (root == null)
 			{
 				string ApplicationPath = $"{Directory.GetCurrentDirectory().Replace("\\UITests\\src\\AppiumUITests", string.Empty)}\\FullTest";
-
-				if (InputLanguage.CurrentInputLanguage.Culture.Name.ToString().ToLower() != "en-us")
-				{
-					MessageBox.Show("Přepněte klávesnici do angličtiny.", "Upozornění", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
 
 				AppiumOptions opts = new AppiumOptions();
 				opts.AddAdditionalCapability("app", "Root");
@@ -38,9 +30,9 @@ namespace TestManager
 				
 				desktopSession = new WindowsDriver<WindowsElement>(new Uri(WindowsApplicationDriverUrl), options);
 
-				
-				Assert.IsNotNull(desktopSession);
-				Assert.IsNotNull(desktopSession.SessionId);
+
+				Xunit.Assert.NotNull(desktopSession);
+				Xunit.Assert.NotNull(desktopSession.SessionId);
 
 				root.Manage().Timeouts().ImplicitWait =
 					TimeSpan.FromSeconds(2.5);
@@ -49,10 +41,6 @@ namespace TestManager
 					TimeSpan.FromSeconds(2.5);
 			}
 
-			if (library == null) {
-				library = new ActionLibrary();
-				library.InitializeLibrary();
-			}
 		}
 
 		public static void TearDown()
