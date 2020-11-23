@@ -29,13 +29,14 @@ namespace UITestingConsole
 				return;
 			}
 
-			Process cmd = new Process();
-			cmd.StartInfo.FileName = @"C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\Tools\LaunchDevCmd.bat";
-			cmd.StartInfo.RedirectStandardInput = true;
-			cmd.StartInfo.RedirectStandardOutput = true;
-			cmd.StartInfo.RedirectStandardError = true;
-			cmd.StartInfo.UseShellExecute = false;
-			cmd.Start();
+			ProcessStartInfo info = new ProcessStartInfo();
+			info.CreateNoWindow = false;
+			info.UseShellExecute = false;
+			info.FileName = @"C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\Tools\LaunchDevCmd.bat";
+			info.RedirectStandardInput = true;
+			info.RedirectStandardOutput = true;
+			info.RedirectStandardError = true;
+			Process cmd = Process.Start(info);
 
 			cmd.StandardInput.WriteLine(@"cd C:\Tools\XUnitTests\bin\\Debug\netcoreapp3.1 &&" +
 			@" vstest.console.exe XUnitTests.dll /TestAdapterPath:C:\Tools\XUnitTests\bin\Debug\netcoreapp3.1"+ 
