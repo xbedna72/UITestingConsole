@@ -1,25 +1,21 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\MayBee\\source\\repos\\UITesting\\TestManager\\TestManager\\TestManager.csproj": {}
+    "C:\\Users\\MayBee\\Source\\Repos\\xbedna72\\UITestingConsole\\TestManager\\TestManager\\TestManager.csproj": {}
   },
   "projects": {
-    "C:\\Users\\MayBee\\source\\repos\\UITesting\\TestManager\\TestManager\\TestManager.csproj": {
+    "C:\\Users\\MayBee\\Source\\Repos\\xbedna72\\UITestingConsole\\TestManager\\TestManager\\TestManager.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\MayBee\\source\\repos\\UITesting\\TestManager\\TestManager\\TestManager.csproj",
+        "projectUniqueName": "C:\\Users\\MayBee\\Source\\Repos\\xbedna72\\UITestingConsole\\TestManager\\TestManager\\TestManager.csproj",
         "projectName": "TestManager",
-        "projectPath": "C:\\Users\\MayBee\\source\\repos\\UITesting\\TestManager\\TestManager\\TestManager.csproj",
+        "projectPath": "C:\\Users\\MayBee\\Source\\Repos\\xbedna72\\UITestingConsole\\TestManager\\TestManager\\TestManager.csproj",
         "packagesPath": "C:\\Users\\MayBee\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\MayBee\\source\\repos\\UITesting\\TestManager\\TestManager\\obj\\",
+        "outputPath": "C:\\Users\\MayBee\\Source\\Repos\\xbedna72\\UITestingConsole\\TestManager\\TestManager\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Microsoft\\Xamarin\\NuGet\\"
-        ],
         "configFilePaths": [
           "C:\\Users\\MayBee\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
@@ -30,6 +26,7 @@
         },
         "frameworks": {
           "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
             "projectReferences": {}
           }
         },
@@ -41,6 +38,7 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
           "dependencies": {
             "Appium.WebDriver": {
               "target": "Package",
@@ -77,12 +75,18 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[3.1.10, 3.1.10]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.403\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     }
