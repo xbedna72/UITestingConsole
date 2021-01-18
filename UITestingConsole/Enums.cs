@@ -12,7 +12,8 @@ namespace UITestingConsole
 			TestPath,
 			TestName,
 			AppPath,
-			AppName
+			AppName,
+			Group
 		};
 	}
 }
