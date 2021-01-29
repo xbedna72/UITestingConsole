@@ -6,14 +6,15 @@ using System.Threading.Tasks;
 
 namespace UITestingConsole
 {
-	class Enums
+	public class Enums
 	{
 		public enum StringType : int {
 			TestPath,
 			TestName,
 			AppPath,
 			AppName,
-			Group
+			Executable,
+			SettingFileName
 		};
 	}
 }
