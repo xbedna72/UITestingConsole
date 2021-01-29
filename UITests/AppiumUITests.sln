@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30128.74
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppiumUITests", "AppiumUITests\AppiumUITests.csproj", "{46713AAF-146F-49DA-B4A6-E7936E9E0C5E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReportManager", "TestManager\ReportManager.csproj", "{E537E502-D73F-4315-89BD-37551E9CDED5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{46713AAF-146F-49DA-B4A6-E7936E9E0C5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46713AAF-146F-49DA-B4A6-E7936E9E0C5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46713AAF-146F-49DA-B4A6-E7936E9E0C5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46713AAF-146F-49DA-B4A6-E7936E9E0C5E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E537E502-D73F-4315-89BD-37551E9CDED5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E537E502-D73F-4315-89BD-37551E9CDED5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E537E502-D73F-4315-89BD-37551E9CDED5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E537E502-D73F-4315-89BD-37551E9CDED5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E47806AB-25A8-4071-86DF-43B16DD6E2AB}
+	EndGlobalSection
+EndGlobal
