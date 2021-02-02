@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -52,14 +53,21 @@ namespace UITestingConsole
 			{
 				if (this.input[0].Equals("set", StringComparison.OrdinalIgnoreCase))
 				{
-					if(FindSettingFile(this.input[1]))
-					return 3;
+					if(FindSettingFile(this.input[1])){
+						return 3;
+					}
 				}
 			}
 			return -2;
 		}
 
 		private bool FindSettingFile(string _string){
+			var path = Directory.GetCurrentDirectory();
+			path = Regex.Replace(path, @"\\bin\\Debug.*", @"\SettingDirectory\");
+			if(File.Exists($"{path}{_string}")){
+				
+
+			}
 			return false;
 		}
 
@@ -123,10 +131,5 @@ namespace UITestingConsole
 		//	}
 		//	return true;
 		//}
-
-		public bool FindAndSet()
-		{
-			return false;
-		}
 	}
 }
