@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "b8V7ZNmy8whmRmcNw0gOM8n6hXnnxdAFV6bXHcrv3mG/LbSgwF4TESENuYK9c1AFJmDrfzZNxTxcHmmSQl0YAA==",
+  "dgSpecHash": "uDQPomiff0/GqserCopENMx6U12cHuKm1OzCxil6HrqNvAuyswyX0KHOadodzV9q/qgCmR4Tn3bqQOROZay6ug==",
   "success": true,
-  "projectFilePath": "C:\\Users\\mbednarova\\Bakalářka\\repos\\UITests\\TestManager\\ReportManager.csproj",
+  "projectFilePath": "C:\\Users\\mbednarova\\source\\repos\\UITestingConsole\\UITests\\TestManager\\ReportManager.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\mbednarova\\.nuget\\packages\\appium.webdriver\\4.1.1\\appium.webdriver.4.1.1.nupkg.sha512",
     "C:\\Users\\mbednarova\\.nuget\\packages\\castle.core\\4.3.1\\castle.core.4.3.1.nupkg.sha512",

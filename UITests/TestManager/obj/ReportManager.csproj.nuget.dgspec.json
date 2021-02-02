@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\mbednarova\\Bakalářka\\repos\\UITests\\TestManager\\ReportManager.csproj": {}
+    "C:\\Users\\mbednarova\\source\\repos\\UITestingConsole\\UITests\\TestManager\\ReportManager.csproj": {}
   },
   "projects": {
-    "C:\\Users\\mbednarova\\Bakalářka\\repos\\UITests\\TestManager\\ReportManager.csproj": {
+    "C:\\Users\\mbednarova\\source\\repos\\UITestingConsole\\UITests\\TestManager\\ReportManager.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\mbednarova\\Bakalářka\\repos\\UITests\\TestManager\\ReportManager.csproj",
+        "projectUniqueName": "C:\\Users\\mbednarova\\source\\repos\\UITestingConsole\\UITests\\TestManager\\ReportManager.csproj",
         "projectName": "ReportManager",
-        "projectPath": "C:\\Users\\mbednarova\\Bakalářka\\repos\\UITests\\TestManager\\ReportManager.csproj",
+        "projectPath": "C:\\Users\\mbednarova\\source\\repos\\UITestingConsole\\UITests\\TestManager\\ReportManager.csproj",
         "packagesPath": "C:\\Users\\mbednarova\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\mbednarova\\Bakalářka\\repos\\UITests\\TestManager\\obj\\",
+        "outputPath": "C:\\Users\\mbednarova\\source\\repos\\UITestingConsole\\UITests\\TestManager\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\mbednarova\\AppData\\Roaming\\NuGet\\NuGet.Config",

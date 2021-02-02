@@ -20,3 +20,12 @@ C:\Projekty\PMS2.0-LW\src\UITests\src\TestManager\obj\Debug\netstandard2.0\Repor
 C:\Projekty\PMS2.0-LW\src\UITests\src\TestManager\obj\Debug\netstandard2.0\ReportManager.dll
 C:\Projekty\PMS2.0-LW\src\UITests\src\TestManager\obj\Debug\netstandard2.0\ReportManager.pdb
 C:\Projekty\PMS2.0-LW\src\UITests\src\TestManager\obj\Debug\netstandard2.0\ReportManager.csproj.CoreCompileInputs.cache
+C:\Users\mbednarova\source\repos\UITestingConsole\UITests\TestManager\obj\Debug\netstandard2.0\ReportManager.csprojAssemblyReference.cache
+C:\Users\mbednarova\source\repos\UITestingConsole\UITests\TestManager\obj\Debug\netstandard2.0\ReportManager.AssemblyInfoInputs.cache
+C:\Users\mbednarova\source\repos\UITestingConsole\UITests\TestManager\obj\Debug\netstandard2.0\ReportManager.AssemblyInfo.cs
+C:\Users\mbednarova\source\repos\UITestingConsole\UITests\TestManager\obj\Debug\netstandard2.0\ReportManager.csproj.CoreCompileInputs.cache
+C:\Users\mbednarova\source\repos\UITestingConsole\UITests\TestManager\obj\Debug\netstandard2.0\ReportManager.dll
+C:\Users\mbednarova\source\repos\UITestingConsole\UITests\TestManager\obj\Debug\netstandard2.0\ReportManager.pdb
+C:\Users\mbednarova\source\repos\UITestingConsole\UITests\TestManager\bin\Debug\netstandard2.0\ReportManager.deps.json
+C:\Users\mbednarova\source\repos\UITestingConsole\UITests\TestManager\bin\Debug\netstandard2.0\ReportManager.dll
+C:\Users\mbednarova\source\repos\UITestingConsole\UITests\TestManager\bin\Debug\netstandard2.0\ReportManager.pdb
