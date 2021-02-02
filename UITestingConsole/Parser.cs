@@ -8,9 +8,12 @@ namespace UITestingConsole
 {
 	public class Parser : IDisposable
 	{
-		Parser(string filePath, SettingObject _settingObject){
-			
+		
+		Parser()
+		{
 		}
+
+
 
 		public void Dispose()
 		{
