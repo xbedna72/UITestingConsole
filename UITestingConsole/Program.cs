@@ -49,6 +49,7 @@ namespace UITestingConsole
 			Loop();
 			Console.ForegroundColor = ConsoleColor.Green;
 			Console.WriteLine("Closing Console.");
+			Console.ForegroundColor = ConsoleColor.White;
 			Thread.Sleep(1000);
 			Environment.Exit(0);
 		}
@@ -62,9 +63,6 @@ namespace UITestingConsole
 				int r = consoleManager.Decision();
 				switch (r)
 				{
-					case -1:
-						Console.WriteLine("Wrong format or argument.");
-						break;
 					case 0:	//"exit" in input
 						return;
 					case 1:
@@ -82,10 +80,16 @@ namespace UITestingConsole
 						}
 						break;
 					default:
-						Console.WriteLine("Unknown command.");
+						ErrorMessage("Unknown command or wrong format of argument.");
 						break;
 				}
 			}
+		}
+
+		static void ErrorMessage(string _message){
+			Console.ForegroundColor = ConsoleColor.Red;
+			Console.WriteLine(_message);
+			Console.ForegroundColor = ConsoleColor.White;
 		}
 	}
 }

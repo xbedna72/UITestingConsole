@@ -15,9 +15,8 @@ namespace UITestingConsole
 		public string[] input = null;
 		public bool settingFlag = false;
 
-		ConsoleManager(){
-
-		}
+		ConsoleManager()
+		{}
 
 		private static readonly object padlock = new object();
 		private static ConsoleManager instance = null;
