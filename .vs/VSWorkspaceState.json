@@ -1,10 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\TestManager",
-    "\\TestManager\\TestManager",
-    "\\UITestingConsole"
+    "\\UITestingConsole",
+    "\\UITests\\AppiumUITests"
   ],
-  "SelectedNode": "\\TestManager\\TestManager\\TestManager.sln",
+  "SelectedNode": "\\UITestingConsole\\UITestingConsole.sln",
   "PreviewInSolutionExplorer": false
 }
