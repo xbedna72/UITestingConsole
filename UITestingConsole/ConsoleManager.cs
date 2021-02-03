@@ -26,10 +26,14 @@ namespace UITestingConsole
 
 		private static readonly object padlock = new object();
 		private static ConsoleManager instance = null;
-		public static ConsoleManager Instance{
-			get{
-				lock(padlock){
-					if(instance == null){
+		public static ConsoleManager Instance
+		{
+			get
+			{
+				lock (padlock)
+				{
+					if (instance == null)
+					{
 						instance = new ConsoleManager();
 					}
 					return instance;
@@ -64,13 +68,18 @@ namespace UITestingConsole
 			return -2;
 		}
 
-		public bool GetSettingFile(string _string){
-			
-			if(File.Exists($"{directory}{_string}")){
-				try{
+		public bool GetSettingFile(string _string)
+		{
+
+			if (File.Exists($"{directory}{_string}.xml"))
+			{
+				try
+				{
 					settingObject = GetSettings(_string, new SettingObject(), directory);
 					return true;
-				}catch(Exception e){
+				}
+				catch (Exception e)
+				{
 					ErrorMessage(e.Message.ToString());
 				}
 			}
@@ -84,9 +93,12 @@ namespace UITestingConsole
 			_input = Console.ReadLine();
 			if (Regex.IsMatch(_input, "^[a-zA-Z0-9]+$"))
 			{
-				try{
+				try
+				{
 					ParseSettings(settingObject, directory, _input);
-				}catch(Exception e){
+				}
+				catch (Exception e)
+				{
 					ErrorMessage(e.Message.ToString());
 				}
 			}
@@ -98,13 +110,20 @@ namespace UITestingConsole
 
 		public void StartControl()
 		{
-			var path = Directory.GetCurrentDirectory();
-			path = Regex.Replace(path, @"\\bin\\Debug.*", @"\SettingDirectory");
-			if (DirectoryControl(path))
+			if (DirectoryControl(directory))
 			{
 				InfoMessage("SettingDirectory control was successful.");
-			}else{
-				CreateDirectory(path);
+			}
+			else
+			{
+				try
+				{
+					CreateDirectory(directory);
+				}
+				catch (Exception e)
+				{
+					ErrorMessage(e.Message.ToString());
+				}
 			}
 		}
 
@@ -114,7 +133,8 @@ namespace UITestingConsole
 			return result;
 		}
 
-		private void CreateDirectory(string _path){
+		private void CreateDirectory(string _path)
+		{
 			Directory.CreateDirectory(_path);
 			InfoMessage("SettingDirectory created.");
 		}
@@ -134,7 +154,8 @@ namespace UITestingConsole
 			}
 		}
 
-		public void Set(){
+		public void Set()
+		{
 			if (GetSettingFile(input[1]))
 			{
 				if (runFlag)

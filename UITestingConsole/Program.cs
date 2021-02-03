@@ -53,12 +53,13 @@ namespace UITestingConsole
 			{
 				consoleManager.StartControl();
 				Loop();
-				End();
 			}
 			catch (Exception e)
 			{
 				consoleManager.ErrorMessage(e.Message.ToString());
 			}
+
+			End();
 		}
 
 		static void Loop()
