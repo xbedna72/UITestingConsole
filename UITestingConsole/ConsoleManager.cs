@@ -66,7 +66,6 @@ namespace UITestingConsole
 			path = Regex.Replace(path, @"\\bin\\Debug.*", @"\SettingDirectory\");
 			if(File.Exists($"{path}{_string}")){
 				
-
 			}
 			return false;
 		}
