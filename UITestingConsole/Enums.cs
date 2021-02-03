@@ -14,8 +14,7 @@ namespace UITestingConsole
 			AppPath,
 			AppName,
 			Executable,
-			SettingFileName,
-			SettingsDirectory
+			SettingFileName
 		};
 	}
 }

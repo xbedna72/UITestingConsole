@@ -9,15 +9,20 @@ using static UITestingConsole.Enums;
 
 namespace UITestingConsole
 {
-	public sealed class ConsoleManager
+	public sealed class ConsoleManager : Parser
 	{
 		public bool runFlag = false;
-		private SettingObject settingObject = null;
+		private static SettingObject settingObject = null;
 		public string[] input = null;
 		public bool settingFlag = false;
+		public bool logging = true;
+		public static string directory;
 
 		ConsoleManager()
-		{}
+		{
+			var path = Directory.GetCurrentDirectory();
+			directory = Regex.Replace(path, @"\\bin\\Debug.*", @"\SettingDirectory\");
+		}
 
 		private static readonly object padlock = new object();
 		private static ConsoleManager instance = null;
@@ -53,45 +58,113 @@ namespace UITestingConsole
 			{
 				if (this.input[0].Equals("set", StringComparison.OrdinalIgnoreCase))
 				{
-					if(FindSettingFile(this.input[1])){
-						return 3;
-					}
+					return 3;
 				}
 			}
 			return -2;
 		}
 
-		private bool FindSettingFile(string _string){
-			var path = Directory.GetCurrentDirectory();
-			path = Regex.Replace(path, @"\\bin\\Debug.*", @"\SettingDirectory\");
-			if(File.Exists($"{path}{_string}")){
-				
+		public bool GetSettingFile(string _string){
+			
+			if(File.Exists($"{directory}{_string}")){
+				try{
+					settingObject = GetSettings(_string, new SettingObject(), directory);
+					return true;
+				}catch(Exception e){
+					ErrorMessage(e.Message.ToString());
+				}
 			}
 			return false;
 		}
 
-		public bool NewSettingFile()
+		public void NewSettingFile()
 		{
-			settingObject = new SettingObject();
-			Console.WriteLine("Creating new setting file");
+			Console.Write("new file: ");
 			string _input = string.Empty;
-
 			_input = Console.ReadLine();
 			if (Regex.IsMatch(_input, "^[a-zA-Z0-9]+$"))
 			{
-				settingObject.SetString(StringType.SettingFileName, _input);
+				try{
+					ParseSettings(settingObject, directory, _input);
+				}catch(Exception e){
+					ErrorMessage(e.Message.ToString());
+				}
 			}
 			else
 			{
 				Console.WriteLine("Wrong formate.");
 			}
+		}
 
-			return false;
+		public void StartControl()
+		{
+			var path = Directory.GetCurrentDirectory();
+			path = Regex.Replace(path, @"\\bin\\Debug.*", @"\SettingDirectory");
+			if (DirectoryControl(path))
+			{
+				InfoMessage("SettingDirectory control was successful.");
+			}else{
+				CreateDirectory(path);
+			}
+		}
+
+		private bool DirectoryControl(string _path)
+		{
+			bool result = Directory.Exists(_path);
+			return result;
+		}
+
+		private void CreateDirectory(string _path){
+			Directory.CreateDirectory(_path);
+			InfoMessage("SettingDirectory created.");
+		}
+
+		public void ErrorMessage(string _message)
+		{
+			Console.ForegroundColor = ConsoleColor.Red;
+			Console.WriteLine(_message);
+			Console.ForegroundColor = ConsoleColor.White;
+		}
+
+		public void InfoMessage(string _message)
+		{
+			if (logging)
+			{
+				Console.WriteLine(_message);
+			}
+		}
+
+		public void Set(){
+			if (GetSettingFile(input[1]))
+			{
+				if (runFlag)
+				{
+					Console.WriteLine("Run");
+					return;
+				}
+			}
+			else
+			{
+				ErrorMessage("Setting file does not exist.");
+				if (runFlag)
+				{
+					return;
+				}
+				else
+				{
+					InfoMessage("Create new setting file? (Yes/no)");
+					var inf = Console.ReadLine();
+					if (inf.Contains("Y") || inf.Contains("y"))
+					{
+						NewSettingFile();
+					}
+				}
+			}
 		}
 
 		//public bool ProcessArguments(ConsoleManager manager, string[] args, ref string info)
 		//{
-			
+
 		//	foreach (string arg in args)
 		//	{
 		//		string[] str = arg.Split(' ');

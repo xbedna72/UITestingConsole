@@ -71,30 +71,6 @@ namespace UITestingConsole
 				executable = value;
 			}
 		}
-		private String settingFileName;
-		public String SettingFileName
-		{
-			get
-			{
-				return settingFileName;
-			}
-			set
-			{
-				settingFileName = value;
-			}
-		}
-		private String settingsDirectory;
-		public String SettingsDirectory
-		{
-			get
-			{
-				return settingsDirectory;
-			}
-			set
-			{
-				settingsDirectory = value;
-			}
-		}
 		private bool buildRequest;
 		public bool BuildRequest
 		{
@@ -128,12 +104,6 @@ namespace UITestingConsole
 					break;
 				case 4:
 					Executable = _string;
-					break;
-				case 5:
-					SettingFileName = _string;
-					break;
-				case 6:
-					SettingsDirectory = _string;
 					break;
 				default:
 					break;
