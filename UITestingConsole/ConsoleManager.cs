@@ -95,7 +95,14 @@ namespace UITestingConsole
 			{
 				try
 				{
-					ParseSettings(settingObject, directory, _input);
+					var s = new SettingObject();
+					s.AppName = "App name";
+					s.AppPath = "App Path";
+					s.BuildRequest = false;
+					s.Executable = ".exe";
+					s.TestName = "Test Name";
+					s.TestPath = "c:\\...testPath\\";
+					ParseSettings(s, directory, _input);
 				}
 				catch (Exception e)
 				{
