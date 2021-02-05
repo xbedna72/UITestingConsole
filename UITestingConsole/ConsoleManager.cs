@@ -88,9 +88,8 @@ namespace UITestingConsole
 
 		public void NewSettingFile()
 		{
-			Console.Write("new file: ");
 			string _input = string.Empty;
-			_input = Console.ReadLine();
+			_input = GetAswer("new file: ");
 			if (Regex.IsMatch(_input, "^[a-zA-Z0-9]+$"))
 			{
 				try
@@ -161,6 +160,11 @@ namespace UITestingConsole
 			}
 		}
 
+		private string GetAswer(string _question){
+			Console.Write(_question);
+			return Console.ReadLine();
+		}
+
 		public void Set()
 		{
 			if (GetSettingFile(input[1]))
@@ -180,9 +184,8 @@ namespace UITestingConsole
 				}
 				else
 				{
-					InfoMessage("Create new setting file? (Yes/no)");
-					var inf = Console.ReadLine();
-					if (inf.Contains("Y") || inf.Contains("y"))
+					var inf = GetAswer("Create new setting file? (Yes/no):  ");
+					if (inf.Equals("yes", StringComparison.OrdinalIgnoreCase) || inf.Equals("y", StringComparison.OrdinalIgnoreCase))
 					{
 						NewSettingFile();
 					}
