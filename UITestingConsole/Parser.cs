@@ -7,13 +7,9 @@ using System.Threading.Tasks;
 
 namespace UITestingConsole
 {
-	public class Parser : IDisposable
+	public static class Parser
 	{
-		public Parser()
-		{
-		}
-
-		public SettingObject GetSettings(string _name, object _settingObject, string _path)
+		public static SettingObject GetSettings(string _name, object _settingObject, string _path)
 		{
 			try
 			{
@@ -29,7 +25,7 @@ namespace UITestingConsole
 			}
 		}
 
-		public void ParseSettings(object _settingObject, string _path, string _name)
+		public static void ParseSettings(object _settingObject, string _path, string _name)
 		{
 			if (_settingObject != null)
 			{
@@ -53,11 +49,6 @@ namespace UITestingConsole
 					throw new Exception(e.Message.ToString());
 				}
 			}
-		}
-
-		public void Dispose()
-		{
-			throw new NotImplementedException();
 		}
 	}
 }

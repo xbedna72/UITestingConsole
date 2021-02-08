@@ -9,13 +9,25 @@ using static UITestingConsole.Enums;
 
 namespace UITestingConsole
 {
-	public sealed class ConsoleManager : Parser
+	public class Arguments{
+		public string settingFile;
+		private bool logging = false;
+
+		public bool Logging{
+			get{
+				return logging;
+			}
+			set{
+				logging = value;
+			}
+		}
+	}
+
+	public sealed class ConsoleManager : Arguments
 	{
 		public bool runFlag = false;
 		private static SettingObject settingObject = null;
 		public string[] input = null;
-		public bool settingFlag = false;
-		public bool logging = true;
 		public static string directory;
 
 		ConsoleManager()
@@ -75,7 +87,7 @@ namespace UITestingConsole
 			{
 				try
 				{
-					settingObject = GetSettings(_string, new SettingObject(), directory);
+					settingObject = Parser.GetSettings(_string, new SettingObject(), directory);
 					return true;
 				}
 				catch (Exception e)
@@ -101,7 +113,7 @@ namespace UITestingConsole
 					s.Executable = ".exe";
 					s.TestName = "Test Name";
 					s.TestPath = "c:\\...testPath\\";
-					ParseSettings(s, directory, _input);
+					Parser.ParseSettings(s, directory, _input);
 				}
 				catch (Exception e)
 				{
@@ -154,7 +166,7 @@ namespace UITestingConsole
 
 		public void InfoMessage(string _message)
 		{
-			if (logging)
+			if (Logging)
 			{
 				Console.WriteLine(_message);
 			}
@@ -192,47 +204,5 @@ namespace UITestingConsole
 				}
 			}
 		}
-
-		//public bool ProcessArguments(ConsoleManager manager, string[] args, ref string info)
-		//{
-
-		//	foreach (string arg in args)
-		//	{
-		//		string[] str = arg.Split(' ');
-		//		if (str[0].Equals("-s"))
-		//		{
-		//			if (str.Length == 2)
-		//			{
-		//				settingObject.SetString(StringType.SettingFileName, str[1]);
-		//			}
-		//			else
-		//			{
-		//				info = "Wrong -s argument format. Error flag set.";
-		//				return false;
-		//			}
-		//		}
-		//		else if (str[0].Equals("-B"))
-		//		{
-		//			if (str.Length == 2)
-		//			{
-		//				settingObject.BuildRequest = (str[1].Contains("Y") | str[1].Contains("y")) ? true : false;
-		//			}
-		//			else
-		//			{
-		//				info = "Wrong -s argument format. Error flag set.";
-		//				return false;
-		//			}
-		//		}
-		//		else if (str[0].Equals("-R"))
-		//		{
-		//			manager.runFlag = true;
-		//		}
-		//		else
-		//		{
-
-		//		}
-		//	}
-		//	return true;
-		//}
 	}
 }

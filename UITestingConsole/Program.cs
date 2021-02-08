@@ -22,30 +22,25 @@ namespace UITestingConsole
 		public static ConsoleManager consoleManager = null;
 		public static string info = "";
 
-		static void Main(string[] args)
+		public static void Main(string[] args)
 		{
 			consoleManager = ConsoleManager.Instance;
 
 			if (args.Count() > 0)
 			{
-				//FluentArgs to process argumants	
-
-				//if (!consoleManager.ProcessArguments(consoleManager, args, ref info))
-				//{
-				//	Console.ForegroundColor = ConsoleColor.Red;
-				//	Console.WriteLine(info);
-				//	Console.ForegroundColor = ConsoleColor.White;
-				//	if (consoleManager.runFlag)
-				//	{
-				//		Console.WriteLine("Closing Console.");
-				//		Thread.Sleep(1000);
-				//		Environment.Exit(0);
-				//	}
-				//}
-				//if (consoleManager.runFlag)
-				//{
-				//	Console.WriteLine("Executing tests.");
-				//}
+				//FluentArgs to process argumants
+				FluentArgsBuilder.New()
+					.Given.Flag("-l", "--logging").Then(() =>
+					{
+						consoleManager.Logging = true;
+					})
+					.Parameter("-sf", "--settingFile")
+					.WithDescription("")
+					.IsOptional()
+					.Call(settingFile =>
+					{
+						consoleManager.settingFile = settingFile;
+					}).Parse(args);
 			}
 
 			consoleManager.InfoMessage("Starting console.");
