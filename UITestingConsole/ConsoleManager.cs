@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FluentArgs;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -9,23 +10,41 @@ using static UITestingConsole.Enums;
 
 namespace UITestingConsole
 {
-	public class Arguments{
+	#region ArgumentsClass
+	public class Arguments
+	{
 		public string settingFile;
 		private bool logging = false;
+		private bool run = false;
 
-		public bool Logging{
-			get{
+		public bool Logging
+		{
+			get
+			{
 				return logging;
 			}
-			set{
+			set
+			{
 				logging = value;
 			}
 		}
+
+		public bool Run
+		{
+			get
+			{
+				return run;
+			}
+			set
+			{
+				run = value;
+			}
+		}
 	}
+	#endregion
 
 	public sealed class ConsoleManager : Arguments
 	{
-		public bool runFlag = false;
 		private static SettingObject settingObject = null;
 		public string[] input = null;
 		public static string directory;
@@ -69,6 +88,10 @@ namespace UITestingConsole
 				{
 					return 2;
 				}
+				else if (this.input[0].Equals("show", StringComparison.OrdinalIgnoreCase))
+				{
+					return 4;
+				}
 			}
 			else
 			{
@@ -80,9 +103,21 @@ namespace UITestingConsole
 			return -2;
 		}
 
+		public void ShowAllSettingFiles()
+		{
+			string[] all = Directory.GetFiles(directory);
+			var formate = String.Format("{0,20} {1,10}\n\n", "LastWriteTime", "Name");
+			FileInfo fi = null;
+			foreach (string file in all)
+			{
+				fi = new FileInfo(file);
+				formate += String.Format("{0,20} {1,20}\n", fi.LastWriteTimeUtc, fi.Name);
+			}
+			Console.WriteLine(formate);
+		}
+
 		public bool GetSettingFile(string _string)
 		{
-
 			if (File.Exists($"{directory}{_string}.xml"))
 			{
 				try
@@ -98,7 +133,7 @@ namespace UITestingConsole
 			return false;
 		}
 
-		public void NewSettingFile()
+		public bool NewSettingFile()
 		{
 			string _input = string.Empty;
 			_input = GetAswer("new file: ");
@@ -118,12 +153,12 @@ namespace UITestingConsole
 				catch (Exception e)
 				{
 					ErrorMessage(e.Message.ToString());
+					return false;
 				}
+				InfoMessage($"{_input} was created.");
 			}
-			else
-			{
-				Console.WriteLine("Wrong formate.");
-			}
+			Console.WriteLine("Wrong formate.");
+			return false;
 		}
 
 		public void StartControl()
@@ -172,37 +207,23 @@ namespace UITestingConsole
 			}
 		}
 
-		private string GetAswer(string _question){
+		private string GetAswer(string _question)
+		{
 			Console.Write(_question);
 			return Console.ReadLine();
 		}
 
-		public void Set()
+		public bool Set()
 		{
 			if (GetSettingFile(input[1]))
 			{
-				if (runFlag)
-				{
-					Console.WriteLine("Run");
-					return;
-				}
+				InfoMessage($"{settingObject.SettingFileName} was set.");
+				return true;
 			}
-			else
-			{
-				ErrorMessage("Setting file does not exist.");
-				if (runFlag)
-				{
-					return;
-				}
-				else
-				{
-					var inf = GetAswer("Create new setting file? (Yes/no):  ");
-					if (inf.Equals("yes", StringComparison.OrdinalIgnoreCase) || inf.Equals("y", StringComparison.OrdinalIgnoreCase))
-					{
-						NewSettingFile();
-					}
-				}
-			}
+			ErrorMessage("Setting file was not found.");
+			GetAswer("For crating new setting file run command: New [new_file]");
+
+			return false;
 		}
 	}
 }

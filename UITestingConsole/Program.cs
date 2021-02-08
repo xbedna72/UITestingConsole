@@ -29,18 +29,9 @@ namespace UITestingConsole
 			if (args.Count() > 0)
 			{
 				//FluentArgs to process argumants
-				FluentArgsBuilder.New()
-					.Given.Flag("-l", "--logging").Then(() =>
-					{
-						consoleManager.Logging = true;
-					})
-					.Parameter("-sf", "--settingFile")
-					.WithDescription("")
-					.IsOptional()
-					.Call(settingFile =>
-					{
-						consoleManager.settingFile = settingFile;
-					}).Parse(args);
+				if(!ParseInputArguments(args)){
+					ErrorEnd("Wrong input arguments. Ends with Error.");
+				}
 			}
 
 			consoleManager.InfoMessage("Starting console.");
@@ -76,13 +67,36 @@ namespace UITestingConsole
 						consoleManager.NewSettingFile();
 						break;
 					case 3:
-						consoleManager.Set();
+						if(!consoleManager.Set()){
+							consoleManager.ErrorMessage("Unable to set setting file.");
+						}
+						break;
+					case 4:
+						consoleManager.ShowAllSettingFiles();
 						break;
 					default:
 						consoleManager.ErrorMessage("Unknown command or wrong format of argument.");
 						break;
 				}
 			}
+		}
+
+		static bool ParseInputArguments(string[] args){
+			return FluentArgsBuilder.New().DisallowUnusedArguments()
+					.Given.Flag("-l", "--logging").Then(() =>
+					{
+						consoleManager.Logging = true;
+					})
+					.Given.Flag("-r", "--run").Then(() =>
+					{
+						consoleManager.Run = true;
+					})
+					.Parameter("-sf", "--settingFile")
+					.IsOptional()
+					.Call(settingFile =>
+					{
+						consoleManager.settingFile = settingFile;
+					}).Parse(args);
 		}
 
 		static void End()
@@ -92,6 +106,12 @@ namespace UITestingConsole
 			Console.ForegroundColor = ConsoleColor.White;
 			Thread.Sleep(1000);
 			Environment.Exit(0);
+		}
+		static void ErrorEnd(string _messeage)
+		{
+			consoleManager.ErrorMessage(_messeage);
+			Thread.Sleep(1000);
+			Environment.Exit(1);
 		}
 	}
 }
