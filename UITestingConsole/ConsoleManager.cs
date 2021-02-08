@@ -93,11 +93,14 @@ namespace UITestingConsole
 					return 4;
 				}
 			}
-			else
+			else if(this.input.Length == 2)
 			{
 				if (this.input[0].Equals("set", StringComparison.OrdinalIgnoreCase))
 				{
 					return 3;
+				}
+				else if (this.input[0].Equals("delete", StringComparison.OrdinalIgnoreCase)){
+					//deleteSettingFile(input[1])
 				}
 			}
 			return -2;
@@ -122,7 +125,7 @@ namespace UITestingConsole
 			{
 				try
 				{
-					settingObject = Parser.GetSettings(_string, new SettingObject(), directory);
+					settingObject = Parser.GetSettings(new SettingObject(), directory);
 					return true;
 				}
 				catch (Exception e)
@@ -141,14 +144,8 @@ namespace UITestingConsole
 			{
 				try
 				{
-					var s = new SettingObject();
-					s.AppName = "App name";
-					s.AppPath = "App Path";
-					s.BuildRequest = false;
-					s.Executable = ".exe";
-					s.TestName = "Test Name";
-					s.TestPath = "c:\\...testPath\\";
-					Parser.ParseSettings(s, directory, _input);
+					var s = NewFileArgumentsParser(_input);
+					Parser.ParseSettings(s, directory);
 				}
 				catch (Exception e)
 				{
@@ -222,8 +219,29 @@ namespace UITestingConsole
 			}
 			ErrorMessage("Setting file was not found.");
 			GetAswer("For crating new setting file run command: New [new_file]");
-
 			return false;
+		}
+
+		private SettingObject NewFileArgumentsParser(string _settingFileName){
+			var _new = new SettingObject();
+			Console.Write("Absolute path of the tested application: ");
+			var _input = Console.ReadLine();
+			if (Regex.IsMatch(_input, "[A-Z]:\\([a-zA-Z0-9]+\\)*([a-zA-Z0-9]+.exe)"))
+			{
+				//_new.AppName = name;
+				
+				_new.AppPath = "App Path";
+				_new.BuildRequest = false;
+				_new.Executable = ".exe";
+				_new.TestName = "Test Name";
+				_new.TestPath = "c:\\...testPath\\";
+				return _new;
+			}
+			else
+			{
+				ErrorMessage("Wrong format name of tested application.");
+			}
+			return null;
 		}
 	}
 }

@@ -9,12 +9,12 @@ namespace UITestingConsole
 {
 	public static class Parser
 	{
-		public static SettingObject GetSettings(string _name, object _settingObject, string _path)
+		public static SettingObject GetSettings(SettingObject _settingObject, string _path)
 		{
 			try
 			{
 				System.Xml.Serialization.XmlSerializer reader = new System.Xml.Serialization.XmlSerializer(typeof(SettingObject));
-				StreamReader file = new StreamReader($"{_path}{_name}.xml");
+				StreamReader file = new StreamReader($"{_path}{_settingObject.SettingFileName}.xml");
 				_settingObject = (SettingObject)reader.Deserialize(file);
 				file.Close();
 				return (SettingObject)_settingObject;
@@ -25,14 +25,14 @@ namespace UITestingConsole
 			}
 		}
 
-		public static void ParseSettings(object _settingObject, string _path, string _name)
+		public static void ParseSettings(SettingObject _settingObject, string _path)
 		{
 			if (_settingObject != null)
 			{
 				try
 				{
 					System.Xml.Serialization.XmlSerializer writer = new System.Xml.Serialization.XmlSerializer(typeof(SettingObject));
-					var path = $"{_path}{_name}.xml";
+					var path = $"{_path}{_settingObject.SettingFileName}.xml";
 					
 					if(File.Exists(path)){
 						File.Delete(path);
