@@ -83,6 +83,9 @@ namespace UITestingConsole
 					case 3:
 						consoleManager.Set();
 						break;
+					case 4:
+						consoleManager.ShowListOfSettingFiles();
+						break;
 					default:
 						consoleManager.ErrorMessage("Unknown command or wrong format of argument.");
 						break;

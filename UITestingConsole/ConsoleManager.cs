@@ -57,6 +57,10 @@ namespace UITestingConsole
 				{
 					return 2;
 				}
+				else if (this.input[0].Equals("show", StringComparison.OrdinalIgnoreCase))
+				{
+					return 4;
+				}
 			}
 			else
 			{
@@ -89,7 +93,7 @@ namespace UITestingConsole
 		public void NewSettingFile()
 		{
 			string _input = string.Empty;
-			_input = GetAswer("new file: ");
+			_input = GetAswer("new file name: ");
 			if (Regex.IsMatch(_input, "^[a-zA-Z0-9]+$"))
 			{
 				try
@@ -112,6 +116,11 @@ namespace UITestingConsole
 			{
 				Console.WriteLine("Wrong formate.");
 			}
+		}
+
+		public void ShowListOfSettingFiles()
+		{
+			
 		}
 
 		public void StartControl()
@@ -139,6 +148,10 @@ namespace UITestingConsole
 			return result;
 		}
 
+		//private Dictionary GetDirectory(){
+			
+		//}
+
 		private void CreateDirectory(string _path)
 		{
 			Directory.CreateDirectory(_path);
@@ -160,7 +173,8 @@ namespace UITestingConsole
 			}
 		}
 
-		private string GetAswer(string _question){
+		private string GetAswer(string _question)
+		{
 			Console.Write(_question);
 			return Console.ReadLine();
 		}
