@@ -2,8 +2,8 @@
 <SettingObject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <TestPath>c:\...testPath\</TestPath>
   <TestName>Test Name</TestName>
-  <AppPath>App Path</AppPath>
-  <AppName>App name</AppName>
-  <Executable>.exe</Executable>
+  <AppPath></AppPath>
+  <AppName>Calculator</AppName>
+  <Executable>C:\Windows\System32\calc.exe</Executable>
   <BuildRequest>false</BuildRequest>
 </SettingObject>

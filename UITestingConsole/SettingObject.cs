@@ -35,18 +35,7 @@ namespace UITestingConsole
 				testName = value;
 			}
 		}
-		private String appPath;
-		public String AppPath
-		{
-			get
-			{
-				return appPath;
-			}
-			set
-			{
-				appPath = value;
-			}
-		}
+
 		private String appName;
 		public String AppName
 		{
@@ -109,15 +98,12 @@ namespace UITestingConsole
 					TestName = _string;
 					break;
 				case 2:
-					AppPath = _string;
-					break;
-				case 3:
 					AppName = _string;
 					break;
-				case 4:
+				case 3:
 					Executable = _string;
 					break;
-				case 5:
+				case 4:
 					SettingFileName = _string;
 					break;
 				default:

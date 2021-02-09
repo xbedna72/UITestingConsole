@@ -237,9 +237,6 @@ namespace UITestingConsole
 			var _input = Console.ReadLine();
 			if (Regex.IsMatch(_input, "[A-Z]:\\([a-zA-Z0-9]+\\)*([a-zA-Z0-9]+.exe)"))
 			{
-				//_new.AppName = name;
-				
-				_new.AppPath = "App Path";
 				_new.BuildRequest = false;
 				_new.Executable = ".exe";
 				_new.TestName = "Test Name";

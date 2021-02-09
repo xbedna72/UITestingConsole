@@ -11,7 +11,6 @@ namespace UITestingConsole
 		public enum StringType : int {
 			TestPath,
 			TestName,
-			AppPath,
 			AppName,
 			Executable,
 			SettingFileName
