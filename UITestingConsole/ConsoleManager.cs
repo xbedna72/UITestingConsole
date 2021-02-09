@@ -106,8 +106,14 @@ namespace UITestingConsole
 			return -2;
 		}
 
+		public void Process()
+		{
+			InfoMessage("Process test.");
+		}
+
 		public void ShowAllSettingFiles()
 		{
+			InfoMessage("Show all Setting files.");
 			string[] all = Directory.GetFiles(directory);
 			var formate = String.Format("{0,20} {1,10}\n\n", "LastWriteTime", "Name");
 			FileInfo fi = null;
@@ -121,6 +127,7 @@ namespace UITestingConsole
 
 		public bool GetSettingFile(string _string)
 		{
+			InfoMessage($"Get Setting File {_string}.");
 			if (File.Exists($"{directory}{_string}.xml"))
 			{
 				try
@@ -158,11 +165,6 @@ namespace UITestingConsole
 			return false;
 		}
 
-		public void ShowListOfSettingFiles()
-		{
-			
-		}
-
 		public void StartControl()
 		{
 			if (DirectoryControl(directory))
@@ -187,10 +189,6 @@ namespace UITestingConsole
 			bool result = Directory.Exists(_path);
 			return result;
 		}
-
-		//private Dictionary GetDirectory(){
-			
-		//}
 
 		private void CreateDirectory(string _path)
 		{

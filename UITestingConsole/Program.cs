@@ -60,8 +60,8 @@ namespace UITestingConsole
 					case 0: //"exit" in input
 						return;
 					case 1:
-						//Process();
 						Console.WriteLine("Run");
+						consoleManager.Process();
 						break;
 					case 2:
 						consoleManager.NewSettingFile();
