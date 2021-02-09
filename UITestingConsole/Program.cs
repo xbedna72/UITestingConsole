@@ -81,8 +81,8 @@ namespace UITestingConsole
 			}
 		}
 
-		static bool ParseInputArguments(string[] args){
-			return FluentArgsBuilder.New().DisallowUnusedArguments()
+		static bool ParseInputArguments(string[] args) {
+			var result = FluentArgsBuilder.New().DisallowUnusedArguments()
 					.Given.Flag("-l", "--logging").Then(() =>
 					{
 						consoleManager.Logging = true;
@@ -93,10 +93,29 @@ namespace UITestingConsole
 					})
 					.Parameter("-sf", "--settingFile")
 					.IsOptional()
-					.Call(settingFile =>
+					.Parameter("/TestingFilePath:")
+						.WithDescription("Absolute path of testing file.")
+						.IsOptional()
+					.Parameter("/TestedApplicationPath:")
+						.WithDescription("Absolute path of executable file of application under test.")
+						.IsOptional()
+					.Call(applicationPath => testingFile => settingFile =>
 					{
 						consoleManager.settingFile = settingFile;
-					}).Parse(args);
+						consoleManager.appExecAbsPath = applicationPath;
+						consoleManager.testFileAbsPath = testingFile;
+					})
+					.Parse(args);
+			if(!result){
+				return false;
+			}
+
+			if(consoleManager.appExecAbsPath == null || consoleManager.testFileAbsPath == null){
+				return false;
+			}else{
+				consoleManager.Run = true;
+				return true;
+			}
 		}
 
 		static void End()

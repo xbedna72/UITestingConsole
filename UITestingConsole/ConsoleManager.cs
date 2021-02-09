@@ -13,7 +13,9 @@ namespace UITestingConsole
 	#region ArgumentsClass
 	public class Arguments
 	{
-		public string settingFile;
+		public string settingFile = null;
+		public string testFileAbsPath = null;
+		public string appExecAbsPath = null;
 		private bool logging = false;
 		private bool run = false;
 
