@@ -22,30 +22,16 @@ namespace UITestingConsole
 		public static ConsoleManager consoleManager = null;
 		public static string info = "";
 
-		static void Main(string[] args)
+		public static void Main(string[] args)
 		{
 			consoleManager = ConsoleManager.Instance;
 
 			if (args.Count() > 0)
 			{
-				//FluentArgs to process argumants	
-
-				//if (!consoleManager.ProcessArguments(consoleManager, args, ref info))
-				//{
-				//	Console.ForegroundColor = ConsoleColor.Red;
-				//	Console.WriteLine(info);
-				//	Console.ForegroundColor = ConsoleColor.White;
-				//	if (consoleManager.runFlag)
-				//	{
-				//		Console.WriteLine("Closing Console.");
-				//		Thread.Sleep(1000);
-				//		Environment.Exit(0);
-				//	}
-				//}
-				//if (consoleManager.runFlag)
-				//{
-				//	Console.WriteLine("Executing tests.");
-				//}
+				//FluentArgs to process argumants
+				if(!ParseInputArguments(args)){
+					ErrorEnd("Wrong input arguments. Ends with Error.");
+				}
 			}
 
 			consoleManager.InfoMessage("Starting console.");
@@ -81,7 +67,12 @@ namespace UITestingConsole
 						consoleManager.NewSettingFile();
 						break;
 					case 3:
-						consoleManager.Set();
+						if(!consoleManager.Set()){
+							consoleManager.ErrorMessage("Unable to set setting file.");
+						}
+						break;
+					case 4:
+						consoleManager.ShowAllSettingFiles();
 						break;
 					case 4:
 						consoleManager.ShowListOfSettingFiles();
@@ -93,6 +84,24 @@ namespace UITestingConsole
 			}
 		}
 
+		static bool ParseInputArguments(string[] args){
+			return FluentArgsBuilder.New().DisallowUnusedArguments()
+					.Given.Flag("-l", "--logging").Then(() =>
+					{
+						consoleManager.Logging = true;
+					})
+					.Given.Flag("-r", "--run").Then(() =>
+					{
+						consoleManager.Run = true;
+					})
+					.Parameter("-sf", "--settingFile")
+					.IsOptional()
+					.Call(settingFile =>
+					{
+						consoleManager.settingFile = settingFile;
+					}).Parse(args);
+		}
+
 		static void End()
 		{
 			Console.ForegroundColor = ConsoleColor.Green;
@@ -100,6 +109,12 @@ namespace UITestingConsole
 			Console.ForegroundColor = ConsoleColor.White;
 			Thread.Sleep(1000);
 			Environment.Exit(0);
+		}
+		static void ErrorEnd(string _messeage)
+		{
+			consoleManager.ErrorMessage(_messeage);
+			Thread.Sleep(1000);
+			Environment.Exit(1);
 		}
 	}
 }

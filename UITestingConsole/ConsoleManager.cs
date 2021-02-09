@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FluentArgs;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -9,13 +10,43 @@ using static UITestingConsole.Enums;
 
 namespace UITestingConsole
 {
-	public sealed class ConsoleManager : Parser
+	#region ArgumentsClass
+	public class Arguments
 	{
-		public bool runFlag = false;
+		public string settingFile;
+		private bool logging = false;
+		private bool run = false;
+
+		public bool Logging
+		{
+			get
+			{
+				return logging;
+			}
+			set
+			{
+				logging = value;
+			}
+		}
+
+		public bool Run
+		{
+			get
+			{
+				return run;
+			}
+			set
+			{
+				run = value;
+			}
+		}
+	}
+	#endregion
+
+	public sealed class ConsoleManager : Arguments
+	{
 		private static SettingObject settingObject = null;
 		public string[] input = null;
-		public bool settingFlag = false;
-		public bool logging = true;
 		public static string directory;
 
 		ConsoleManager()
@@ -62,24 +93,39 @@ namespace UITestingConsole
 					return 4;
 				}
 			}
-			else
+			else if(this.input.Length == 2)
 			{
 				if (this.input[0].Equals("set", StringComparison.OrdinalIgnoreCase))
 				{
 					return 3;
 				}
+				else if (this.input[0].Equals("delete", StringComparison.OrdinalIgnoreCase)){
+					//deleteSettingFile(input[1])
+				}
 			}
 			return -2;
 		}
 
+		public void ShowAllSettingFiles()
+		{
+			string[] all = Directory.GetFiles(directory);
+			var formate = String.Format("{0,20} {1,10}\n\n", "LastWriteTime", "Name");
+			FileInfo fi = null;
+			foreach (string file in all)
+			{
+				fi = new FileInfo(file);
+				formate += String.Format("{0,20} {1,20}\n", fi.LastWriteTimeUtc, fi.Name);
+			}
+			Console.WriteLine(formate);
+		}
+
 		public bool GetSettingFile(string _string)
 		{
-
 			if (File.Exists($"{directory}{_string}.xml"))
 			{
 				try
 				{
-					settingObject = GetSettings(_string, new SettingObject(), directory);
+					settingObject = Parser.GetSettings(new SettingObject(), directory);
 					return true;
 				}
 				catch (Exception e)
@@ -90,7 +136,7 @@ namespace UITestingConsole
 			return false;
 		}
 
-		public void NewSettingFile()
+		public bool NewSettingFile()
 		{
 			string _input = string.Empty;
 			_input = GetAswer("new file name: ");
@@ -98,24 +144,18 @@ namespace UITestingConsole
 			{
 				try
 				{
-					var s = new SettingObject();
-					s.AppName = "App name";
-					s.AppPath = "App Path";
-					s.BuildRequest = false;
-					s.Executable = ".exe";
-					s.TestName = "Test Name";
-					s.TestPath = "c:\\...testPath\\";
-					ParseSettings(s, directory, _input);
+					var s = NewFileArgumentsParser(_input);
+					Parser.ParseSettings(s, directory);
 				}
 				catch (Exception e)
 				{
 					ErrorMessage(e.Message.ToString());
+					return false;
 				}
+				InfoMessage($"{_input} was created.");
 			}
-			else
-			{
-				Console.WriteLine("Wrong formate.");
-			}
+			Console.WriteLine("Wrong formate.");
+			return false;
 		}
 
 		public void ShowListOfSettingFiles()
@@ -167,7 +207,7 @@ namespace UITestingConsole
 
 		public void InfoMessage(string _message)
 		{
-			if (logging)
+			if (Logging)
 			{
 				Console.WriteLine(_message);
 			}
@@ -179,74 +219,38 @@ namespace UITestingConsole
 			return Console.ReadLine();
 		}
 
-		public void Set()
+		public bool Set()
 		{
 			if (GetSettingFile(input[1]))
 			{
-				if (runFlag)
-				{
-					Console.WriteLine("Run");
-					return;
-				}
+				InfoMessage($"{settingObject.SettingFileName} was set.");
+				return true;
+			}
+			ErrorMessage("Setting file was not found.");
+			GetAswer("For crating new setting file run command: New [new_file]");
+			return false;
+		}
+
+		private SettingObject NewFileArgumentsParser(string _settingFileName){
+			var _new = new SettingObject();
+			Console.Write("Absolute path of the tested application: ");
+			var _input = Console.ReadLine();
+			if (Regex.IsMatch(_input, "[A-Z]:\\([a-zA-Z0-9]+\\)*([a-zA-Z0-9]+.exe)"))
+			{
+				//_new.AppName = name;
+				
+				_new.AppPath = "App Path";
+				_new.BuildRequest = false;
+				_new.Executable = ".exe";
+				_new.TestName = "Test Name";
+				_new.TestPath = "c:\\...testPath\\";
+				return _new;
 			}
 			else
 			{
-				ErrorMessage("Setting file does not exist.");
-				if (runFlag)
-				{
-					return;
-				}
-				else
-				{
-					var inf = GetAswer("Create new setting file? (Yes/no):  ");
-					if (inf.Equals("yes", StringComparison.OrdinalIgnoreCase) || inf.Equals("y", StringComparison.OrdinalIgnoreCase))
-					{
-						NewSettingFile();
-					}
-				}
+				ErrorMessage("Wrong format name of tested application.");
 			}
+			return null;
 		}
-
-		//public bool ProcessArguments(ConsoleManager manager, string[] args, ref string info)
-		//{
-
-		//	foreach (string arg in args)
-		//	{
-		//		string[] str = arg.Split(' ');
-		//		if (str[0].Equals("-s"))
-		//		{
-		//			if (str.Length == 2)
-		//			{
-		//				settingObject.SetString(StringType.SettingFileName, str[1]);
-		//			}
-		//			else
-		//			{
-		//				info = "Wrong -s argument format. Error flag set.";
-		//				return false;
-		//			}
-		//		}
-		//		else if (str[0].Equals("-B"))
-		//		{
-		//			if (str.Length == 2)
-		//			{
-		//				settingObject.BuildRequest = (str[1].Contains("Y") | str[1].Contains("y")) ? true : false;
-		//			}
-		//			else
-		//			{
-		//				info = "Wrong -s argument format. Error flag set.";
-		//				return false;
-		//			}
-		//		}
-		//		else if (str[0].Equals("-R"))
-		//		{
-		//			manager.runFlag = true;
-		//		}
-		//		else
-		//		{
-
-		//		}
-		//	}
-		//	return true;
-		//}
 	}
 }
