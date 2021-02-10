@@ -13,7 +13,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static UITestingConsole.Enums;
-using FluentArgs;
 
 namespace UITestingConsole
 {
@@ -29,8 +28,20 @@ namespace UITestingConsole
 			if (args.Count() > 0)
 			{
 				//FluentArgs to process argumants
-				if(!ParseInputArguments(args)){
-					ErrorEnd("Wrong input arguments. Ends with Error.");
+				var helpFlag = ParseInputArguments(args);
+
+				if (!helpFlag && consoleManager.ErrorInput)
+				{
+					ErrorEnd(" ");
+				}
+				else if (consoleManager.Run)
+				{
+					Console.WriteLine($"Process with {String.Join(", ", consoleManager.testNames)}\n and {consoleManager.appName}.");
+					//Process();
+				}
+				else if (helpFlag)
+				{
+					End();
 				}
 			}
 
@@ -67,7 +78,8 @@ namespace UITestingConsole
 						consoleManager.NewSettingFile();
 						break;
 					case 3:
-						if(!consoleManager.Set()){
+						if (!consoleManager.Set())
+						{
 							consoleManager.ErrorMessage("Unable to set setting file.");
 						}
 						break;
@@ -81,41 +93,86 @@ namespace UITestingConsole
 			}
 		}
 
-		static bool ParseInputArguments(string[] args) {
-			var result = FluentArgsBuilder.New().DisallowUnusedArguments()
-					.Given.Flag("-l", "--logging").Then(() =>
+		static bool ParseInputArguments(string[] args)
+		{
+			for (int i = 0; i < args.Count(); i++)
+			{
+				if (args[i].Equals("-a", StringComparison.OrdinalIgnoreCase))
+				{
+					try
 					{
-						consoleManager.Logging = true;
-					})
-					.Given.Flag("-r", "--run").Then(() =>
-					{
-						consoleManager.Run = true;
-					})
-					.Parameter("-sf", "--settingFile")
-					.IsOptional()
-					.Parameter("/TestingFilePath:")
-						.WithDescription("Absolute path of testing file.")
-						.IsOptional()
-					.Parameter("/TestedApplicationPath:")
-						.WithDescription("Absolute path of executable file of application under test.")
-						.IsOptional()
-					.Call(applicationPath => testingFile => settingFile =>
-					{
-						consoleManager.settingFile = settingFile;
-						consoleManager.appExecAbsPath = applicationPath;
-						consoleManager.testFileAbsPath = testingFile;
-					})
-					.Parse(args);
-			if(!result){
-				return false;
-			}
+						if (args[i + 1].Equals("/TestNames:"))
+						{
+							for (int j = i + 2; j < args.Count(); j++)
+							{
+								if (Regex.IsMatch(args[j], "[A-Z]:\\\\([a-zA-Z0-9]+\\\\)*([a-zA-Z0-9]+.dll)") || Regex.IsMatch(args[j], "[A-Z]:\\\\([a-zA-Z0-9]+\\\\)*([a-zA-Z0-9]+.exe)"))
+								{
+									consoleManager.testNames.Add(args[j]);
+								}
+								else if (args[j].Equals("/AppName:"))
+								{
+									if (Regex.IsMatch(args[j + 1], "[A-Z]:\\\\([a-zA-Z0-9]+\\\\)*([a-zA-Z0-9]+.exe)"))
+									{
+										consoleManager.appName = args[j + 1];
 
-			if(consoleManager.appExecAbsPath == null || consoleManager.testFileAbsPath == null){
-				return false;
-			}else{
-				consoleManager.Run = true;
-				return true;
+										if(j+2 > args.Count()){
+											if(args[j+2].Equals("-b")){
+												consoleManager.BuildFlag = true;
+												consoleManager.Run = true;
+												return true;
+											}
+											consoleManager.ErrorMessage($"Unknown parameter {args[j + 2]}.");
+											break;
+										}
+										consoleManager.Run = true;
+										return true;
+									}
+									consoleManager.ErrorMessage("Wrong format of Application name. Absolute path with name of .exe file.");
+									break;
+								}
+								else
+								{
+									consoleManager.ErrorMessage("Wrong format of Test name. Absolute path with name of .dll or .exe file.");
+									break;
+								}
+							}
+							consoleManager.ErrorMessage("Undefined application name.");
+							break;
+						}
+						else if (args[i + 1].Equals("/SettingFile:"))
+						{
+							consoleManager.settingFile = args[i + 2];
+						}
+						break;
+					}
+					catch (Exception e)
+					{
+						e.ToString();
+						consoleManager.ErrorMessage("Wrong formate of input arguments. Run with parameter \"?\" or \"-h\" for help.");
+						break;
+					}
+				}
+				else if (args[i].Equals("?", StringComparison.OrdinalIgnoreCase) || args[i].Equals("-h", StringComparison.OrdinalIgnoreCase))
+				{
+					if (args.Count() == 1)
+					{
+						Console.WriteLine("Help text.");
+						return true;
+					}
+					break;
+				}
+				else if (args[i].Equals("-l", StringComparison.OrdinalIgnoreCase))
+				{
+					consoleManager.Logging = true;
+				}
+				else
+				{
+					consoleManager.ErrorInput = true;
+					return false;
+				}
 			}
+			consoleManager.ErrorInput = true;
+			return false;
 		}
 
 		static void End()

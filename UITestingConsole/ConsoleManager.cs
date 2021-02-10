@@ -1,5 +1,4 @@
-﻿using FluentArgs;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -14,34 +13,16 @@ namespace UITestingConsole
 	public class Arguments
 	{
 		public string settingFile = null;
-		public string testFileAbsPath = null;
-		public string appExecAbsPath = null;
+		public IList<string> testNames = new List<string>();
+		public string appName = null;
 		private bool logging = false;
 		private bool run = false;
-
-		public bool Logging
-		{
-			get
-			{
-				return logging;
-			}
-			set
-			{
-				logging = value;
-			}
-		}
-
-		public bool Run
-		{
-			get
-			{
-				return run;
-			}
-			set
-			{
-				run = value;
-			}
-		}
+		private bool errorInput = false;
+		private bool buildFlag = false;
+		public bool Logging { get { return logging; } set { logging = value; } }
+		public bool Run { get { return run; } set { run = value; } }
+		public bool ErrorInput { get { return errorInput; } set { errorInput = value; } }
+		public bool BuildFlag { get { return buildFlag; } set { buildFlag = value; } }
 	}
 	#endregion
 
@@ -111,6 +92,18 @@ namespace UITestingConsole
 		public void Process()
 		{
 			InfoMessage("Process test.");
+			if(settingFile != null){
+				if(GetSettingFile(settingFile)){
+					Console.WriteLine("Run");
+				}
+			}else{
+				InputAgumentsProcess();
+			}
+		}
+
+		private void InputAgumentsProcess()
+		{
+			
 		}
 
 		public void ShowAllSettingFiles()
