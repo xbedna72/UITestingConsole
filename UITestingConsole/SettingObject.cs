@@ -10,17 +10,10 @@ namespace UITestingConsole
 	public class SettingObject
 	{
 		#region Properties
-		private String testPath;
-		public String TestPath
+		public IList<string> TestPaths
 		{
-			get
-			{
-				return testPath;
-			}
-			set
-			{
-				testPath = value;
-			}
+			get;
+			set;
 		}
 
 		private String testName;
@@ -89,10 +82,10 @@ namespace UITestingConsole
 		public SettingObject()
 		{}
 
-		public void SetString(StringType type, string _string){
+		public void SetString(StringType type, string _string, IList<string> _list){
 			switch((int)type){
 				case 0:
-					TestPath = _string;
+					TestPaths = _list;
 					break;
 				case 1:
 					TestName = _string;

@@ -103,7 +103,8 @@ namespace UITestingConsole
 
 		private void InputAgumentsProcess()
 		{
-			
+			settingObject = new SettingObject();
+			settingObject.TestPaths = 
 		}
 
 		public void ShowAllSettingFiles()
