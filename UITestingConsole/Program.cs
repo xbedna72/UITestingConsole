@@ -32,7 +32,7 @@ namespace UITestingConsole
 
 				if (!helpFlag && consoleManager.ErrorInput)
 				{
-					ErrorEnd(" ");
+					ErrorEnd("End with failer.");
 				}
 				else if (consoleManager.Run)
 				{
@@ -72,13 +72,13 @@ namespace UITestingConsole
 						return;
 					case 1:
 						Console.WriteLine("Run");
-						consoleManager.Process();
+						consoleManager.Run = true;
 						break;
 					case 2:
 						consoleManager.NewSettingFile();
 						break;
 					case 3:
-						if (!consoleManager.Set())
+						if (!consoleManager.SetSettingFile())
 						{
 							consoleManager.ErrorMessage("Unable to set setting file.");
 						}
@@ -89,6 +89,9 @@ namespace UITestingConsole
 					default:
 						consoleManager.ErrorMessage("Unknown command or wrong format of argument.");
 						break;
+				}
+				if(consoleManager.Run){
+					consoleManager.Process();
 				}
 			}
 		}
@@ -115,8 +118,10 @@ namespace UITestingConsole
 									{
 										consoleManager.appName = args[j + 1];
 
-										if(j+2 > args.Count()){
-											if(args[j+2].Equals("-b")){
+										if (j + 2 > args.Count())
+										{
+											if (args[j + 2].Equals("-b"))
+											{
 												consoleManager.BuildFlag = true;
 												consoleManager.Run = true;
 												return true;

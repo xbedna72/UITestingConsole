@@ -6,13 +6,10 @@ using System.Threading.Tasks;
 
 namespace UITestingConsole
 {
-	public class TestManager
+	public static class TestManager
 	{
-		public TestManager(){
-			
-		}
-
-		public bool Process(SettingObject _object){
+		public static bool Process(SettingObject _object)
+		{
 			
 			return false;
 		}

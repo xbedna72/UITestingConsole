@@ -15,13 +15,14 @@ namespace UITestingConsole
 		public string settingFile = null;
 		public IList<string> testNames = new List<string>();
 		public string appName = null;
-		private bool logging = false;
-		private bool run = false;
-		private bool errorInput = false;
+		
+		private bool loggingFlag = false;
+		private bool runFlag = false;
+		private bool errorInputFlag = false;
 		private bool buildFlag = false;
-		public bool Logging { get { return logging; } set { logging = value; } }
-		public bool Run { get { return run; } set { run = value; } }
-		public bool ErrorInput { get { return errorInput; } set { errorInput = value; } }
+		public bool Logging { get { return loggingFlag; } set { loggingFlag = value; } }
+		public bool Run { get { return runFlag; } set { runFlag = value; } }
+		public bool ErrorInput { get { return errorInputFlag; } set { errorInputFlag = value; } }
 		public bool BuildFlag { get { return buildFlag; } set { buildFlag = value; } }
 	}
 	#endregion
@@ -89,24 +90,29 @@ namespace UITestingConsole
 			return -2;
 		}
 
-		public void Process()
+		public bool Process()
 		{
 			InfoMessage("Process test.");
 			if(settingFile != null){
-				if(GetSettingFile(settingFile)){
-					Console.WriteLine("Run");
+				if(!GetSettingFileByName(settingFile)){
+					ErrorMessage("Setting file was not found.");
+					return false;
 				}
 			}else{
 				InputAgumentsProcess();
 			}
+			return TestManager.Process(settingObject);
 		}
 
 		private void InputAgumentsProcess()
 		{
 			settingObject = new SettingObject();
-			settingObject.TestPaths = 
+			settingObject.TestNames = testNames;
+			settingObject.AppName = appName;
+			settingObject.BuildRequest = BuildFlag;
 		}
 
+		#region SettingFile
 		public void ShowAllSettingFiles()
 		{
 			InfoMessage("Show all Setting files.");
@@ -121,7 +127,7 @@ namespace UITestingConsole
 			Console.WriteLine(formate);
 		}
 
-		public bool GetSettingFile(string _string)
+		public bool GetSettingFileByName(string _string)
 		{
 			InfoMessage($"Get Setting File {_string}.");
 			if (File.Exists($"{directory}{_string}.xml"))
@@ -147,7 +153,7 @@ namespace UITestingConsole
 			{
 				try
 				{
-					var s = NewFileArgumentsParser(_input);
+					var s = NewSettingFileArgumentsParser(_input);
 					Parser.ParseSettings(s, directory);
 				}
 				catch (Exception e)
@@ -161,6 +167,39 @@ namespace UITestingConsole
 			return false;
 		}
 
+		public bool SetSettingFile()
+		{
+			if (GetSettingFileByName(input[1]))
+			{
+				InfoMessage($"{settingObject.SettingFileName} was set.");
+				return true;
+			}
+			ErrorMessage("Setting file was not found.");
+			GetAswer("For crating new setting file run command: New [new_file]");
+			return false;
+		}
+
+		private SettingObject NewSettingFileArgumentsParser(string _settingFileName)
+		{
+			var _new = new SettingObject();
+			Console.Write("Absolute path of the tested application: ");
+			var _input = Console.ReadLine();
+			if (Regex.IsMatch(_input, "[A-Z]:\\([a-zA-Z0-9]+\\)*([a-zA-Z0-9]+.exe)"))
+			{
+				_new.BuildRequest = false;
+				_new.Executable = ".exe";
+				_new.TestNames = new List<string> { "c:\\...test1Path\\", "c:\\...test2Path\\" };
+				return _new;
+			}
+			else
+			{
+				ErrorMessage("Wrong format name of tested application.");
+			}
+			return null;
+		}
+		#endregion
+
+		#region Directory
 		public void StartControl()
 		{
 			if (DirectoryControl(directory))
@@ -191,7 +230,9 @@ namespace UITestingConsole
 			Directory.CreateDirectory(_path);
 			InfoMessage("SettingDirectory created.");
 		}
+		#endregion
 
+		#region IOMethods
 		public void ErrorMessage(string _message)
 		{
 			Console.ForegroundColor = ConsoleColor.Red;
@@ -212,36 +253,6 @@ namespace UITestingConsole
 			Console.Write(_question);
 			return Console.ReadLine();
 		}
-
-		public bool Set()
-		{
-			if (GetSettingFile(input[1]))
-			{
-				InfoMessage($"{settingObject.SettingFileName} was set.");
-				return true;
-			}
-			ErrorMessage("Setting file was not found.");
-			GetAswer("For crating new setting file run command: New [new_file]");
-			return false;
-		}
-
-		private SettingObject NewFileArgumentsParser(string _settingFileName){
-			var _new = new SettingObject();
-			Console.Write("Absolute path of the tested application: ");
-			var _input = Console.ReadLine();
-			if (Regex.IsMatch(_input, "[A-Z]:\\([a-zA-Z0-9]+\\)*([a-zA-Z0-9]+.exe)"))
-			{
-				_new.BuildRequest = false;
-				_new.Executable = ".exe";
-				_new.TestName = "Test Name";
-				_new.TestPath = "c:\\...testPath\\";
-				return _new;
-			}
-			else
-			{
-				ErrorMessage("Wrong format name of tested application.");
-			}
-			return null;
-		}
+		#endregion
 	}
 }

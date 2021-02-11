@@ -9,8 +9,7 @@ namespace UITestingConsole
 	public class Enums
 	{
 		public enum StringType : int {
-			TestPath,
-			TestName,
+			TestNames,
 			AppName,
 			Executable,
 			SettingFileName
