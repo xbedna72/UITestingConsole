@@ -10,7 +10,7 @@ namespace UITestingConsole
 	public class SettingObject
 	{
 		#region Properties
-		public IList<string> TestNames
+		public IList<string> TestProjectPaths
 		{
 			get;
 			set;
@@ -72,7 +72,7 @@ namespace UITestingConsole
 		public void SetString(StringType type, string _string, IList<string> _list){
 			switch((int)type){
 				case 0:
-					TestNames = _list;
+					TestProjectPaths = _list;
 					break;
 				case 1:
 					AppName = _string;

@@ -101,13 +101,15 @@ namespace UITestingConsole
 			}else{
 				InputAgumentsProcess();
 			}
+			TestManager.TestBuild(settingObject.TestProjectPaths);
+
 			return TestManager.Process(settingObject);
 		}
 
 		private void InputAgumentsProcess()
 		{
 			settingObject = new SettingObject();
-			settingObject.TestNames = testNames;
+			settingObject.TestProjectPaths = testNames;
 			settingObject.AppName = appName;
 			settingObject.BuildRequest = BuildFlag;
 		}
@@ -188,7 +190,7 @@ namespace UITestingConsole
 			{
 				_new.BuildRequest = false;
 				_new.Executable = ".exe";
-				_new.TestNames = new List<string> { "c:\\...test1Path\\", "c:\\...test2Path\\" };
+				_new.TestProjectPaths = new List<string> { "c:\\...test1Path\\", "c:\\...test2Path\\" };
 				return _new;
 			}
 			else

@@ -104,11 +104,11 @@ namespace UITestingConsole
 				{
 					try
 					{
-						if (args[i + 1].Equals("/TestNames:"))
+						if (args[i + 1].Equals("/TestProjectPaths:"))
 						{
 							for (int j = i + 2; j < args.Count(); j++)
 							{
-								if (Regex.IsMatch(args[j], "[A-Z]:\\\\([a-zA-Z0-9]+\\\\)*([a-zA-Z0-9]+.dll)") || Regex.IsMatch(args[j], "[A-Z]:\\\\([a-zA-Z0-9]+\\\\)*([a-zA-Z0-9]+.exe)"))
+								if (Regex.IsMatch(args[j], "[A-Z]:\\\\([a-zA-Z0-9]+\\\\)*([a-zA-Z0-9]+.sln)"))
 								{
 									consoleManager.testNames.Add(args[j]);
 								}
@@ -137,7 +137,7 @@ namespace UITestingConsole
 								}
 								else
 								{
-									consoleManager.ErrorMessage("Wrong format of Test name. Absolute path with name of .dll or .exe file.");
+									consoleManager.ErrorMessage("Wrong format of Test project absolute path. Project file ending with .sln postfix needed.");
 									break;
 								}
 							}
