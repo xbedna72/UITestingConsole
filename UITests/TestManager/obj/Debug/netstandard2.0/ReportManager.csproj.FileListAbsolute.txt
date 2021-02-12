@@ -29,3 +29,12 @@ C:\Users\mbednarova\source\repos\UITestingConsole\UITests\TestManager\obj\Debug\
 C:\Users\mbednarova\source\repos\UITestingConsole\UITests\TestManager\bin\Debug\netstandard2.0\ReportManager.deps.json
 C:\Users\mbednarova\source\repos\UITestingConsole\UITests\TestManager\bin\Debug\netstandard2.0\ReportManager.dll
 C:\Users\mbednarova\source\repos\UITestingConsole\UITests\TestManager\bin\Debug\netstandard2.0\ReportManager.pdb
+C:\Users\MayBee\source\repos\xbedna72\UITestingConsole\UITests\TestManager\bin\Debug\netstandard2.0\ReportManager.deps.json
+C:\Users\MayBee\source\repos\xbedna72\UITestingConsole\UITests\TestManager\bin\Debug\netstandard2.0\ReportManager.dll
+C:\Users\MayBee\source\repos\xbedna72\UITestingConsole\UITests\TestManager\bin\Debug\netstandard2.0\ReportManager.pdb
+C:\Users\MayBee\source\repos\xbedna72\UITestingConsole\UITests\TestManager\obj\Debug\netstandard2.0\ReportManager.csprojAssemblyReference.cache
+C:\Users\MayBee\source\repos\xbedna72\UITestingConsole\UITests\TestManager\obj\Debug\netstandard2.0\ReportManager.AssemblyInfoInputs.cache
+C:\Users\MayBee\source\repos\xbedna72\UITestingConsole\UITests\TestManager\obj\Debug\netstandard2.0\ReportManager.AssemblyInfo.cs
+C:\Users\MayBee\source\repos\xbedna72\UITestingConsole\UITests\TestManager\obj\Debug\netstandard2.0\ReportManager.csproj.CoreCompileInputs.cache
+C:\Users\MayBee\source\repos\xbedna72\UITestingConsole\UITests\TestManager\obj\Debug\netstandard2.0\ReportManager.dll
+C:\Users\MayBee\source\repos\xbedna72\UITestingConsole\UITests\TestManager\obj\Debug\netstandard2.0\ReportManager.pdb

@@ -10,7 +10,10 @@ namespace UITestingConsole
 	{
 		public static bool Process(SettingObject _object)
 		{
-			
+			if(_object != null){
+
+			}
+
 			return false;
 		}
 	}
