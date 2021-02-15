@@ -89,6 +89,7 @@ namespace UITestingConsole
 		public bool Process()
 		{
 			InfoMessage("Process test.");
+			var tm = new TestManager();
 			if (actualSettingFile != null)
 			{
 				if (!GetSettingFileByName(actualSettingFile))
@@ -99,18 +100,15 @@ namespace UITestingConsole
 			}
 			else
 			{
-				InputAgumentsProcess();
+				InputAgumentsProcess(tm);
 			}
-			var ts = new TestManager();
-			ts.TestBuild(settingObject.TestProjectPaths);
-
-			return ts.Process(settingObject);
+			return tm.Process(settingObject);
 		}
 
-		private void InputAgumentsProcess()
+		private void InputAgumentsProcess(TestManager _tm)
 		{
 			settingObject = new SettingObject();
-			settingObject.TestProjectPaths = testNames;
+			settingObject.TestProjectPaths = _tm.TestBuild(testNames);
 			settingObject.appName = appName;
 			settingObject.buildRequest = BuildFlag;
 		}
@@ -118,22 +116,24 @@ namespace UITestingConsole
 		#region SettingFile
 		public void ShowAllSettingFiles()
 		{
-			InfoMessage("Show all Setting files.");
+			InfoMessage("Show all Setting files.\n\n");
 			string[] all = Directory.GetFiles(directory);
-			var formate = String.Format("{0,20} {1,10}\n\n", "LastWriteTime", "Name");
+			var formate = String.Format("{0,20} {1,20}\n\n", "LastWriteTime", "Name");
 			FileInfo fi = null;
 			foreach (string file in all)
 			{
 				fi = new FileInfo(file);
 				formate += String.Format("{0,20} {1,20}\n", fi.LastWriteTimeUtc, fi.Name);
 			}
+			Console.ForegroundColor = ConsoleColor.Cyan;
 			Console.WriteLine(formate);
+			Console.ForegroundColor = ConsoleColor.White;
 		}
 
 		public bool GetSettingFileByName(string _string)
 		{
 			InfoMessage($"Get Setting File {_string}.");
-			if (File.Exists($"{directory}{_string}.xml"))
+			if (File.Exists($"{directory}{_string}"))
 			{
 				try
 				{
@@ -184,23 +184,39 @@ namespace UITestingConsole
 
 		private SettingObject NewSettingFileArgumentsParser(string _settingFileName)
 		{
-			var _new = new SettingObject();
-			Console.Write("Absolute path of application under test: ");
-			var _input = Console.ReadLine();
-			if (Regex.IsMatch(_input, "[A-Z]:\\\\([a-zA-Z0-9]+\\\\)*([a-zA-Z0-9]+.exe)"))
-			{
-				_new.settingFileName = _settingFileName;
-				_new.buildRequest = false;
-				_new.executable = _input;
-				var m = Regex.Match(_input, @"([a-zA-Z0-9]+).exe");
-				_new.appName = m.Groups[0].Value;
-				_new.TestProjectPaths = new List<string> { "c:\\...test1Path\\", "c:\\...test2Path\\" };
-				return _new;
-			}
-			else
-			{
-				throw new Exception("Wrong name format application under test.");
-			}
+			//var _new = new SettingObject();
+			//Console.Write("Absolute path of application under test: ");
+			//var _input = Console.ReadLine();
+			//if (Regex.IsMatch(_input, "[A-Z]:\\\\([a-zA-Z0-9]+\\\\)*([a-zA-Z0-9]+.exe)"))
+			//{
+			//	_new.settingFileName = _settingFileName;
+
+			//	_new.executable = _input;
+			//	var m = Regex.Match(_input, @"([a-zA-Z0-9]+).exe");
+			//	_new.appName = m.Groups[0].Value;
+
+			//	Console.Write("Pull and build project?(Yes/no): ");
+			//	_input = Console.ReadLine();
+			//	if(_input.Contains("Y")){
+			//		_new.buildRequest = true;
+			//		Console.Write("Absolute path of file for pull: ");
+			//		_new.pullRequest = Console.ReadLine();
+			//		Console.Write("Absolute path of source project for builde: ");
+			//		_new.sourceProject = Console.ReadLine();
+			//	}
+			//	else if(_input.Contains("n")){
+			//		_new.buildRequest = false;
+			//	}
+			//	Console.Write("List of absolute paths of test projects (separete with ';'): ");
+			//	_input = Console.ReadLine();
+			//	_new.TestProjectPaths = _input.Split(';').ToList();
+			//	return _new;
+			//}
+			//else
+			//{
+			//	throw new Exception("Wrong name format application under test.");
+			//}
+			return null;
 		}
 		#endregion
 

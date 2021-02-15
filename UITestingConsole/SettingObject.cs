@@ -15,6 +15,8 @@ namespace UITestingConsole
 		public string executable;
 		public string settingFileName;
 		public bool buildRequest;
+		public string sourceProject;
+		public string pullRequest;
 		#endregion
 	}
 }

@@ -24,10 +24,11 @@ namespace UITestingConsole
 		public static void Main(string[] args)
 		{
 			consoleManager = ConsoleManager.Instance;
+			consoleManager.InfoMessage("Starting console.");
+			consoleManager.StartControl();
 
 			if (args.Count() > 0)
 			{
-				//FluentArgs to process argumants
 				var helpFlag = ParseInputArguments(args);
 
 				if (!helpFlag && consoleManager.ErrorInput)
@@ -36,8 +37,8 @@ namespace UITestingConsole
 				}
 				else if (consoleManager.Run)
 				{
-					Console.WriteLine($"Process with {String.Join(", ", consoleManager.testNames)}\n and {consoleManager.appName}.");
 					consoleManager.Process();
+					consoleManager.End();
 				}
 				else if (helpFlag)
 				{
@@ -45,10 +46,8 @@ namespace UITestingConsole
 				}
 			}
 
-			consoleManager.InfoMessage("Starting console.");
 			try
-			{
-				consoleManager.StartControl();
+			{	
 				Loop();
 			}
 			catch (Exception e)
@@ -68,7 +67,7 @@ namespace UITestingConsole
 				int r = consoleManager.Decision();
 				switch (r)
 				{
-					case 0: //"exit" in input
+					case 0:
 						return;
 					case 1:
 						Console.WriteLine("Run");
@@ -102,6 +101,7 @@ namespace UITestingConsole
 			{
 				if (args[i].Equals("-a", StringComparison.OrdinalIgnoreCase))
 				{
+					consoleManager.Run = true;
 					try
 					{
 						if (args[i + 1].Equals("/TestProjectPaths:"))
@@ -118,18 +118,11 @@ namespace UITestingConsole
 									{
 										consoleManager.appName = args[j + 1];
 
-										if (j + 2 > args.Count())
+										if (j + 1 != args.Count())
 										{
-											if (args[j + 2].Equals("-b"))
-											{
-												consoleManager.BuildFlag = true;
-												consoleManager.Run = true;
-												return true;
-											}
-											consoleManager.ErrorMessage($"Unknown parameter {args[j + 2]}.");
+											consoleManager.ErrorMessage($"Unknown parameters on input.");
 											break;
 										}
-										consoleManager.Run = true;
 										return true;
 									}
 									consoleManager.ErrorMessage("Wrong format of Application name. Absolute path with name of .exe file.");
@@ -147,6 +140,7 @@ namespace UITestingConsole
 						else if (args[i + 1].Equals("/SettingFile:"))
 						{
 							consoleManager.actualSettingFile = args[i + 2];
+							return true;
 						}
 						break;
 					}

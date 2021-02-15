@@ -34,6 +34,9 @@ namespace UITestingConsole
 		{
 			if (_object != null)
 			{
+				if(_object.buildRequest){
+					PullAndBuild(_object.executable);
+				}
 				InfoMessage("Processing");
 				return true;
 			}
@@ -46,18 +49,28 @@ namespace UITestingConsole
 			//process = System.Diagnostics.Process.Start(devCmd);
 		}
 
-		public void TestBuild(IList<string> _list)
+		void PullAndBuild(string _executable)
 		{
+			
+		}
+
+		public List<string> TestBuild(IList<string> _list)
+		{
+			var i = new List<string>();
 			foreach (var path in _list)
 			{
-				try{
+				try
+				{
 					Microsoft.Build.Evaluation.Project p = new Microsoft.Build.Evaluation.Project(path);
 					p.SetGlobalProperty("Configuration", "Release");
 					p.Build();
-				}catch(Exception e){
+				}
+				catch (Exception e)
+				{
 					ErrorMessage(e.ToString());
 				}
 			}
+			return i;
 		}
 	}
 }
