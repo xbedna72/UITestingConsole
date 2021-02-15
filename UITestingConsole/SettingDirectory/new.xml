@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<SettingObject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TestProjectPaths>
+    <string>c:\...test1Path\</string>
+    <string>c:\...test2Path\</string>
+  </TestProjectPaths>
+  <appName>app.exe</appName>
+  <executable>C:\Tools\app.exe</executable>
+  <settingFileName>new</settingFileName>
+  <buildRequest>false</buildRequest>
+</SettingObject>

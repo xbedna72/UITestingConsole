@@ -9,29 +9,24 @@ using static UITestingConsole.Enums;
 
 namespace UITestingConsole
 {
-	#region ArgumentsClass
-	public class Arguments
-	{
-		public string settingFile = null;
-		public IList<string> testNames = new List<string>();
-		public string appName = null;
-		
-		private bool loggingFlag = false;
-		private bool runFlag = false;
-		private bool errorInputFlag = false;
-		private bool buildFlag = false;
-		public bool Logging { get { return loggingFlag; } set { loggingFlag = value; } }
-		public bool Run { get { return runFlag; } set { runFlag = value; } }
-		public bool ErrorInput { get { return errorInputFlag; } set { errorInputFlag = value; } }
-		public bool BuildFlag { get { return buildFlag; } set { buildFlag = value; } }
-	}
-	#endregion
-
-	public sealed class ConsoleManager : Arguments
+	sealed class ConsoleManager : Base
 	{
 		private static SettingObject settingObject = null;
 		public string[] input = null;
 		public static string directory;
+		public string actualSettingFile = null;
+
+		#region Params
+		private bool runFlag = false;
+		private bool errorInputFlag = false;
+		private bool buildFlag = false;
+		public List<string> testNames = new List<string>();
+		public string appName = null;
+
+		public bool Run { get { return runFlag; } set { runFlag = value; } }
+		public bool ErrorInput { get { return errorInputFlag; } set { errorInputFlag = value; } }
+		public bool BuildFlag { get { return buildFlag; } set { buildFlag = value; } }
+		#endregion
 
 		ConsoleManager()
 		{
@@ -77,13 +72,14 @@ namespace UITestingConsole
 					return 4;
 				}
 			}
-			else if(this.input.Length == 2)
+			else if (this.input.Length == 2)
 			{
 				if (this.input[0].Equals("set", StringComparison.OrdinalIgnoreCase))
 				{
 					return 3;
 				}
-				else if (this.input[0].Equals("delete", StringComparison.OrdinalIgnoreCase)){
+				else if (this.input[0].Equals("delete", StringComparison.OrdinalIgnoreCase))
+				{
 					//deleteSettingFile(input[1])
 				}
 			}
@@ -93,25 +89,30 @@ namespace UITestingConsole
 		public bool Process()
 		{
 			InfoMessage("Process test.");
-			if(settingFile != null){
-				if(!GetSettingFileByName(settingFile)){
+			if (actualSettingFile != null)
+			{
+				if (!GetSettingFileByName(actualSettingFile))
+				{
 					ErrorMessage("Setting file was not found.");
 					return false;
 				}
-			}else{
+			}
+			else
+			{
 				InputAgumentsProcess();
 			}
-			TestManager.TestBuild(settingObject.TestProjectPaths);
+			var ts = new TestManager();
+			ts.TestBuild(settingObject.TestProjectPaths);
 
-			return TestManager.Process(settingObject);
+			return ts.Process(settingObject);
 		}
 
 		private void InputAgumentsProcess()
 		{
 			settingObject = new SettingObject();
 			settingObject.TestProjectPaths = testNames;
-			settingObject.AppName = appName;
-			settingObject.BuildRequest = BuildFlag;
+			settingObject.appName = appName;
+			settingObject.buildRequest = BuildFlag;
 		}
 
 		#region SettingFile
@@ -147,7 +148,7 @@ namespace UITestingConsole
 			return false;
 		}
 
-		public bool NewSettingFile()
+		public void NewSettingFile()
 		{
 			string _input = string.Empty;
 			_input = GetAswer("new file name: ");
@@ -156,24 +157,24 @@ namespace UITestingConsole
 				try
 				{
 					var s = NewSettingFileArgumentsParser(_input);
-					Parser.ParseSettings(s, directory);
+					if (s != null)
+						Parser.ParseSettings(s, directory);
 				}
 				catch (Exception e)
 				{
 					ErrorMessage(e.Message.ToString());
-					return false;
 				}
 				InfoMessage($"{_input} was created.");
+				return;
 			}
-			Console.WriteLine("Wrong formate.");
-			return false;
+			Console.WriteLine("Wrong format of file name.");
 		}
 
 		public bool SetSettingFile()
 		{
 			if (GetSettingFileByName(input[1]))
 			{
-				InfoMessage($"{settingObject.SettingFileName} was set.");
+				InfoMessage($"{settingObject.settingFileName} was set.");
 				return true;
 			}
 			ErrorMessage("Setting file was not found.");
@@ -184,20 +185,22 @@ namespace UITestingConsole
 		private SettingObject NewSettingFileArgumentsParser(string _settingFileName)
 		{
 			var _new = new SettingObject();
-			Console.Write("Absolute path of the tested application: ");
+			Console.Write("Absolute path of application under test: ");
 			var _input = Console.ReadLine();
-			if (Regex.IsMatch(_input, "[A-Z]:\\([a-zA-Z0-9]+\\)*([a-zA-Z0-9]+.exe)"))
+			if (Regex.IsMatch(_input, "[A-Z]:\\\\([a-zA-Z0-9]+\\\\)*([a-zA-Z0-9]+.exe)"))
 			{
-				_new.BuildRequest = false;
-				_new.Executable = ".exe";
+				_new.settingFileName = _settingFileName;
+				_new.buildRequest = false;
+				_new.executable = _input;
+				var m = Regex.Match(_input, @"([a-zA-Z0-9]+).exe");
+				_new.appName = m.Groups[0].Value;
 				_new.TestProjectPaths = new List<string> { "c:\\...test1Path\\", "c:\\...test2Path\\" };
 				return _new;
 			}
 			else
 			{
-				ErrorMessage("Wrong format name of tested application.");
+				throw new Exception("Wrong name format application under test.");
 			}
-			return null;
 		}
 		#endregion
 
@@ -231,29 +234,6 @@ namespace UITestingConsole
 		{
 			Directory.CreateDirectory(_path);
 			InfoMessage("SettingDirectory created.");
-		}
-		#endregion
-
-		#region IOMethods
-		public void ErrorMessage(string _message)
-		{
-			Console.ForegroundColor = ConsoleColor.Red;
-			Console.WriteLine(_message);
-			Console.ForegroundColor = ConsoleColor.White;
-		}
-
-		public void InfoMessage(string _message)
-		{
-			if (Logging)
-			{
-				Console.WriteLine(_message);
-			}
-		}
-
-		private string GetAswer(string _question)
-		{
-			Console.Write(_question);
-			return Console.ReadLine();
 		}
 		#endregion
 	}

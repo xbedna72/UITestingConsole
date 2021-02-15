@@ -14,7 +14,7 @@ namespace UITestingConsole
 			try
 			{
 				System.Xml.Serialization.XmlSerializer reader = new System.Xml.Serialization.XmlSerializer(typeof(SettingObject));
-				StreamReader file = new StreamReader($"{_path}{_settingObject.SettingFileName}.xml");
+				StreamReader file = new StreamReader($"{_path}{_settingObject.settingFileName}.xml");
 				_settingObject = (SettingObject)reader.Deserialize(file);
 				file.Close();
 				return (SettingObject)_settingObject;
@@ -32,7 +32,7 @@ namespace UITestingConsole
 				try
 				{
 					System.Xml.Serialization.XmlSerializer writer = new System.Xml.Serialization.XmlSerializer(typeof(SettingObject));
-					var path = $"{_path}{_settingObject.SettingFileName}.xml";
+					var path = $"{_path}{_settingObject.settingFileName}.xml";
 					
 					if(File.Exists(path)){
 						File.Delete(path);

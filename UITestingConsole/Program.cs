@@ -32,16 +32,16 @@ namespace UITestingConsole
 
 				if (!helpFlag && consoleManager.ErrorInput)
 				{
-					ErrorEnd("End with failer.");
+					consoleManager.ErrorEnd("End with failer.");
 				}
 				else if (consoleManager.Run)
 				{
 					Console.WriteLine($"Process with {String.Join(", ", consoleManager.testNames)}\n and {consoleManager.appName}.");
-					//Process();
+					consoleManager.Process();
 				}
 				else if (helpFlag)
 				{
-					End();
+					consoleManager.End();
 				}
 			}
 
@@ -56,7 +56,7 @@ namespace UITestingConsole
 				consoleManager.ErrorMessage(e.Message.ToString());
 			}
 
-			End();
+			consoleManager.End();
 		}
 
 		static void Loop()
@@ -146,7 +146,7 @@ namespace UITestingConsole
 						}
 						else if (args[i + 1].Equals("/SettingFile:"))
 						{
-							consoleManager.settingFile = args[i + 2];
+							consoleManager.actualSettingFile = args[i + 2];
 						}
 						break;
 					}
@@ -166,10 +166,6 @@ namespace UITestingConsole
 					}
 					break;
 				}
-				else if (args[i].Equals("-l", StringComparison.OrdinalIgnoreCase))
-				{
-					consoleManager.Logging = true;
-				}
 				else
 				{
 					consoleManager.ErrorInput = true;
@@ -178,21 +174,6 @@ namespace UITestingConsole
 			}
 			consoleManager.ErrorInput = true;
 			return false;
-		}
-
-		static void End()
-		{
-			Console.ForegroundColor = ConsoleColor.Green;
-			Console.WriteLine("Closing Console.");
-			Console.ForegroundColor = ConsoleColor.White;
-			Thread.Sleep(1000);
-			Environment.Exit(0);
-		}
-		static void ErrorEnd(string _messeage)
-		{
-			consoleManager.ErrorMessage(_messeage);
-			Thread.Sleep(1000);
-			Environment.Exit(1);
 		}
 	}
 }
