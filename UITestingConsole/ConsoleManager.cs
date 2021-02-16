@@ -23,9 +23,21 @@ namespace UITestingConsole
 		public List<string> testNames = new List<string>();
 		public string appName = null;
 
-		public bool Run { get { return runFlag; } set { runFlag = value; } }
-		public bool ErrorInput { get { return errorInputFlag; } set { errorInputFlag = value; } }
-		public bool BuildFlag { get { return buildFlag; } set { buildFlag = value; } }
+		public bool Run
+		{
+			get { return runFlag; }
+			set { runFlag = value; }
+		}
+		public bool ErrorInput
+		{
+			get { return errorInputFlag; }
+			set { errorInputFlag = value; }
+		}
+		public bool BuildFlag
+		{
+			get { return buildFlag; }
+			set { buildFlag = value; }
+		}
 		#endregion
 
 		ConsoleManager()
