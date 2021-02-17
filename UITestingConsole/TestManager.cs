@@ -35,7 +35,8 @@ namespace UITestingConsole
 			if (_object != null)
 			{
 				if(_object.buildRequest){
-					PullAndBuild(_object.executable);
+					var name = Regex.Match(_object.sourceProject, '[^\\]*[^\\]*$');
+					RunGitScript(_object.sourceProject);
 				}
 				InfoMessage("Processing");
 				return true;
@@ -49,7 +50,7 @@ namespace UITestingConsole
 			//process = System.Diagnostics.Process.Start(devCmd);
 		}
 
-		void PullAndBuild(string _executable)
+		void RunGitScript(string _path, string _name, bool _flag)
 		{
 			
 		}
@@ -59,16 +60,7 @@ namespace UITestingConsole
 			var i = new List<string>();
 			foreach (var path in _list)
 			{
-				try
-				{
-					Microsoft.Build.Evaluation.Project p = new Microsoft.Build.Evaluation.Project(path);
-					p.SetGlobalProperty("Configuration", "Release");
-					p.Build();
-				}
-				catch (Exception e)
-				{
-					ErrorMessage(e.ToString());
-				}
+				
 			}
 			return i;
 		}
