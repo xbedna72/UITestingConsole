@@ -33,7 +33,7 @@ namespace UITestingConsole
 
 				if (!helpFlag && consoleManager.ErrorInput)
 				{
-					consoleManager.ErrorEnd("End with failer.");
+					consoleManager.ErrorEnd("End...");
 				}
 				else if (consoleManager.Run)
 				{
@@ -47,7 +47,7 @@ namespace UITestingConsole
 			}
 
 			try
-			{	
+			{
 				Loop();
 			}
 			catch (Exception e)
@@ -89,7 +89,8 @@ namespace UITestingConsole
 						consoleManager.ErrorMessage("Unknown command or wrong format of argument.");
 						break;
 				}
-				if(consoleManager.Run){
+				if (consoleManager.Run)
+				{
 					consoleManager.Process();
 				}
 			}
@@ -102,11 +103,13 @@ namespace UITestingConsole
 				if (args[i].Equals("-a", StringComparison.OrdinalIgnoreCase))
 				{
 					consoleManager.Run = true;
+					i++;
 					try
 					{
-						if (args[i + 1].Equals("/TestProjectPaths:"))
+						if (args[i].Equals("/TestSolutionPaths:"))
 						{
-							for (int j = i + 2; j < args.Count(); j++)
+							i++;
+							for (int j = i; j < args.Count(); j++)
 							{
 								if (Regex.IsMatch(args[j], "[A-Z]:\\\\([a-zA-Z0-9]+\\\\)*([a-zA-Z0-9]+.sln)"))
 								{
@@ -114,23 +117,41 @@ namespace UITestingConsole
 								}
 								else if (args[j].Equals("/AppName:"))
 								{
-									if (Regex.IsMatch(args[j + 1], "[A-Z]:\\\\([a-zA-Z0-9]+\\\\)*([a-zA-Z0-9]+.exe)"))
+									j++;
+									if (Regex.IsMatch(args[j], "[A-Z]:\\\\([a-zA-Z0-9]+\\\\)*([a-zA-Z0-9]+.exe)"))
 									{
-										consoleManager.appName = args[j + 1];
-
-										if (j + 1 != args.Count())
+										consoleManager.appName = args[j];
+										if (j + 1 < args.Count())
 										{
-											consoleManager.ErrorMessage($"Unknown parameters on input.");
+											j++;
+											if (args[j].Equals("-b", StringComparison.OrdinalIgnoreCase))
+											{
+												j++;
+												if (Regex.IsMatch(args[j], "[A-Z]:\\\\([a-zA-Z0-9]+\\\\)*([a-zA-Z0-9]+.sln)"))
+												{
+													consoleManager.slnPath = args[j];
+													consoleManager.BuildFlag = true;
+													return true;
+												}
+												else{
+													consoleManager.ErrorMessage($"The path or name of solution is wrong or missing.");
+													break;
+												}
+											}
+											consoleManager.ErrorMessage($"Unknown parameters on position: {j}");
 											break;
 										}
 										return true;
 									}
-									consoleManager.ErrorMessage("Wrong format of Application name. Absolute path with name of .exe file.");
-									break;
+									else
+									{
+										consoleManager.ErrorMessage("Wrong format of Application name. Absolute path with name of .exe file.");
+										break;
+									}
 								}
 								else
 								{
-									consoleManager.ErrorMessage("Wrong format of Test project absolute path. Project file ending with .sln postfix needed.");
+									consoleManager.ErrorMessage("Wrong format of Test solution absolute path. File type .sln.");
 									break;
 								}
 							}
@@ -142,12 +163,13 @@ namespace UITestingConsole
 							consoleManager.actualSettingFile = args[i + 2];
 							return true;
 						}
+						consoleManager.ErrorMessage("Undefined input parameter.");
 						break;
 					}
 					catch (Exception e)
 					{
 						e.ToString();
-						consoleManager.ErrorMessage("Wrong formate of input arguments. Run with parameter \"?\" or \"-h\" for help.");
+						consoleManager.ErrorMessage("Wrong formate of input arguments. Run with \"?\" or \"-h\" for help.");
 						break;
 					}
 				}
