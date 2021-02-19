@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using System.ComponentModel;
+using System.Text.RegularExpressions;
+using System.IO;
 
 namespace UITestingConsole
 {
@@ -30,18 +32,19 @@ namespace UITestingConsole
 			}
 		}
 
-		public bool Process(SettingObject _object)
+		public void Process(SettingObject _object)
 		{
 			if (_object != null)
 			{
-				if(_object.buildRequest){
-					var name = Regex.Match(_object.sourceProject, '[^\\]*[^\\]*$');
-					RunGitScript(_object.sourceProject);
+				if (_object.buildRequest)
+				{
+					string[] _string = Regex.Split(_object.sourceProject, "(.+)\\\\(.+)$");
+					RunGitScript(_string[0], _string[1], true.ToString());
 				}
 				InfoMessage("Processing");
-				return true;
+				return;
 			}
-			return false;
+			throw new Exception("Setting object not defined.");
 		}
 
 		private void RunDevCmd()
@@ -50,9 +53,14 @@ namespace UITestingConsole
 			//process = System.Diagnostics.Process.Start(devCmd);
 		}
 
-		void RunGitScript(string _path, string _name, bool _flag)
+		void RunGitScript(string _path, string _name, string _flag)
 		{
-			
+			string scriptPath = Environment.CurrentDirectory.Replace("\\bin\\Debug", "gitScript.ps1");
+			if (!File.Exists(scriptPath))
+			{
+				throw new Exception("GitScript does not exists.");
+			}
+			RunScript(scriptPath, _path, _name, _flag);
 		}
 
 		public List<string> TestBuild(IList<string> _list)
@@ -60,9 +68,32 @@ namespace UITestingConsole
 			var i = new List<string>();
 			foreach (var path in _list)
 			{
-				
+				string[] _string = Regex.Split(path, "(.+)\\\\(.+)$");
+				RunGitScript(_string[0], _string[1], false.ToString());
+				i.Add($"_string[0]\\bin\\Debug\\");
 			}
 			return i;
+		}
+
+		private void RunScript(string _script, string _path, string _name, string _flag)
+		{
+			ProcessStartInfo startInfo = new ProcessStartInfo();
+			startInfo.FileName = $"{_script}";
+			startInfo.Arguments = $"& {_path} {_name} {_flag}";
+			startInfo.RedirectStandardOutput = true;
+			startInfo.RedirectStandardError = true;
+			startInfo.UseShellExecute = false;
+			startInfo.CreateNoWindow = true;
+			Process process = new Process();
+			process.StartInfo = startInfo;
+			process.Start();
+			string output = process.StandardOutput.ReadToEnd();
+			InfoMessage(output);
+			string error = process.StandardError.ReadToEnd();
+			if (error.Length > 0)
+			{
+				throw new Exception(error);
+			}
 		}
 	}
 }

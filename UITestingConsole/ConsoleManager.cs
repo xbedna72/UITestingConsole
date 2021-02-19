@@ -99,7 +99,7 @@ namespace UITestingConsole
 			return -2;
 		}
 
-		public bool Process()
+		public void Process()
 		{
 			InfoMessage("Process test.");
 			var tm = new TestManager();
@@ -107,15 +107,15 @@ namespace UITestingConsole
 			{
 				if (!GetSettingFileByName(actualSettingFile))
 				{
-					ErrorMessage("Setting file was not found.");
-					return false;
+					throw new Exception("Setting file was not found.");
 				}
 			}
 			else
 			{
 				InputAgumentsProcess(tm);
 			}
-			return tm.Process(settingObject);
+			tm.Process(settingObject);
+			return;
 		}
 
 		private void InputAgumentsProcess(TestManager _tm)
@@ -124,6 +124,7 @@ namespace UITestingConsole
 			settingObject.TestProjectPaths = _tm.TestBuild(testNames);
 			settingObject.appName = appName;
 			settingObject.buildRequest = BuildFlag;
+			settingObject.sourceProject = slnPath;
 		}
 
 		#region SettingFile

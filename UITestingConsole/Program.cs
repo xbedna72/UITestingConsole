@@ -37,8 +37,13 @@ namespace UITestingConsole
 				}
 				else if (consoleManager.Run)
 				{
-					consoleManager.Process();
-					consoleManager.End();
+					try{
+						consoleManager.Process();
+						consoleManager.End();
+					}catch(Exception e){
+						consoleManager.ErrorEnd(e.ToString());
+					}
+					
 				}
 				else if (helpFlag)
 				{
@@ -111,14 +116,14 @@ namespace UITestingConsole
 							i++;
 							for (int j = i; j < args.Count(); j++)
 							{
-								if (Regex.IsMatch(args[j], "[A-Z]:\\\\([a-zA-Z0-9]+\\\\)*([a-zA-Z0-9]+.sln)"))
+								if (Regex.IsMatch(args[j], "[A-Z]:(\\\\(.+))+.sln$"))
 								{
 									consoleManager.testNames.Add(args[j]);
 								}
 								else if (args[j].Equals("/AppName:"))
 								{
 									j++;
-									if (Regex.IsMatch(args[j], "[A-Z]:\\\\([a-zA-Z0-9]+\\\\)*([a-zA-Z0-9]+.exe)"))
+									if (Regex.IsMatch(args[j], "[A-Z]:(\\\\(.+))+.exe$"))
 									{
 										consoleManager.appName = args[j];
 										if (j + 1 < args.Count())
@@ -127,7 +132,7 @@ namespace UITestingConsole
 											if (args[j].Equals("-b", StringComparison.OrdinalIgnoreCase))
 											{
 												j++;
-												if (Regex.IsMatch(args[j], "[A-Z]:\\\\([a-zA-Z0-9]+\\\\)*([a-zA-Z0-9]+.sln)"))
+												if (Regex.IsMatch(args[j], "[A-Z]:(\\\\(.+))+.sln$"))
 												{
 													consoleManager.slnPath = args[j];
 													consoleManager.BuildFlag = true;
