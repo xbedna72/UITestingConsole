@@ -20,7 +20,7 @@ namespace TestEditMaterializeCard
         [ClassInitialize()]
         public static void ClassInitialize(TestContext context)
         {
-            Setup(context, applicationPath);
+            Setup(context);
         }
 
         [ClassCleanup]

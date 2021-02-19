@@ -20,9 +20,10 @@ namespace UITestingConsole
 		private bool runFlag = false;
 		private bool errorInputFlag = false;
 		private bool buildFlag = false;
-		public List<string> testNames = new List<string>();
+		public string testName = null;
 		public string appName = null;
 		public string slnPath = null;
+		public string adapterPath = null;
 
 		public bool Run
 		{
@@ -121,10 +122,12 @@ namespace UITestingConsole
 		private void InputAgumentsProcess(TestManager _tm)
 		{
 			settingObject = new SettingObject();
-			settingObject.TestProjectPaths = _tm.TestBuild(testNames);
+			settingObject.testProjectPath = testName;
+			_tm.TestBuild(testName);
+			settingObject.testAdapterPath = adapterPath;
 			settingObject.appName = appName;
 			settingObject.buildRequest = BuildFlag;
-			settingObject.sourceProject = slnPath;
+			settingObject.sourceProject = BuildFlag ? slnPath : null;
 		}
 
 		#region SettingFile

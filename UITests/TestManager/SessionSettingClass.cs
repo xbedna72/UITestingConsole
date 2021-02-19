@@ -19,12 +19,12 @@ namespace ReportManager
 		protected static string applicationPath = $"C:\\Projekty\\PMS2.0-LW\\src\\Bin\\Debug\\FullTest";
 
 		//Will be execute before every  TestClass
-		public static bool Setup(TestContext context, string applicationPath)
+		public static bool Setup(TestContext context)
 		{
 			if (desktopSession == null)
 			{
 				AppiumOptions options = new AppiumOptions();
-				options.AddAdditionalCapability("app", applicationPath);
+				options.AddAdditionalCapability("app", context.Properties["testedApp"]);
 				desktopSession = new WindowsDriver<WindowsElement>(new Uri(WindowsApplicationDriverUrl), options);
 
 				if (desktopSession == null || desktopSession.SessionId == null){

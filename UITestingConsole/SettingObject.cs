@@ -10,7 +10,8 @@ namespace UITestingConsole
 	public class SettingObject
 	{
 		#region Properties
-		public List<string> TestProjectPaths;
+		public string testProjectPath;
+		public string testAdapterPath;
 		public string appName;
 		public string executable;
 		public string settingFileName;

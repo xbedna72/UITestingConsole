@@ -41,16 +41,38 @@ namespace UITestingConsole
 					string[] _string = Regex.Split(_object.sourceProject, "(.+)\\\\(.+)$");
 					RunGitScript(_string[0], _string[1], true.ToString());
 				}
-				InfoMessage("Processing");
+				RunDevCmd(_object);
 				return;
 			}
 			throw new Exception("Setting object not defined.");
 		}
 
-		private void RunDevCmd()
+		private void RunDevCmd(SettingObject _object)
 		{
-			//ProcessStartInfo info = 
-			//process = System.Diagnostics.Process.Start(devCmd);
+			string args = string.Empty;
+			args += $"& ";
+			foreach (var obj in _object.testProjectPath)
+			{
+				args += $"{obj} ";
+			}
+
+			ProcessStartInfo startInfo = new ProcessStartInfo();
+			startInfo.FileName = @"C:\Program Files(x86)\Microsoft Visual Studio\2019\Community\Common7\Tools\VsDevCmd.bat";
+			//startInfo.Arguments = $"& {_path} {_name} {_flag}";
+			startInfo.RedirectStandardOutput = true;
+			startInfo.RedirectStandardError = true;
+			startInfo.UseShellExecute = false;
+			startInfo.CreateNoWindow = true;
+			Process process = new Process();
+			process.StartInfo = startInfo;
+			process.Start();
+			string output = process.StandardOutput.ReadToEnd();
+			InfoMessage(output);
+			string error = process.StandardError.ReadToEnd();
+			if (error.Length > 0)
+			{
+				throw new Exception(error);
+			}
 		}
 
 		void RunGitScript(string _path, string _name, string _flag)
@@ -63,16 +85,10 @@ namespace UITestingConsole
 			RunScript(scriptPath, _path, _name, _flag);
 		}
 
-		public List<string> TestBuild(IList<string> _list)
+		public void TestBuild(string _path)
 		{
-			var i = new List<string>();
-			foreach (var path in _list)
-			{
-				string[] _string = Regex.Split(path, "(.+)\\\\(.+)$");
-				RunGitScript(_string[0], _string[1], false.ToString());
-				i.Add($"_string[0]\\bin\\Debug\\");
-			}
-			return i;
+			string[] _string = Regex.Split(_path, "(.+)\\\\(.+)$");
+			RunGitScript(_string[0], _string[1], false.ToString());
 		}
 
 		private void RunScript(string _script, string _path, string _name, string _flag)
