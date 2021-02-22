@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.ComponentModel;
 using System.Text.RegularExpressions;
 using System.IO;
+using System.Management.Automation;
 
 namespace UITestingConsole
 {
@@ -52,9 +53,9 @@ namespace UITestingConsole
 			string args = string.Empty;
 			args += $"& ";
 			args += $"{_object.testProjectPath} ";
-			args += $"/Settings: {runSettings}";
 			args += $"/TestAdapther: {_object.testAdapterPath} ";
-			Parser.InsertParameter(_object.appName);
+			args += $"/Settings: {runSettings} ";
+			Parser.InsertAppNameParameter(_object.appName);
 			ProcessStartInfo startInfo = new ProcessStartInfo();
 			startInfo.FileName = devCmd;
 			startInfo.Arguments = args;
@@ -70,6 +71,7 @@ namespace UITestingConsole
 			{
 				throw new Exception("gitScript does not exists.");
 			}
+			scriptPath = scriptPath.Replace(@"\\", @"\");
 			_path = _path.Replace(@"\\", @"\");
 			RunScript(scriptPath, _path, _name, _flag);
 		}
@@ -82,23 +84,13 @@ namespace UITestingConsole
 
 		private void RunScript(string _script, string _path, string _name, string _flag)
 		{
-			ProcessStartInfo startInfo = new ProcessStartInfo();
-			startInfo.FileName = $"{_script}";
-			startInfo.Arguments = $"& {_path} {_name} {_flag}";
-			startInfo.RedirectStandardOutput = true;
-			startInfo.RedirectStandardError = true;
-			startInfo.UseShellExecute = false;
-			startInfo.CreateNoWindow = true;
-			Process process = new Process();
-			process.StartInfo = startInfo;
-			process.Start();
-			string output = process.StandardOutput.ReadToEnd();
-			InfoMessage(output);
-			string error = process.StandardError.ReadToEnd();
-			if (error.Length > 0)
-			{
-				throw new Exception(error);
+			PowerShell ps = PowerShell.Create();
+			ps.AddScript($"{_script} {_path} {_name} {_flag}");
+			ps.Invoke();
+			if(ps.HadErrors){
+				throw new Exception(ps.HadErrors.ToString());
 			}
+			ps.Dispose();
 		}
 	}
 }
