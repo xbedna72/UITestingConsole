@@ -132,6 +132,7 @@ namespace UITestingConsole
 											j++;
 											if(args[j].Equals("/AppName:"))
 											{
+												j++;
 												if (Regex.IsMatch(args[j], "[A-Z]:(\\\\(.+))+.exe$"))
 												{
 													consoleManager.appName = args[j];

@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace UITestingConsole
 {
@@ -49,6 +50,21 @@ namespace UITestingConsole
 					throw new Exception(e.Message.ToString());
 				}
 			}
+		}
+
+		public static void InsertParameter(string appName){
+			var path = Environment.CurrentDirectory.Replace("bin\\Debug", ".runsettings");
+			if(!File.Exists(path)){
+				throw new Exception(".runsetting file was not found.");
+			}
+
+			XmlDocument doc = new XmlDocument();
+			doc.Load(path);
+			XmlElement element = doc.CreateElement("Parameter");
+			element.SetAttribute("name", "appName");
+			element.SetAttribute("value", appName);
+			doc.AppendChild(element);
+			doc.Save(path);
 		}
 	}
 }
