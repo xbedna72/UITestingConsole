@@ -9,7 +9,7 @@
     ".NETStandard,Version=v2.0/": {
       "ReportManager/1.0.0": {
         "dependencies": {
-          "Appium.WebDriver": "4.1.1",
+          "Appium.WebDriver": "4.3.1",
           "MSTest.TestFramework": "2.1.2",
           "NETStandard.Library": "2.0.3"
         },
@@ -17,7 +17,7 @@
           "ReportManager.dll": {}
         }
       },
-      "Appium.WebDriver/4.1.1": {
+      "Appium.WebDriver/4.3.1": {
         "dependencies": {
           "Castle.Core": "4.3.1",
           "DotNetSeleniumExtras.PageObjects": "3.11.0",
@@ -28,8 +28,8 @@
         },
         "runtime": {
           "lib/netstandard2.0/Appium.Net.dll": {
-            "assemblyVersion": "4.1.1.0",
-            "fileVersion": "4.1.1.0"
+            "assemblyVersion": "4.3.1.0",
+            "fileVersion": "4.3.1.0"
           }
         }
       },
@@ -599,12 +599,12 @@
       "serviceable": false,
       "sha512": ""
     },
-    "Appium.WebDriver/4.1.1": {
+    "Appium.WebDriver/4.3.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-OPA9VRnpuvFgFKjLrlOIFpR+mK7bL4v6rM10vNpggNW3wxrEGrteW1uYYcNPrzLV30Z5OMFb1qdevei8oAKeNg==",
-      "path": "appium.webdriver/4.1.1",
-      "hashPath": "appium.webdriver.4.1.1.nupkg.sha512"
+      "sha512": "sha512-g8ZDjcdcmbC0vJqwnhYlFWSYMg57aGSY/XvoIj2bOixWliT7sHP/2sIB5Gi35bT9SoM/FGjUnr0e7NlSRSq06g==",
+      "path": "appium.webdriver/4.3.1",
+      "hashPath": "appium.webdriver.4.3.1.nupkg.sha512"
     },
     "Castle.Core/4.3.1": {
       "type": "package",

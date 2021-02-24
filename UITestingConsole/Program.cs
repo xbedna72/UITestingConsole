@@ -117,67 +117,65 @@ namespace UITestingConsole
 						if (args[i].Equals("/TestSolutionPath:"))
 						{
 							i++;
-							for (int j = i; j < args.Count(); j++)
+							if (Regex.IsMatch(args[i], "[A-Z]:(\\\\(.+))+.sln$"))
 							{
-								if (Regex.IsMatch(args[j], "[A-Z]:(\\\\(.+))+.sln$"))
+								consoleManager.testName = args[i];
+								i++;
+								if (args[i].Equals("/TestAdapterPath:"))
 								{
-									consoleManager.testName = args[j];
-									j++;
-									if (args[j].Equals("/TestAdapterPath:"))
+									i++;
+									if (Regex.IsMatch(args[i], "[A-Z]:(\\\\(.+))+.dll$"))
 									{
-										j++;
-										if (Regex.IsMatch(args[j], "[A-Z]:(\\\\(.+))+.dll$"))
+										consoleManager.adapterPath = args[i];
+										i++;
+										if (args[i].Equals("/AppName:"))
 										{
-											consoleManager.adapterPath = args[j];
-											j++;
-											if(args[j].Equals("/AppName:"))
+											i++;
+											if (Regex.IsMatch(args[i], "[A-Z]:(\\\\(.+))+.exe$"))
 											{
-												j++;
-												if (Regex.IsMatch(args[j], "[A-Z]:(\\\\(.+))+.exe$"))
+												consoleManager.appName = args[i];
+												if (i + 1 < args.Count())
 												{
-													consoleManager.appName = args[j];
-													if (j + 1 < args.Count())
+													i++;
+													if (args[i].Equals("-b", StringComparison.OrdinalIgnoreCase))
 													{
-														j++;
-														if (args[j].Equals("-b", StringComparison.OrdinalIgnoreCase))
+														i++;
+														if (Regex.IsMatch(args[i], "[A-Z]:(\\\\(.+))+.sln$"))
 														{
-															j++;
-															if (Regex.IsMatch(args[j], "[A-Z]:(\\\\(.+))+.sln$"))
-															{
-																consoleManager.slnPath = args[j];
-																consoleManager.BuildFlag = true;
-																return true;
-															}
-															else
-															{
-																consoleManager.ErrorMessage($"The path or name of solution is wrong or missing.");
-																break;
-															}
+															consoleManager.slnPath = args[i];
+															consoleManager.BuildFlag = true;
+															return true;
 														}
-														consoleManager.ErrorMessage($"Unknown parameters on position: {j}");
-														break;
+														else
+														{
+															consoleManager.ErrorMessage($"The path or name of solution is wrong or missing.");
+															break;
+														}
 													}
-													return true;
-												}
-												else
-												{
-													consoleManager.ErrorMessage("Wrong format of Application name. Absolute path with name of .exe file.");
+													consoleManager.ErrorMessage($"Unknown parameters on position: {i}");
 													break;
 												}
+												return true;
+											}
+											else
+											{
+												consoleManager.ErrorMessage("Wrong format of Application name. Absolute path with name of .exe file.");
+												break;
 											}
 										}
-										else
-										{
-											consoleManager.ErrorMessage("Wrong format of Application name. Absolute path with name of .exe file.");
-										}
+									}
+									else
+									{
+										consoleManager.ErrorMessage("Wrong format of Application name. Absolute path with name of .exe file.");
 									}
 								}
-								else
-								{
-									consoleManager.ErrorMessage("Wrong format of Test solution absolute path. File type .sln.");
-									break;
-								}
 							}
+							else
+							{
+								consoleManager.ErrorMessage("Wrong format of Test solution absolute path. File type .sln.");
+								break;
+							}
+
 							consoleManager.ErrorMessage("Undefined application name.");
 							break;
 						}

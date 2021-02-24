@@ -122,12 +122,12 @@ namespace UITestingConsole
 		private void InputAgumentsProcess(TestManager _tm)
 		{
 			settingObject = new SettingObject();
-			settingObject.testProjectPath = testName;
-			_tm.TestBuild(testName);
-			settingObject.testAdapterPath = adapterPath;
-			settingObject.appName = appName;
+			settingObject.testProjectPath = testName.Replace(@"\\", @"\");
+//			_tm.TestBuild(testName);
+			settingObject.testAdapterPath = adapterPath.Replace(@"\\", @"\");
+			settingObject.appName = appName.Replace(@"\\", @"\");
 			settingObject.buildRequest = BuildFlag;
-			settingObject.sourceProject = BuildFlag ? slnPath : null;
+			settingObject.sourceProject = BuildFlag ? slnPath.Replace(@"\\", @"\") : null;
 		}
 
 		#region SettingFile

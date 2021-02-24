@@ -51,17 +51,21 @@ namespace UITestingConsole
 		private void RunDevCmd(SettingObject _object)
 		{
 			string args = string.Empty;
-			args += $"& ";
 			args += $"{_object.testProjectPath} ";
 			args += $"/TestAdapther: {_object.testAdapterPath} ";
 			args += $"/Settings: {runSettings} ";
-			Parser.InsertAppNameParameter(_object.appName);
-			ProcessStartInfo startInfo = new ProcessStartInfo();
-			startInfo.FileName = devCmd;
-			startInfo.Arguments = args;
-			startInfo.RedirectStandardOutput = true;
-			startInfo.RedirectStandardError = true;
-			startInfo.UseShellExecute = false;
+			System.Diagnostics.Process prc = new System.Diagnostics.Process();
+			prc.StartInfo.FileName = devCmd;
+			prc.StartInfo.RedirectStandardInput = true;
+			prc.StartInfo.RedirectStandardOutput = true;
+			prc.StartInfo.RedirectStandardError = true;
+			prc.StartInfo.UseShellExecute = false;
+			prc.Start();
+
+			prc.StandardInput.WriteLine(args);
+			prc.StandardInput.Flush();
+			prc.StandardInput.Close();
+			InfoMessage(prc.StandardOutput.ReadToEnd());
 		}
 
 		void RunGitScript(string _path, string _name, string _flag)
@@ -87,7 +91,8 @@ namespace UITestingConsole
 			PowerShell ps = PowerShell.Create();
 			ps.AddScript($"{_script} {_path} {_name} {_flag}");
 			ps.Invoke();
-			if(ps.HadErrors){
+			if (ps.HadErrors)
+			{
 				throw new Exception(ps.HadErrors.ToString());
 			}
 			ps.Dispose();

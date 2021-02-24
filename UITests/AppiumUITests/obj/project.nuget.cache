@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "WJAsqY+j9i95x6JTJF72UgeEcPyH/Dqv0iL1YiwWI6WoOd1CpahHhKsfvLsEcMXi3Mg8ZImvuJB/LWsXIevNtA==",
+  "dgSpecHash": "zXlo6Bj12i6y4TpXL3D/fh9ZN1EwzhtNHWnbrqKYxjxWxWMHZpEB6JMeklsUhMeK8ZuW24Bi4WLtHAw1dCad+Q==",
   "success": true,
   "projectFilePath": "C:\\Users\\mbednarova\\source\\repos\\UITestingConsole\\UITests\\AppiumUITests\\AppiumUITests.csproj",
   "expectedPackageFiles": [
@@ -14,5 +14,19 @@
     "C:\\Users\\mbednarova\\.nuget\\packages\\selenium.webdriver\\3.141.0\\selenium.webdriver.3.141.0.nupkg.sha512",
     "C:\\Users\\mbednarova\\.nuget\\packages\\system.management.automation\\6.1.0\\system.management.automation.6.1.0.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1605",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Detected package downgrade: Appium.WebDriver from 4.3.1 to 4.1.1. Reference the package directly from the project to select a different version. \r\n AppiumUITests -> ReportManager -> Appium.WebDriver (>= 4.3.1) \r\n AppiumUITests -> Appium.WebDriver (>= 4.1.1)",
+      "libraryId": "Appium.WebDriver",
+      "targetGraphs": [
+        ".NETFramework,Version=v4.7.2",
+        ".NETFramework,Version=v4.7.2/win",
+        ".NETFramework,Version=v4.7.2/win-x64",
+        ".NETFramework,Version=v4.7.2/win-x86"
+      ]
+    }
+  ]
 }

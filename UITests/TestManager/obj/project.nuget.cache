@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "uDQPomiff0/GqserCopENMx6U12cHuKm1OzCxil6HrqNvAuyswyX0KHOadodzV9q/qgCmR4Tn3bqQOROZay6ug==",
+  "dgSpecHash": "5yYL8x8xhVfBPrde8B+gwVlAJKkpdPCnwwonvJkOrqdwSqXWsXvI6a5hktuZgP6d+KMQQwM/2lHJqyJXf9ODDQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\mbednarova\\source\\repos\\UITestingConsole\\UITests\\TestManager\\ReportManager.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\mbednarova\\.nuget\\packages\\appium.webdriver\\4.1.1\\appium.webdriver.4.1.1.nupkg.sha512",
+    "C:\\Users\\mbednarova\\.nuget\\packages\\appium.webdriver\\4.3.1\\appium.webdriver.4.3.1.nupkg.sha512",
     "C:\\Users\\mbednarova\\.nuget\\packages\\castle.core\\4.3.1\\castle.core.4.3.1.nupkg.sha512",
     "C:\\Users\\mbednarova\\.nuget\\packages\\dotnetseleniumextras.pageobjects\\3.11.0\\dotnetseleniumextras.pageobjects.3.11.0.nupkg.sha512",
     "C:\\Users\\mbednarova\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",

@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Windows;
+using OpenQA.Selenium.Remote;
 using OpenQA.Selenium.Support.Events;
 using System;
 using System.Collections.Concurrent;
@@ -24,15 +25,16 @@ namespace ReportManager
 			if (desktopSession == null)
 			{
 				AppiumOptions options = new AppiumOptions();
-				options.AddAdditionalCapability("app", context.Properties["testedApp"]);
+				options.AddAdditionalCapability("app", $"C:\\Windows\\System32\\calc.exe");
+				options.AddAdditionalCapability("ms:waitForAppLaunch", "20000");
+				options.AddAdditionalCapability("platformName", "windows");
+				options.AddAdditionalCapability("automationName", "windows");
 				desktopSession = new WindowsDriver<WindowsElement>(new Uri(WindowsApplicationDriverUrl), options);
 
-				if (desktopSession == null || desktopSession.SessionId == null){
+				if (desktopSession == null || desktopSession.SessionId == null)
+				{
 					return false;
 				}
-
-				desktopSession.Manage().Timeouts().ImplicitWait =
-					TimeSpan.FromSeconds(2.5);
 			}
 
 			if (root == null)
@@ -47,7 +49,7 @@ namespace ReportManager
 				}
 
 				root.Manage().Timeouts().ImplicitWait =
-					TimeSpan.FromSeconds(2.5);
+					TimeSpan.FromSeconds(5);
 			}
 			return true;
 		}
