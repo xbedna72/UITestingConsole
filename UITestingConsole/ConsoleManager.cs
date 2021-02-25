@@ -122,8 +122,9 @@ namespace UITestingConsole
 		private void InputAgumentsProcess(TestManager _tm)
 		{
 			settingObject = new SettingObject();
-			settingObject.testProjectPath = testName.Replace(@"\\", @"\");
-//			_tm.TestBuild(testName);
+			_tm.TestBuild(testName);
+			settingObject.testProjectPath = _tm.GetTestProjectPath(testName);
+			settingObject.testResults = _tm.GetTestResultsPath(testName);
 			settingObject.testAdapterPath = adapterPath.Replace(@"\\", @"\");
 			settingObject.appName = appName.Replace(@"\\", @"\");
 			settingObject.buildRequest = BuildFlag;

@@ -18,6 +18,7 @@ namespace UITestingConsole
 		public bool buildRequest;
 		public string sourceProject;
 		public string pullRequest;
+		public string testResults;
 		#endregion
 	}
 }

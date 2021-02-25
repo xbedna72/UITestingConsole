@@ -14,7 +14,7 @@ namespace UITestingConsole
 	sealed class TestManager : Base
 	{
 		private static string devCmd = @"C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\Tools\VsDevCmd.bat";
-		private static string runSettings = @"C:\Users\mbednarova\source\repos\UITestingConsole\UITestingConsole\.runsettings";
+		private static string runSettings = @"C:\Users\mbednarova\source\repos\UITestingConsole\UITestingConsole\runsettings.txt";
 
 		private static readonly object padlock = new object();
 		private static TestManager instance = null;
@@ -51,9 +51,10 @@ namespace UITestingConsole
 		private void RunDevCmd(SettingObject _object)
 		{
 			string args = string.Empty;
-			args += $"{_object.testProjectPath} ";
-			args += $"/TestAdapther: {_object.testAdapterPath} ";
-			args += $"/Settings: {runSettings} ";
+			args += $"cd Common7\\Tools && vstest.console.exe {_object.testProjectPath}";
+			args += $" /TestAdapterPath:{_object.testAdapterPath}";
+			args += $" /Settings:{runSettings}";
+			args += $" /ResultsDirectory:{_object.testResults}";
 			System.Diagnostics.Process prc = new System.Diagnostics.Process();
 			prc.StartInfo.FileName = devCmd;
 			prc.StartInfo.RedirectStandardInput = true;
@@ -65,7 +66,6 @@ namespace UITestingConsole
 			prc.StandardInput.WriteLine(args);
 			prc.StandardInput.Flush();
 			prc.StandardInput.Close();
-			InfoMessage(prc.StandardOutput.ReadToEnd());
 		}
 
 		void RunGitScript(string _path, string _name, string _flag)
@@ -96,6 +96,20 @@ namespace UITestingConsole
 				throw new Exception(ps.HadErrors.ToString());
 			}
 			ps.Dispose();
+		}
+
+		public string GetTestProjectPath(string _path){
+			string[] _string = Regex.Split(_path, "(.+)\\\\(.+)$");
+			string[] _name = Regex.Split(_string[2], "(.+)\\..+$");
+			_string[1] += $"\\bin\\Debug\\{_name[1]}.dll";
+
+			return _string[1];
+		}
+
+		public string GetTestResultsPath(string _path){
+			string[] _string = Regex.Split(_path, "(.+)\\\\(.+)$");
+
+			return _string[1];
 		}
 	}
 }

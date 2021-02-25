@@ -124,7 +124,7 @@ namespace UITestingConsole
 								if (args[i].Equals("/TestAdapterPath:"))
 								{
 									i++;
-									if (Regex.IsMatch(args[i], "[A-Z]:(\\\\(.+))+.dll$"))
+									if (args[i].Length > 0)
 									{
 										consoleManager.adapterPath = args[i];
 										i++;
