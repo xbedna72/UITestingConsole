@@ -66,6 +66,8 @@ namespace UITestingConsole
 			prc.StandardInput.WriteLine(args);
 			prc.StandardInput.Flush();
 			prc.StandardInput.Close();
+			prc.WaitForInputIdle();
+			prc.WaitForExit();
 		}
 
 		void RunGitScript(string _path, string _name, string _flag)

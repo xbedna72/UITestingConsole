@@ -17,7 +17,7 @@ namespace ReportManager
 		protected const string WindowsApplicationDriverUrl = "http://127.0.0.1:4723";
 		protected static WindowsDriver<WindowsElement> desktopSession;
 		protected static WindowsDriver<WindowsElement> root;
-		protected static string applicationPath = $"C:\\Projekty\\PMS2.0-LW\\src\\Bin\\Debug\\FullTest";
+		protected static string appName = string.Empty;
 
 		//Will be execute before every  TestClass
 		public static bool Setup(TestContext context)
@@ -25,7 +25,7 @@ namespace ReportManager
 			if (desktopSession == null)
 			{
 				AppiumOptions options = new AppiumOptions();
-				options.AddAdditionalCapability("app", $"C:\\Windows\\System32\\calc.exe");
+				options.AddAdditionalCapability("app", appName);
 				options.AddAdditionalCapability("ms:waitForAppLaunch", "20000");
 				options.AddAdditionalCapability("platformName", "windows");
 				options.AddAdditionalCapability("automationName", "windows");
@@ -69,6 +69,10 @@ namespace ReportManager
 				desktopSession.Quit();
 				desktopSession = null;
 			}
+		}
+
+		public static void GetContextParameters(TestContext context){
+			appName = Convert.ToString(context.Properties["appName"]);
 		}
 	}
 }

@@ -16,6 +16,11 @@ namespace TestEditMaterializeCard
     [TestClass]
     public class CalculatorTests : SessionSettingClass
     {
+        [AssemblyInitialize()]
+        public static void AssemblyInitialize(TestContext context)
+        {
+            GetContextParameters(context);
+		}
 
         [ClassInitialize()]
         public static void ClassInitialize(TestContext context)
@@ -23,7 +28,7 @@ namespace TestEditMaterializeCard
             Setup(context);
         }
 
-        [ClassCleanup]
+        [ClassCleanup()]
         public static void ClassCleanup()
         {
             TearDown();
