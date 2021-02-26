@@ -51,22 +51,19 @@ namespace UITestingConsole
 		private void RunDevCmd(SettingObject _object)
 		{
 			string args = string.Empty;
-			args += $"cd Common7\\Tools && vstest.console.exe {_object.testProjectPath}";
+			args += $"cd C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\Common7\\Tools && vstest.console.exe {_object.testProjectPath}";
 			args += $" /TestAdapterPath:{_object.testAdapterPath}";
 			args += $" /Settings:{runSettings}";
 			args += $" /ResultsDirectory:{_object.testResults}";
 			System.Diagnostics.Process prc = new System.Diagnostics.Process();
 			prc.StartInfo.FileName = devCmd;
+			prc.StartInfo.Arguments = args;
+			prc.StartInfo.CreateNoWindow = true;
 			prc.StartInfo.RedirectStandardInput = true;
 			prc.StartInfo.RedirectStandardOutput = true;
-			prc.StartInfo.RedirectStandardError = true;
+			prc.StartInfo.RedirectStandardError = false;
 			prc.StartInfo.UseShellExecute = false;
 			prc.Start();
-
-			prc.StandardInput.WriteLine(args);
-			prc.StandardInput.Flush();
-			prc.StandardInput.Close();
-			prc.WaitForInputIdle();
 			prc.WaitForExit();
 		}
 
