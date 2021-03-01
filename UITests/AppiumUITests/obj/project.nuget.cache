@@ -1,18 +1,18 @@
 {
   "version": 2,
-  "dgSpecHash": "zXlo6Bj12i6y4TpXL3D/fh9ZN1EwzhtNHWnbrqKYxjxWxWMHZpEB6JMeklsUhMeK8ZuW24Bi4WLtHAw1dCad+Q==",
+  "dgSpecHash": "U5eaA/U6GwYiG3ygEG6ChLnefyDTd1ZcIRy3rEqEvmDYgzzMZGxigEN90h+BW8PYcfckeKbTlMkaV6/ph3lH/g==",
   "success": true,
-  "projectFilePath": "C:\\Users\\mbednarova\\source\\repos\\UITestingConsole\\UITests\\AppiumUITests\\AppiumUITests.csproj",
+  "projectFilePath": "C:\\Users\\MayBee\\source\\repos\\xbedna72\\UITestingConsole\\UITests\\AppiumUITests\\AppiumUITests.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\mbednarova\\.nuget\\packages\\appium.webdriver\\4.1.1\\appium.webdriver.4.1.1.nupkg.sha512",
-    "C:\\Users\\mbednarova\\.nuget\\packages\\castle.core\\4.3.1\\castle.core.4.3.1.nupkg.sha512",
-    "C:\\Users\\mbednarova\\.nuget\\packages\\dotnetseleniumextras.pageobjects\\3.11.0\\dotnetseleniumextras.pageobjects.3.11.0.nupkg.sha512",
-    "C:\\Users\\mbednarova\\.nuget\\packages\\mstest.testadapter\\2.1.2\\mstest.testadapter.2.1.2.nupkg.sha512",
-    "C:\\Users\\mbednarova\\.nuget\\packages\\mstest.testframework\\2.1.2\\mstest.testframework.2.1.2.nupkg.sha512",
-    "C:\\Users\\mbednarova\\.nuget\\packages\\newtonsoft.json\\12.0.1\\newtonsoft.json.12.0.1.nupkg.sha512",
-    "C:\\Users\\mbednarova\\.nuget\\packages\\selenium.support\\3.141.0\\selenium.support.3.141.0.nupkg.sha512",
-    "C:\\Users\\mbednarova\\.nuget\\packages\\selenium.webdriver\\3.141.0\\selenium.webdriver.3.141.0.nupkg.sha512",
-    "C:\\Users\\mbednarova\\.nuget\\packages\\system.management.automation\\6.1.0\\system.management.automation.6.1.0.nupkg.sha512"
+    "C:\\Users\\MayBee\\.nuget\\packages\\appium.webdriver\\4.1.1\\appium.webdriver.4.1.1.nupkg.sha512",
+    "C:\\Users\\MayBee\\.nuget\\packages\\castle.core\\4.3.1\\castle.core.4.3.1.nupkg.sha512",
+    "C:\\Users\\MayBee\\.nuget\\packages\\dotnetseleniumextras.pageobjects\\3.11.0\\dotnetseleniumextras.pageobjects.3.11.0.nupkg.sha512",
+    "C:\\Users\\MayBee\\.nuget\\packages\\mstest.testadapter\\2.1.2\\mstest.testadapter.2.1.2.nupkg.sha512",
+    "C:\\Users\\MayBee\\.nuget\\packages\\mstest.testframework\\2.1.2\\mstest.testframework.2.1.2.nupkg.sha512",
+    "C:\\Users\\MayBee\\.nuget\\packages\\newtonsoft.json\\12.0.1\\newtonsoft.json.12.0.1.nupkg.sha512",
+    "C:\\Users\\MayBee\\.nuget\\packages\\selenium.support\\3.141.0\\selenium.support.3.141.0.nupkg.sha512",
+    "C:\\Users\\MayBee\\.nuget\\packages\\selenium.webdriver\\3.141.0\\selenium.webdriver.3.141.0.nupkg.sha512",
+    "C:\\Users\\MayBee\\.nuget\\packages\\system.management.automation\\6.1.0\\system.management.automation.6.1.0.nupkg.sha512"
   ],
   "logs": [
     {
