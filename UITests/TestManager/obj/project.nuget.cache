@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "TJXNfDzRKmr9kk/Sq2YzgAWyY4fOKvgxUAGxPjnpGds+kNh6MaG3JAu+ljKTikCu8Da31Qmag7EP7x57ggjSrw==",
+  "dgSpecHash": "HBWkMkx01ieuX5ZRa397mhND0t2M83NKpsR2/tsvv80cZvXbrlQHpT+/9OENpNTL2YzbVbYWLsUM6y0w3K5F5Q==",
   "success": true,
   "projectFilePath": "C:\\Users\\MayBee\\source\\repos\\xbedna72\\UITestingConsole\\UITests\\TestManager\\ReportManager.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\MayBee\\.nuget\\packages\\appium.webdriver\\4.3.1\\appium.webdriver.4.3.1.nupkg.sha512",
+    "C:\\Users\\MayBee\\.nuget\\packages\\appium.webdriver\\4.1.1\\appium.webdriver.4.1.1.nupkg.sha512",
     "C:\\Users\\MayBee\\.nuget\\packages\\castle.core\\4.3.1\\castle.core.4.3.1.nupkg.sha512",
     "C:\\Users\\MayBee\\.nuget\\packages\\dotnetseleniumextras.pageobjects\\3.11.0\\dotnetseleniumextras.pageobjects.3.11.0.nupkg.sha512",
     "C:\\Users\\MayBee\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",

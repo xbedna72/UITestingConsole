@@ -136,7 +136,7 @@
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
-          "Appium.WebDriver": "4.3.1",
+          "Appium.WebDriver": "4.1.1",
           "MSTest.TestFramework": "2.1.2"
         },
         "compile": {
@@ -252,7 +252,7 @@
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
-          "Appium.WebDriver": "4.3.1",
+          "Appium.WebDriver": "4.1.1",
           "MSTest.TestFramework": "2.1.2"
         },
         "compile": {
@@ -371,7 +371,7 @@
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
-          "Appium.WebDriver": "4.3.1",
+          "Appium.WebDriver": "4.1.1",
           "MSTest.TestFramework": "2.1.2"
         },
         "compile": {
@@ -490,7 +490,7 @@
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
-          "Appium.WebDriver": "4.3.1",
+          "Appium.WebDriver": "4.1.1",
           "MSTest.TestFramework": "2.1.2"
         },
         "compile": {
@@ -905,20 +905,5 @@
         "#import": []
       }
     }
-  },
-  "logs": [
-    {
-      "code": "NU1605",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Detected package downgrade: Appium.WebDriver from 4.3.1 to 4.1.1. Reference the package directly from the project to select a different version. \r\n AppiumUITests -> ReportManager -> Appium.WebDriver (>= 4.3.1) \r\n AppiumUITests -> Appium.WebDriver (>= 4.1.1)",
-      "libraryId": "Appium.WebDriver",
-      "targetGraphs": [
-        ".NETFramework,Version=v4.7.2",
-        ".NETFramework,Version=v4.7.2/win",
-        ".NETFramework,Version=v4.7.2/win-x64",
-        ".NETFramework,Version=v4.7.2/win-x86"
-      ]
-    }
-  ]
+  }
 }

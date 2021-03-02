@@ -24,16 +24,21 @@ namespace ReportManager
 		{
 			if (desktopSession == null)
 			{
-				AppiumOptions options = new AppiumOptions();
-				options.AddAdditionalCapability("app", appName);
-				options.AddAdditionalCapability("platformName", "windows");
-				options.AddAdditionalCapability("automationName", "windows");
-				desktopSession = new WindowsDriver<WindowsElement>(new Uri(WindowsApplicationDriverUrl), options);
-
-				if (desktopSession == null || desktopSession.SessionId == null)
+				try
 				{
-					return false;
+					AppiumOptions options = new AppiumOptions();
+					options.AddAdditionalCapability("app", @"C:\Windows\System32\calc.exe");
+					options.AddAdditionalCapability("platformName", "windows");
+					options.AddAdditionalCapability("automationName", "windows");
+					desktopSession = new WindowsDriver<WindowsElement>(new Uri(WindowsApplicationDriverUrl), options);
+
+					if (desktopSession == null || desktopSession.SessionId == null)
+					{
+						return false;
+					}
 				}
+				catch (Exception e)
+				{}
 			}
 
 			if (root == null)
@@ -70,7 +75,12 @@ namespace ReportManager
 			}
 		}
 
-		public static void GetContextParameters(TestContext context){
+		public static void RunWinAppDriverConsole(){
+			System.Diagnostics.Process.Start(@"C:\Program Files (x86)\Windows Application Driver\WinAppDriver.exe");
+		}
+
+		public static void GetContextParameters(TestContext context)
+		{
 			appName = Convert.ToString(context.Properties["appName"]);
 		}
 	}
