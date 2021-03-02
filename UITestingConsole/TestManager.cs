@@ -109,5 +109,10 @@ namespace UITestingConsole
 
 			return _string[1];
 		}
+
+		private string GetScriptsDirectory(){
+			string path = Regex.Replace(Directory.GetCurrentDirectory(), @"\\bin\\Debug", @"\\Scripts");
+			return path;
+		}
 	}
 }
