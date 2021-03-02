@@ -14,7 +14,6 @@ namespace UITestingConsole
 	sealed class TestManager : Base
 	{
 		private static string devCmd = @"C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\Tools\VsDevCmd.bat";
-		private static string runSettings = @"C:\Users\mbednarova\source\repos\UITestingConsole\UITestingConsole\runsettings.txt";
 
 		private static readonly object padlock = new object();
 		private static TestManager instance = null;
@@ -40,7 +39,7 @@ namespace UITestingConsole
 				if (_object.buildRequest)
 				{
 					string[] _string = Regex.Split(_object.sourceProject, "(.+)\\\\(.+)$");
-					RunGitScript(_string[0], _string[1], true.ToString());
+					RunScript(_string[0], _string[1], true.ToString());
 				}
 				RunDevCmd(_object);
 				return;
@@ -51,9 +50,9 @@ namespace UITestingConsole
 		private void RunDevCmd(SettingObject _object)
 		{
 			string args = string.Empty;
-			args += $"cd C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\Common7\\Tools && vstest.console.exe {_object.testProjectPath}";
+			args += $"&& cd C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\Common7\\Tools && vstest.console.exe {_object.testProjectPath}";
 			args += $" /TestAdapterPath:{_object.testAdapterPath}";
-			args += $" /Settings:{runSettings}";
+			args += $" /Settings:{GetRunSettings()}";
 			args += $" /ResultsDirectory:{_object.testResults}";
 			System.Diagnostics.Process prc = new System.Diagnostics.Process();
 			prc.StartInfo.FileName = devCmd;
@@ -69,39 +68,25 @@ namespace UITestingConsole
 		public void TestBuild(string _path)
 		{
 			string[] _string = Regex.Split(_path, "(.+)\\\\(.+)$");
-			RunGitScript(_string[1], _string[2], false.ToString());
+			RunScript(_string[1], _string[2], false.ToString());
 		}
 
-		void RunGitScript(string _path, string _name, string _flag)
+		private void RunScript(string _path, string _name, string _flag)
 		{
-			string scriptPath = Environment.CurrentDirectory.Replace("bin\\Debug", "gitScript.ps1");
-			if (!File.Exists(scriptPath))
-			{
-				throw new Exception("gitScript does not exists.");
-			}
-			scriptPath = scriptPath.Replace(@"\\", @"\");
 			_path = _path.Replace(@"\\", @"\");
-			RunScript(scriptPath, _path, _name, _flag);
-		}
-
-		private void RunScript(string _script, string _path, string _name, string _flag)
-		{
 			PowerShell ps = PowerShell.Create();
-			ps.AddScript($"{_script} {_path} {_name} {_flag}");
+			ps.AddScript($"cd {GetScriptsDirectory()}");
+			ps.AddScript($".\\gitScript.ps1 {_path} {_name} {_flag}");
 			ps.Invoke();
-			if (ps.HadErrors)
-			{
-				throw new Exception(ps.HadErrors.ToString());
-			}
 			ps.Dispose();
 		}
 
-		public string GetTestProjectPath(string _path){
-			string[] _string = Regex.Split(_path, "(.+)\\\\(.+)$");
+		public string GetTestProjectPath(string _projectPath, string _adapterPath){
+			string[] _string = Regex.Split(_projectPath, "(.+)\\\\(.+)$");
 			string[] _name = Regex.Split(_string[2], "(.+)\\..+$");
-			_string[1] += $"\\bin\\Debug\\{_name[1]}.dll";
+			var result = $"{_adapterPath}\\{_name[1]}.dll";
 
-			return _string[1];
+			return result;
 		}
 
 		public string GetTestResultsPath(string _path){
@@ -112,6 +97,11 @@ namespace UITestingConsole
 
 		private string GetScriptsDirectory(){
 			string path = Regex.Replace(Directory.GetCurrentDirectory(), @"\\bin\\Debug", @"\\Scripts");
+			return path;
+		}
+
+		private string GetRunSettings(){
+			string path = Regex.Replace(Directory.GetCurrentDirectory(), @"\\bin\\Debug", @"\runsettings.txt");
 			return path;
 		}
 	}

@@ -123,7 +123,8 @@ namespace UITestingConsole
 		{
 			settingObject = new SettingObject();
 			_tm.TestBuild(testName);
-			settingObject.testProjectPath = _tm.GetTestProjectPath(testName);
+			settingObject.testProjectPath = _tm.GetTestProjectPath(testName, adapterPath);
+			settingObject.testProjectPath = settingObject.testProjectPath.Replace(@"\\", @"\");
 			settingObject.testResults = _tm.GetTestResultsPath(testName);
 			settingObject.testAdapterPath = adapterPath.Replace(@"\\", @"\");
 			settingObject.appName = appName.Replace(@"\\", @"\");
