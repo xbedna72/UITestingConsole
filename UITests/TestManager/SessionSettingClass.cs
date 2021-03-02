@@ -27,7 +27,7 @@ namespace ReportManager
 				try
 				{
 					AppiumOptions options = new AppiumOptions();
-					options.AddAdditionalCapability("app", @"C:\Windows\System32\calc.exe");
+					options.AddAdditionalCapability("app", appName);
 					options.AddAdditionalCapability("platformName", "windows");
 					options.AddAdditionalCapability("automationName", "windows");
 					desktopSession = new WindowsDriver<WindowsElement>(new Uri(WindowsApplicationDriverUrl), options);
