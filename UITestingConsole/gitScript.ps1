@@ -5,7 +5,6 @@ $path = $args[0]
 $name = $args[1]
 $pull = $args[2]
 
-$defaultLocation = "C:\Users\mbednarova\source\repos\UITestingConsole\UITestingConsole"
 if(!(Test-Path $path)){
 	throw "Path does not exists"
 }
@@ -29,4 +28,3 @@ Invoke-Expression -Command ".\devenv.com $path\$name /Build"
 if(! $?){
 	throw "Build failed"
 }
-#Set-Location $defaultLocation

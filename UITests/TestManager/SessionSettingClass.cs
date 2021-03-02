@@ -26,7 +26,6 @@ namespace ReportManager
 			{
 				AppiumOptions options = new AppiumOptions();
 				options.AddAdditionalCapability("app", appName);
-				options.AddAdditionalCapability("ms:waitForAppLaunch", "20000");
 				options.AddAdditionalCapability("platformName", "windows");
 				options.AddAdditionalCapability("automationName", "windows");
 				desktopSession = new WindowsDriver<WindowsElement>(new Uri(WindowsApplicationDriverUrl), options);

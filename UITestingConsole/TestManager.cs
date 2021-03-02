@@ -66,6 +66,11 @@ namespace UITestingConsole
 			prc.Start();
 			prc.WaitForExit();
 		}
+		public void TestBuild(string _path)
+		{
+			string[] _string = Regex.Split(_path, "(.+)\\\\(.+)$");
+			RunGitScript(_string[1], _string[2], false.ToString());
+		}
 
 		void RunGitScript(string _path, string _name, string _flag)
 		{
@@ -77,12 +82,6 @@ namespace UITestingConsole
 			scriptPath = scriptPath.Replace(@"\\", @"\");
 			_path = _path.Replace(@"\\", @"\");
 			RunScript(scriptPath, _path, _name, _flag);
-		}
-
-		public void TestBuild(string _path)
-		{
-			string[] _string = Regex.Split(_path, "(.+)\\\\(.+)$");
-			RunGitScript(_string[1], _string[2], false.ToString());
 		}
 
 		private void RunScript(string _script, string _path, string _name, string _flag)

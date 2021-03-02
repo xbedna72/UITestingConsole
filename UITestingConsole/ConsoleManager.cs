@@ -247,6 +247,7 @@ namespace UITestingConsole
 			}
 			else
 			{
+				InfoMessage("Creating SettingDirectory.");
 				try
 				{
 					CreateDirectory(directory);
