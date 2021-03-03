@@ -81,7 +81,7 @@ namespace ReportManager
 
 		public static void GetContextParameters(TestContext context)
 		{
-			appName = Convert.ToString(context.Properties["appName"]);
+			appName = context.Properties["appName"].ToString();
 		}
 	}
 }
