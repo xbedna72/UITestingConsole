@@ -19,15 +19,14 @@ namespace TestEditMaterializeCard
         [AssemblyInitialize()]
         public static void AssemblyInitialize(TestContext context)
         {
-            GetContextParameters(context);
-            RunWinAppDriverConsole();
+            ExecuteApps(context);
 		}
 
         [AssemblyCleanup()]
         public static void AssemblyCleanup()
         {
-
-		}
+            StopRunningApps();
+        }
 
         [ClassInitialize()]
         public static void ClassInitialize(TestContext context)
