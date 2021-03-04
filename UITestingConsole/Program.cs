@@ -163,20 +163,25 @@ namespace UITestingConsole
 												break;
 											}
 										}
+										else
+										{
+											consoleManager.ErrorMessage("Parameter AppName is missing.");
+										}
 									}
 									else
 									{
 										consoleManager.ErrorMessage("Wrong format of Application name. Absolute path with name of .exe file.");
 									}
 								}
+								else
+								{
+									consoleManager.ErrorMessage("Parameter TestAdapterPath is missing.");
+								}
 							}
 							else
 							{
 								consoleManager.ErrorMessage("Wrong format of Test solution absolute path. File type .sln.");
-								break;
 							}
-
-							consoleManager.ErrorMessage("Undefined application name.");
 							break;
 						}
 						else if (args[i + 1].Equals("/SettingFile:"))

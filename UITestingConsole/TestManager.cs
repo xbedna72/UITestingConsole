@@ -34,10 +34,12 @@ namespace UITestingConsole
 
 		public void Process(SettingObject _object)
 		{
+			InfoMessage("Process.");
 			if (_object != null)
 			{
 				if (_object.buildRequest)
 				{
+					InfoMessage("Building solution of system udner test.");
 					string[] _string = Regex.Split(_object.sourceProject, "(.+)\\\\(.+)$");
 					RunScript(_string[0], _string[1], true.ToString());
 				}
@@ -49,6 +51,7 @@ namespace UITestingConsole
 
 		private void RunDevCmd(SettingObject _object)
 		{
+			InfoMessage("Preparing for execution of vstest console.");
 			string args = string.Empty;
 			args += $"&& cd C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\Common7\\Tools && vstest.console.exe {_object.testProjectPath}";
 			args += $" /TestAdapterPath:{_object.testAdapterPath}";
@@ -62,13 +65,19 @@ namespace UITestingConsole
 			prc.StartInfo.RedirectStandardOutput = true;
 			prc.StartInfo.RedirectStandardError = false;
 			prc.StartInfo.UseShellExecute = false;
+			InfoMessage("Process Start");
 			prc.Start();
+			InfoMessage("Waiting for exit");
 			prc.WaitForExit();
+			InfoMessage("End of tests");
+			TearDown(_object);
 		}
 		public void TestBuild(string _path)
 		{
+			InfoMessage("Preparing for test building process.");
 			string[] _string = Regex.Split(_path, "(.+)\\\\(.+)$");
 			RunScript(_string[1], _string[2], false.ToString());
+			InfoMessage("Done.");
 		}
 
 		private void RunScript(string _path, string _name, string _flag)
@@ -78,6 +87,9 @@ namespace UITestingConsole
 			ps.AddScript($"cd {GetScriptsDirectory()}");
 			ps.AddScript($".\\gitScript.ps1 {_path} {_name} {_flag}");
 			ps.Invoke();
+			if(ps.HadErrors){
+				throw new Exception("Problems with build script.");
+			}
 			ps.Dispose();
 		}
 
@@ -103,6 +115,10 @@ namespace UITestingConsole
 		private string GetRunSettings(){
 			string path = Regex.Replace(Directory.GetCurrentDirectory(), @"\\bin\\Debug", @"\runsettings.txt");
 			return path;
+		}
+
+		private void TearDown(SettingObject _object){
+			Parser.UpdateRunsetting(_object.appName);
 		}
 	}
 }

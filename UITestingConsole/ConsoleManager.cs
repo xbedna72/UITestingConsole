@@ -102,7 +102,6 @@ namespace UITestingConsole
 
 		public void Process()
 		{
-			InfoMessage("Process test.");
 			var tm = new TestManager();
 			if (actualSettingFile != null)
 			{
@@ -121,6 +120,7 @@ namespace UITestingConsole
 
 		private void InputAgumentsProcess(TestManager _tm)
 		{
+			InfoMessage("Parsing values of inpput parameters into setting object.");
 			settingObject = new SettingObject();
 			_tm.TestBuild(testName);
 			settingObject.testProjectPath = _tm.GetTestProjectPath(testName, adapterPath);
@@ -130,6 +130,9 @@ namespace UITestingConsole
 			settingObject.appName = appName.Replace(@"\\", @"\");
 			settingObject.buildRequest = BuildFlag;
 			settingObject.sourceProject = BuildFlag ? slnPath.Replace(@"\\", @"\") : null;
+			InfoMessage("Done.");
+			InfoMessage("Preparing Runsettingfile.");
+			Parser.InsertAppNameParameter(settingObject.appName);
 		}
 
 		#region SettingFile
