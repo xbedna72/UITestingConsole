@@ -19,7 +19,6 @@ namespace ReportManager
 		protected static WindowsDriver<WindowsElement> root;
 		protected static string appName = string.Empty;
 		static System.Diagnostics.Process winAppDriver = null;
-		static System.Diagnostics.Process appProcess = null;
 
 		//Will be execute before every  TestClass
 		public static bool Setup(TestContext context)
@@ -29,7 +28,7 @@ namespace ReportManager
 				try
 				{
 					AppiumOptions options = new AppiumOptions();
-					options.AddAdditionalCapability("app", appProcess.MainWindowHandle);
+					options.AddAdditionalCapability("app", context.Properties["appName"].ToString());
 					options.AddAdditionalCapability("platformName", "windows");
 					options.AddAdditionalCapability("automationName", "windows");
 					desktopSession = new WindowsDriver<WindowsElement>(new Uri(WindowsApplicationDriverUrl), options);
@@ -79,7 +78,6 @@ namespace ReportManager
 
 		public static void ExecuteApps(TestContext context)
 		{
-			appProcess = System.Diagnostics.Process.Start(@"C:\Windows\System32\calc.exe"); //context.Properties["appName"].ToString()
 			winAppDriver = System.Diagnostics.Process.Start(@"C:\Program Files (x86)\Windows Application Driver\WinAppDriver.exe");
 		}
 
