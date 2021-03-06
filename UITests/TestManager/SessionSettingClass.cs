@@ -28,7 +28,7 @@ namespace ReportManager
 				try
 				{
 					AppiumOptions options = new AppiumOptions();
-					options.AddAdditionalCapability("app", app);
+					options.AddAdditionalCapability("app", context.Properties["appName"].ToString());
 					options.AddAdditionalCapability("platformName", "windows");
 					options.AddAdditionalCapability("automationName", "windows");
 					desktopSession = new WindowsDriver<WindowsElement>(new Uri(WindowsApplicationDriverUrl), options);
@@ -78,12 +78,6 @@ namespace ReportManager
 
 		public static void ExecuteApps(TestContext context)
 		{
-			System.Diagnostics.ProcessStartInfo info = new System.Diagnostics.ProcessStartInfo();
-			info.WorkingDirectory = Directory.GetCurrentDirectory();
-			info.WindowStyle = System.Diagnostics.ProcessWindowStyle.Maximized;
-			info.FileName = context.Properties["appName"].ToString();
-			app.StartInfo = info;
-			app.Start();
 			winAppDriver = System.Diagnostics.Process.Start(@"C:\Program Files (x86)\Windows Application Driver\WinAppDriver.exe");
 		}
 
