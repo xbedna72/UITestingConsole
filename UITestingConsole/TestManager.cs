@@ -56,7 +56,7 @@ namespace UITestingConsole
 			args += $"&& cd C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\Common7\\Tools && vstest.console.exe {_object.testProjectPath}";
 			args += $" /TestAdapterPath:{_object.testAdapterPath}";
 			args += $" /Settings:{GetRunSettings()}";
-			args += $" /ResultsDirectory:{_object.testResults}";
+			args += $" /ResultsDirectory:C:\\Users\\MayBee\\Desktop\\Results";
 			System.Diagnostics.Process prc = new System.Diagnostics.Process();
 			prc.StartInfo.FileName = devCmd;
 			prc.StartInfo.Arguments = args;
@@ -87,9 +87,6 @@ namespace UITestingConsole
 			ps.AddScript($"cd {GetScriptsDirectory()}");
 			ps.AddScript($".\\gitScript.ps1 {_path} {_name} {_flag}");
 			ps.Invoke();
-			if(ps.HadErrors){
-				throw new Exception("Problems with build script.");
-			}
 			ps.Dispose();
 		}
 
@@ -108,7 +105,7 @@ namespace UITestingConsole
 		}
 
 		private string GetScriptsDirectory(){
-			string path = Regex.Replace(Directory.GetCurrentDirectory(), @"\\bin\\Debug", @"\\Scripts");
+			string path = Regex.Replace(Directory.GetCurrentDirectory(), @"\\bin\\Debug", @"\Scripts");
 			return path;
 		}
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RunSettings>
 	<TestRunParameters>
-		<Parameter name="appName" value="C:\Projekty\PMS2.0-LW\src\Bin\Debug\FullTest.exe" />
+		<Parameter name="appName" value="***" />
 	</TestRunParameters>
 </RunSettings>
