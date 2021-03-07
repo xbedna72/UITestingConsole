@@ -28,7 +28,7 @@ namespace ReportManager
 				try
 				{
 					AppiumOptions options = new AppiumOptions();
-					options.AddAdditionalCapability("app", context.Properties["appName"].ToString());
+					options.AddAdditionalCapability("app", app);
 					options.AddAdditionalCapability("platformName", "windows");
 					options.AddAdditionalCapability("automationName", "windows");
 					desktopSession = new WindowsDriver<WindowsElement>(new Uri(WindowsApplicationDriverUrl), options);
@@ -37,6 +37,7 @@ namespace ReportManager
 					{
 						return false;
 					}
+					desktopSession.Manage().Window.FullScreen();
 				}
 				catch (Exception e)
 				{}
@@ -78,6 +79,7 @@ namespace ReportManager
 
 		public static void ExecuteApps(TestContext context)
 		{
+			app = System.Diagnostics.Process.Start(@"C:\Windows\System32\calc.exe"); //context.Properties["appName"]
 			winAppDriver = System.Diagnostics.Process.Start(@"C:\Program Files (x86)\Windows Application Driver\WinAppDriver.exe");
 		}
 
