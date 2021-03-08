@@ -128,6 +128,18 @@ namespace UITestingConsole
 									{
 										consoleManager.adapterPath = args[i];
 										i++;
+										if (args[i].Equals("/TestResultsDirectory"))
+										{
+											i++;
+											if (Directory.Exists(args[i].ToString()))
+											{
+												consoleManager.resultsDirestory = args[i].ToString();
+												i++;
+											}else{
+												consoleManager.ErrorMessage("Input path to results directtory does not exists.");
+												break;
+											}
+										}
 										if (args[i].Equals("/Application:"))
 										{
 											i++;

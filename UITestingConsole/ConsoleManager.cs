@@ -24,6 +24,7 @@ namespace UITestingConsole
 		public string application = null;
 		public string slnPath = null;
 		public string adapterPath = null;
+		public string resultsDirestory = null;
 
 		public bool Run
 		{
@@ -125,7 +126,7 @@ namespace UITestingConsole
 			_tm.TestBuild(testName);
 			settingObject.testProjectPath = _tm.GetTestProjectPath(testName, adapterPath);
 			settingObject.testProjectPath = settingObject.testProjectPath.Replace(@"\\", @"\");
-			settingObject.testResults = _tm.GetTestResultsPath(testName);
+			settingObject.resultsDirectory = settingObject.resultsDirectory == null ? @"C:\TEMP\Results" : settingObject.resultsDirectory.Replace(@"\\", @"\");
 			settingObject.testAdapterPath = adapterPath.Replace(@"\\", @"\");
 			settingObject.application = application.Replace(@"\\", @"\");
 			settingObject.buildRequest = BuildFlag;
@@ -255,6 +256,18 @@ namespace UITestingConsole
 				try
 				{
 					CreateDirectory(directory);
+				}
+				catch (Exception e)
+				{
+					ErrorMessage(e.Message.ToString());
+				}
+			}
+
+			if (!Directory.Exists(@"C:\TEMP\Results")){
+				InfoMessage("TEMP directory is missing.");
+				try
+				{
+					CreateDirectory(@"C:\TEMP\Results");
 				}
 				catch (Exception e)
 				{

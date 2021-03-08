@@ -13,12 +13,11 @@ namespace UITestingConsole
 		public string testProjectPath;
 		public string testAdapterPath;
 		public string application;
-		public string executable;
 		public string settingFileName;
 		public bool buildRequest;
 		public string sourceProject;
 		public string pullRequest;
-		public string testResults;
+		public string resultsDirectory;
 		#endregion
 	}
 }
