@@ -21,7 +21,7 @@ namespace UITestingConsole
 		private bool errorInputFlag = false;
 		private bool buildFlag = false;
 		public string testName = null;
-		public string appName = null;
+		public string application = null;
 		public string slnPath = null;
 		public string adapterPath = null;
 
@@ -127,12 +127,12 @@ namespace UITestingConsole
 			settingObject.testProjectPath = settingObject.testProjectPath.Replace(@"\\", @"\");
 			settingObject.testResults = _tm.GetTestResultsPath(testName);
 			settingObject.testAdapterPath = adapterPath.Replace(@"\\", @"\");
-			settingObject.appName = appName.Replace(@"\\", @"\");
+			settingObject.application = application.Replace(@"\\", @"\");
 			settingObject.buildRequest = BuildFlag;
 			settingObject.sourceProject = BuildFlag ? slnPath.Replace(@"\\", @"\") : null;
 			InfoMessage("Done.");
 			InfoMessage("Preparing Runsettingfile.");
-			Parser.InsertAppNameParameter(settingObject.appName);
+			Parser.InsertAppNameParameter(settingObject.application);
 		}
 
 		#region SettingFile

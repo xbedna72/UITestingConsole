@@ -17,30 +17,29 @@ namespace ReportManager
 		protected const string WindowsApplicationDriverUrl = "http://127.0.0.1:4723";
 		protected static WindowsDriver<WindowsElement> desktopSession;
 		protected static WindowsDriver<WindowsElement> root;
-		protected static string appName = string.Empty;
+		protected static string application = string.Empty;
 		static System.Diagnostics.Process winAppDriver = null;
-		static System.Diagnostics.Process app = null;
 
 		public static bool Setup(TestContext context)
 		{
 			if (desktopSession == null)
 			{
+				WindowsDriver<WindowsElement> run;
 				try
 				{
 					AppiumOptions options = new AppiumOptions();
-					options.AddAdditionalCapability("app", app);
+					options.AddAdditionalCapability("app", application);
 					options.AddAdditionalCapability("platformName", "windows");
 					options.AddAdditionalCapability("automationName", "windows");
-					desktopSession = new WindowsDriver<WindowsElement>(new Uri(WindowsApplicationDriverUrl), options);
-
+					run = new WindowsDriver<WindowsElement>(new Uri(WindowsApplicationDriverUrl), options);
+				}
+				catch (Exception e)
+				{
 					if (desktopSession == null || desktopSession.SessionId == null)
 					{
 						return false;
 					}
-					desktopSession.Manage().Window.FullScreen();
 				}
-				catch (Exception e)
-				{}
 			}
 
 			if (root == null)
@@ -79,7 +78,7 @@ namespace ReportManager
 
 		public static void ExecuteApps(TestContext context)
 		{
-			app = System.Diagnostics.Process.Start(@"C:\Windows\System32\calc.exe"); //context.Properties["appName"]
+			application = context.Properties["appName"].ToString();
 			winAppDriver = System.Diagnostics.Process.Start(@"C:\Program Files (x86)\Windows Application Driver\WinAppDriver.exe");
 		}
 

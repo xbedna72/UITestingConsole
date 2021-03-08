@@ -128,12 +128,12 @@ namespace UITestingConsole
 									{
 										consoleManager.adapterPath = args[i];
 										i++;
-										if (args[i].Equals("/AppName:"))
+										if (args[i].Equals("/Application:"))
 										{
 											i++;
-											if (Regex.IsMatch(args[i], "[A-Z]:(\\\\(.+))+.exe$"))
+											if (args[i].Length > 0)
 											{
-												consoleManager.appName = args[i];
+												consoleManager.application = args[i];
 												if (i + 1 < args.Count())
 												{
 													i++;

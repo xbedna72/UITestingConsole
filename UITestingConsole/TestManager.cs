@@ -115,7 +115,7 @@ namespace UITestingConsole
 		}
 
 		private void TearDown(SettingObject _object){
-			Parser.UpdateRunsetting(_object.appName);
+			Parser.UpdateRunsetting(_object.application);
 		}
 	}
 }

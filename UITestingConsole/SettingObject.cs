@@ -12,7 +12,7 @@ namespace UITestingConsole
 		#region Properties
 		public string testProjectPath;
 		public string testAdapterPath;
-		public string appName;
+		public string application;
 		public string executable;
 		public string settingFileName;
 		public bool buildRequest;
