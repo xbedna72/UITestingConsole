@@ -60,13 +60,6 @@ namespace ReportManager
 				root.Quit();
 				root = null;
 			}
-
-			if (desktopSession != null)
-			{
-				desktopSession.Close();
-				desktopSession.Quit();
-				desktopSession = null;
-			}
 		}
 
 		public static void ExecuteApps(TestContext context)
