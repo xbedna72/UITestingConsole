@@ -7,6 +7,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,26 +20,18 @@ namespace ReportManager
 		protected static WindowsDriver<WindowsElement> root;
 		protected static string application = string.Empty;
 		static System.Diagnostics.Process winAppDriver = null;
-
 		public static bool Setup(TestContext context)
 		{
 			if (desktopSession == null)
 			{
-				WindowsDriver<WindowsElement> run;
-				try
+				AppiumOptions options = new AppiumOptions();
+				options.AddAdditionalCapability("app", application);
+				options.AddAdditionalCapability("platformName", "windows");
+				options.AddAdditionalCapability("automationName", "windows");
+				desktopSession = new WindowsDriver<WindowsElement>(new Uri(WindowsApplicationDriverUrl), options);
+				if (desktopSession == null || desktopSession.SessionId == null)
 				{
-					AppiumOptions options = new AppiumOptions();
-					options.AddAdditionalCapability("app", application);
-					options.AddAdditionalCapability("platformName", "windows");
-					options.AddAdditionalCapability("automationName", "windows");
-					run = new WindowsDriver<WindowsElement>(new Uri(WindowsApplicationDriverUrl), options);
-				}
-				catch (Exception e)
-				{
-					if (desktopSession == null || desktopSession.SessionId == null)
-					{
-						return false;
-					}
+					return false;
 				}
 			}
 
@@ -78,11 +71,24 @@ namespace ReportManager
 
 		public static void ExecuteApps(TestContext context)
 		{
-			application = context.Properties["appName"].ToString();
+			application = "Microsoft.WindowsCalculator_8wekyb3d8bbwe!App"; //context.Properties["appName"].ToString();
 			winAppDriver = System.Diagnostics.Process.Start(@"C:\Program Files (x86)\Windows Application Driver\WinAppDriver.exe");
 		}
 
-		public static void StopRunningApps(){
+		public static void StopRunningApps()
+		{
+			AppiumOptions options = new AppiumOptions();
+			options.AddAdditionalCapability("app", application);
+			options.AddAdditionalCapability("platformName", "windows");
+			options.AddAdditionalCapability("automationName", "windows");
+			desktopSession = new WindowsDriver<WindowsElement>(new Uri(WindowsApplicationDriverUrl), options);
+			foreach(var handle in desktopSession.WindowHandles){
+				desktopSession.SwitchTo().Window(handle);
+				desktopSession.Close();
+			}
+			desktopSession.Quit();
+			desktopSession = null;
+
 			winAppDriver.Kill();
 			winAppDriver.WaitForExit();
 			winAppDriver.Dispose();

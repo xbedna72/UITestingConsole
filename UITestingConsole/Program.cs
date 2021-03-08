@@ -165,7 +165,7 @@ namespace UITestingConsole
 										}
 										else
 										{
-											consoleManager.ErrorMessage("Parameter AppName is missing.");
+											consoleManager.ErrorMessage("Parameter Application in bad format or missing.");
 										}
 									}
 									else
