@@ -7,18 +7,6 @@ namespace ReportManager
 {
 	public static class Helper
 	{
-		private static Tools tools = null;
-		public static Tools Tools
-		{
-			get
-			{
-				if (tools == null)
-				{
-					tools = new Tools();
-				}
-				return tools;
-			}
-		}
 		public static WindowsElement FindByXPath(
 			this WindowsDriver<WindowsElement> MyDesktopSession,
 			string xPath,
@@ -43,7 +31,7 @@ namespace ReportManager
 					System.Threading.Thread.Sleep(500);
 				}
 			}
-			Tools.GetInfo(uiTarget, xPath);
+			ReportManagerClass.ActualReportModel.NewCase(uiTarget, xPath);
 			return uiTarget;
 		}
 

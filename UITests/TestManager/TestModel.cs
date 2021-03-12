@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
@@ -6,35 +7,46 @@ using static ReportManager.Enums;
 
 namespace ReportManager
 {
-	public class TestModel
+	public class ReportModel
 	{
-		protected string testName = string.Empty;
+		protected string testProjectName = string.Empty;
 		public IList<TestMethodModel> methods = null;
-		public TestResult result = TestResult.Unknown;
+		private TestMethodModel actualMethod = null;
+		private static IParser _parser;
 
-		public TestModel(string _testName){
-			testName = _testName;
+		public ReportModel(TestContext context)
+		{
+			Initialize("name");
+		}
+		public void Initialize(string _testName)
+		{
+			_parser = ParserFactory.GetParserObj();
+			testProjectName = _testName;
 			methods = new List<TestMethodModel>();
 		}
 
-		public void NewMethod(){
-			var _newMethod = new TestMethodModel(this.testName, methods.Count);
+		public void NewMethod(string _methodName)
+		{
+			var _newMethod = new TestMethodModel(this.testProjectName, methods.Count);
 			methods.Add(_newMethod);
+			actualMethod = _newMethod;
 		}
 
-		public void SetResult(TestResult _result){
-			result = _result;
+		public void NewCase()
+		{
 		}
 	}
 
 	public class TestMethodModel
 	{
-		public string testName = string.Empty;
+		public string methodName = string.Empty;
 		public int num;
+		public Enums.TestResult testMethodResult = Enums.TestResult.Unknown;
 		public IList<TestCaseModel> cases = null;
 
-		public TestMethodModel(string _testName, int _num){
-			testName = _testName;
+		public TestMethodModel(string _methodName, int _num)
+		{
+			methodName = _methodName;
 			num = _num;
 			cases = new List<TestCaseModel>();
 		}
@@ -45,21 +57,37 @@ namespace ReportManager
 	{
 		public int num;
 		public bool result;
+		public string info;
 		public byte[] screenshot = null;
-		public TestCaseModel()
+		public Element element = null;
+
+		public TestCaseModel(int _case)
 		{
+			num = _case;
+			element = new Element();
 		}
 
-		public TestCaseModel(int _num){
-			num = _num;
-		}
-
-		public void SetResult(bool _result){
+		public void SetResult(bool _result)
+		{
 			this.result = _result;
 		}
 
-		public void SetScreenshot(byte[] _screenshot){
+		public void SetScreenshot(byte[] _screenshot)
+		{
 			this.screenshot = _screenshot;
 		}
+
+		public void SetInfo(string _info)
+		{
+			this.info = _info;
+		}
+	}
+
+	public class Element
+	{
+		public string TagName;
+		public string Text;
+		public Point Location;
+		public Size Size;
 	}
 }

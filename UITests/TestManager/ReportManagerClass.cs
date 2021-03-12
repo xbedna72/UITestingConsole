@@ -13,13 +13,14 @@ using System.Threading.Tasks;
 
 namespace ReportManager
 {
-	public class SessionSettingClass
+	public class ReportManagerClass
 	{
 		protected const string WindowsApplicationDriverUrl = "http://127.0.0.1:4723";
 		protected static WindowsDriver<WindowsElement> desktopSession;
 		protected static WindowsDriver<WindowsElement> root;
 		protected static string application = string.Empty;
 		static System.Diagnostics.Process winAppDriver = null;
+		public static ReportModel ActualReportModel = null;
 		public static bool Setup(TestContext context)
 		{
 			if (desktopSession == null)
@@ -49,6 +50,7 @@ namespace ReportManager
 				root.Manage().Timeouts().ImplicitWait =
 					TimeSpan.FromSeconds(5);
 			}
+			ActualReportModel.NewMethod(context.TestName);
 			return true;
 		}
 
@@ -62,10 +64,11 @@ namespace ReportManager
 			}
 		}
 
-		public static void ExecuteApps(TestContext context)
+		public static void Initialize(TestContext context)
 		{
 			application = "Microsoft.WindowsCalculator_8wekyb3d8bbwe!App"; //context.Properties["appName"].ToString();
 			winAppDriver = System.Diagnostics.Process.Start(@"C:\Program Files (x86)\Windows Application Driver\WinAppDriver.exe");
+			ActualReportModel = new ReportModel(context);
 		}
 
 		public static void StopRunningApps()
@@ -87,9 +90,12 @@ namespace ReportManager
 			winAppDriver.Dispose();
 
 			var results = Helper.GetResults();
+			var path = @"C:\Users\MayBee\Desktop\Results\r.txt";
+			string all = "";
 			foreach(string r in results){
-				
+				all += r;
 			}
+			File.WriteAllText(path, all);
 		}
 	}
 }

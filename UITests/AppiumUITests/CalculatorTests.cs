@@ -14,12 +14,12 @@ using System.Security.Cryptography.X509Certificates;
 namespace TestEditMaterializeCard
 {
     [TestClass]
-    public class CalculatorTests : SessionSettingClass
+    public class CalculatorTests : ReportManagerClass
     {
         [AssemblyInitialize()]
         public static void AssemblyInitialize(TestContext context)
         {
-            ExecuteApps(context);
+            Initialize(context);
 		}
 
         [AssemblyCleanup()]
