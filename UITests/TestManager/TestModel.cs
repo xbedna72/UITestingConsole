@@ -27,13 +27,9 @@ namespace ReportManager
 
 		public void NewMethod(string _methodName)
 		{
-			var _newMethod = new TestMethodModel(this.testProjectName, methods.Count);
+			var _newMethod = new TestMethodModel(this.testProjectName, methods.Count+1);
 			methods.Add(_newMethod);
 			actualMethod = _newMethod;
-		}
-
-		public void NewCase()
-		{
 		}
 	}
 
@@ -50,6 +46,10 @@ namespace ReportManager
 			num = _num;
 			cases = new List<TestCaseModel>();
 		}
+
+		public TestCaseModel NewCase(){
+			return new TestCaseModel(cases.Count+1);
+		}
 	}
 
 	//Per element
@@ -61,9 +61,9 @@ namespace ReportManager
 		public byte[] screenshot = null;
 		public Element element = null;
 
-		public TestCaseModel(int _case)
+		public TestCaseModel(int _caseNum)
 		{
-			num = _case;
+			num = _caseNum;
 			element = new Element();
 		}
 
