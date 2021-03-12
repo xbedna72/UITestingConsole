@@ -7,6 +7,18 @@ namespace ReportManager
 {
 	public static class Helper
 	{
+		private static Tools tools = null;
+		public static Tools Tools
+		{
+			get
+			{
+				if (tools == null)
+				{
+					tools = new Tools();
+				}
+				return tools;
+			}
+		}
 		public static WindowsElement FindByXPath(
 			this WindowsDriver<WindowsElement> MyDesktopSession,
 			string xPath,
@@ -31,6 +43,7 @@ namespace ReportManager
 					System.Threading.Thread.Sleep(500);
 				}
 			}
+			Tools.GetInfo(uiTarget, xPath);
 			return uiTarget;
 		}
 
@@ -58,6 +71,7 @@ namespace ReportManager
 					System.Threading.Thread.Sleep(500);
 				}
 			}
+			Tools.GetInfo(uiTarget, accessibilityId);
 			return uiTarget;
 		}
 
@@ -85,7 +99,12 @@ namespace ReportManager
 					System.Threading.Thread.Sleep(1000);
 				}
 			}
+			Tools.GetInfo(uiTarget, name);
 			return uiTarget;
+		}
+
+		public static IList<string> GetResults(){
+			return Tools.GetResults();
 		}
 	}
 }

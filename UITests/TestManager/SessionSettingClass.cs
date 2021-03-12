@@ -85,6 +85,11 @@ namespace ReportManager
 			winAppDriver.Kill();
 			winAppDriver.WaitForExit();
 			winAppDriver.Dispose();
+
+			var results = Helper.GetResults();
+			foreach(string r in results){
+				
+			}
 		}
 	}
 }

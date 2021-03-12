@@ -8,18 +8,34 @@ namespace ReportManager
 {
 	public class Tools
 	{
-		public void BaseControl(WindowsElement element, string _element = "")
+		private static IParser _parser;
+		public Tools()
+		{
+			_parser = ParserFactory.GetParserObj();
+		}
+
+		public static void GetInfo(WindowsElement element, string xPath = null, string name = null, string accessibilityId = null)
 		{
 			string info = string.Empty;
 			if (element == null)
 			{
-				info = $"Unable to find element: {_element}\n";
-				
+				if (xPath != null)
+				{
+					info = $"Unable to find element by xPath: {xPath}\n";
+				}
+				else if (name != null)
+				{
+					info = $"Unable to find element by name: {name}\n";
+				}
+				else if (accessibilityId != null)
+				{
+					info = $"Unable to find element by accessibilityId: {accessibilityId}\n";
+				}
 			}
 			else
 			{
 				info = $"Name:{element.TagName} Text:{element.Text} Location-X:{element.Location.X} Location-Y:{element.Location.Y}\n";
-				//actualElement = element;
+				_parser.NewTestCase(info);
 			}
 		}
 
@@ -28,6 +44,10 @@ namespace ReportManager
 		{
 			string val = new TimeSpan(date.Ticks).ToString();
 			return val;
+		}
+
+		public IList<string> GetResults(){
+			return _parser.GetResults();
 		}
 	}
 }
