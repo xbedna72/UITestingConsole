@@ -7,6 +7,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -69,6 +70,7 @@ namespace ReportManager
 			application = "Microsoft.WindowsCalculator_8wekyb3d8bbwe!App"; //context.Properties["appName"].ToString();
 			winAppDriver = System.Diagnostics.Process.Start(@"C:\Program Files (x86)\Windows Application Driver\WinAppDriver.exe");
 			ActualReportModel = new ReportModel(context);
+			
 		}
 
 		public static void StopRunningApps()
@@ -89,11 +91,17 @@ namespace ReportManager
 			winAppDriver.WaitForExit();
 			winAppDriver.Dispose();
 
-			var results = Helper.GetResults();
 			var path = @"C:\Users\MayBee\Desktop\Results\r.txt";
 			string all = "";
-			foreach(string r in results){
-				all += r;
+			all += $"{ActualReportModel.testProjectName}\n";
+			foreach(var method in ActualReportModel.methods){
+				all += $"Test Method name: {method.methodName} #{method.num}\n";
+				all += $"{method.testMethodResult}\n";
+				foreach(var _case in method.cases){
+					all += $"Case: {_case.num}\n";
+					all += $"{_case.info}\n";
+					all += $"{_case.element.TagName}\n";
+				}
 			}
 			File.WriteAllText(path, all);
 		}

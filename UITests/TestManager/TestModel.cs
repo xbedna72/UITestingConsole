@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using OpenQA.Selenium.Appium.Windows;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -9,14 +10,14 @@ namespace ReportManager
 {
 	public class ReportModel
 	{
-		protected string testProjectName = string.Empty;
+		public string testProjectName = string.Empty;
 		public IList<TestMethodModel> methods = null;
 		private TestMethodModel actualMethod = null;
 		private static IParser _parser;
 
-		public ReportModel(TestContext context)
+		public ReportModel(string _projectName)
 		{
-			Initialize("name");
+			Initialize(_projectName);
 		}
 		public void Initialize(string _testName)
 		{
@@ -27,9 +28,15 @@ namespace ReportManager
 
 		public void NewMethod(string _methodName)
 		{
-			var _newMethod = new TestMethodModel(this.testProjectName, methods.Count+1);
+			var _newMethod = new TestMethodModel(this.testProjectName, methods.Count + 1);
 			methods.Add(_newMethod);
 			actualMethod = _newMethod;
+		}
+
+		public void NewCase(WindowsElement windowsElement, string xPath = null, string name = null, string accessibilityId = null)
+		{
+			var newElement = new TestCaseModel(actualMethod.cases.Count + 1);
+			actualMethod.cases.Add(_parser.GetInfo(windowsElement, newElement, xPath: xPath, name: name, accessibilityId: accessibilityId));
 		}
 	}
 
@@ -46,10 +53,6 @@ namespace ReportManager
 			num = _num;
 			cases = new List<TestCaseModel>();
 		}
-
-		public TestCaseModel NewCase(){
-			return new TestCaseModel(cases.Count+1);
-		}
 	}
 
 	//Per element
@@ -57,7 +60,7 @@ namespace ReportManager
 	{
 		public int num;
 		public bool result;
-		public string info;
+		public string info = "";
 		public byte[] screenshot = null;
 		public Element element = null;
 
