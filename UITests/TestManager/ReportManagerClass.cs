@@ -69,8 +69,7 @@ namespace ReportManager
 		{
 			application = "Microsoft.WindowsCalculator_8wekyb3d8bbwe!App"; //context.Properties["appName"].ToString();
 			winAppDriver = System.Diagnostics.Process.Start(@"C:\Program Files (x86)\Windows Application Driver\WinAppDriver.exe");
-			ActualReportModel = new ReportModel(context);
-			
+			ActualReportModel = new ReportModel("name");
 		}
 
 		public static void StopRunningApps()

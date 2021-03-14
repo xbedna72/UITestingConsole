@@ -33,27 +33,17 @@ namespace ReportManager
 				}else{
 					_case.info = $"Unable to find element with accessibilityId: {accessibilityId}\n";
 				}
-				
-			}else{
+				_case.result = false;
+			}
+			else{
 				_case.element.TagName = element.TagName;
+				if(element.TagName.EndsWith("Button")){
+					_case.screenshot = element.GetScreenshot().AsBase64EncodedString;
+				}
 				_case.element.Text = element.Text;
 				_case.element.Size = element.Size;
 				_case.element.Location = element.Location;
 			}
-
-			return _case;
-		}
-
-		public TestCaseModel GetInfo_name(WindowsElement element, TestCaseModel _case, string name)
-		{
-			string info = string.Empty;
-
-			return _case;
-		}
-
-		public TestCaseModel GetInfo_accessibilityId(WindowsElement element, TestCaseModel _case, string accessibilityId = null)
-		{
-			string info = string.Empty;
 
 			return _case;
 		}

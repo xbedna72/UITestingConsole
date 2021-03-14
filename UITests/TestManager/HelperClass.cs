@@ -59,7 +59,7 @@ namespace ReportManager
 					System.Threading.Thread.Sleep(500);
 				}
 			}
-			ReportManagerClass.ActualReportModel.NewCase(uiTarget, accessibilityId: accessibilityId);
+			ReportManagerClass.ActualReportModel.NewCase(uiTarget, accessibilityId:accessibilityId);
 			return uiTarget;
 		}
 
@@ -87,7 +87,7 @@ namespace ReportManager
 					System.Threading.Thread.Sleep(1000);
 				}
 			}
-			ReportManagerClass.ActualReportModel.NewCase(uiTarget, name: name);
+			ReportManagerClass.ActualReportModel.NewCase(uiTarget, name:name);
 			return uiTarget;
 		}
 	}

@@ -36,7 +36,11 @@ namespace ReportManager
 		public void NewCase(WindowsElement windowsElement, string xPath = null, string name = null, string accessibilityId = null)
 		{
 			var newElement = new TestCaseModel(actualMethod.cases.Count + 1);
-			actualMethod.cases.Add(_parser.GetInfo(windowsElement, newElement, xPath: xPath, name: name, accessibilityId: accessibilityId));
+			newElement = _parser.GetInfo(windowsElement, newElement, xPath: xPath, name: name, accessibilityId: accessibilityId);
+			actualMethod.cases.Add(newElement);
+			if(!newElement.result){
+				actualMethod.testMethodResult = Enums.TestResult.Failed;
+			}
 		}
 	}
 
@@ -61,28 +65,13 @@ namespace ReportManager
 		public int num;
 		public bool result;
 		public string info = "";
-		public byte[] screenshot = null;
+		public string screenshot = null;
 		public Element element = null;
 
 		public TestCaseModel(int _caseNum)
 		{
 			num = _caseNum;
 			element = new Element();
-		}
-
-		public void SetResult(bool _result)
-		{
-			this.result = _result;
-		}
-
-		public void SetScreenshot(byte[] _screenshot)
-		{
-			this.screenshot = _screenshot;
-		}
-
-		public void SetInfo(string _info)
-		{
-			this.info = _info;
 		}
 	}
 
