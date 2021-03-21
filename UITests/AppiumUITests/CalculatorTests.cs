@@ -25,7 +25,7 @@ namespace TestEditMaterializeCard
         [AssemblyCleanup()]
         public static void AssemblyCleanup()
         {
-            StopRunningApps();
+            FinalTasks();
         }
 
         [ClassInitialize()]

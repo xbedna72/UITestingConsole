@@ -50,6 +50,7 @@ namespace ReportManager
 		public int num;
 		public Enums.TestResult testMethodResult = Enums.TestResult.Unknown;
 		public IList<TestCaseModel> cases = null;
+		public string screenshot = null;
 
 		public TestMethodModel(string _methodName, int _num)
 		{
