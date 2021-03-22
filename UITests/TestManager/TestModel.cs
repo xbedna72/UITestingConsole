@@ -14,6 +14,7 @@ namespace ReportManager
 		public IList<TestMethodModel> methods = null;
 		private TestMethodModel actualMethod = null;
 		private static IParser _parser;
+		private static WindowsDriver<WindowsElement> driver = null;
 
 		public ReportModel(string _projectName)
 		{
@@ -26,8 +27,9 @@ namespace ReportManager
 			methods = new List<TestMethodModel>();
 		}
 
-		public void NewMethod(string _methodName)
+		public void NewMethod(string _methodName, WindowsDriver<WindowsElement> _driver)
 		{
+			driver = _driver;
 			var _newMethod = new TestMethodModel(this.testProjectName, methods.Count + 1);
 			methods.Add(_newMethod);
 			actualMethod = _newMethod;
@@ -36,9 +38,10 @@ namespace ReportManager
 		public void NewCase(WindowsElement windowsElement, string xPath = null, string name = null, string accessibilityId = null)
 		{
 			var newElement = new TestCaseModel(actualMethod.cases.Count + 1);
-			newElement = _parser.GetInfo(windowsElement, newElement, xPath: xPath, name: name, accessibilityId: accessibilityId);
+			newElement = _parser.GetInfo(windowsElement, driver, newElement, xPath: xPath, name: name, accessibilityId: accessibilityId);
 			actualMethod.cases.Add(newElement);
-			if(!newElement.result){
+			if(!newElement.result)
+			{
 				actualMethod.testMethodResult = Enums.TestResult.Failed;
 			}
 		}
@@ -66,7 +69,7 @@ namespace ReportManager
 		public int num;
 		public bool result;
 		public string info = "";
-		public string screenshot = null;
+		public byte[] screenshot = null;
 		public Element element = null;
 
 		public TestCaseModel(int _caseNum)

@@ -52,8 +52,7 @@ namespace ReportManager
 				root.Manage().Timeouts().ImplicitWait =
 					TimeSpan.FromSeconds(5);
 			}
-			ActualReportModel.NewMethod(context.TestName);
-
+			ActualReportModel.NewMethod(context.TestName, root);
 			return true;
 		}
 

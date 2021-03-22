@@ -8,7 +8,7 @@ namespace ReportManager
 	public interface IParser
 	{
 		IList<string> GetResults();
-		TestCaseModel GetInfo(WindowsElement element, TestCaseModel _case, string xPath = null, string name=null, string accessibilityId = null);
+		TestCaseModel GetInfo(WindowsElement element, WindowsDriver<WindowsElement> _driver, TestCaseModel _case, string xPath = null, string name=null, string accessibilityId = null);
 	}
 	public class Parser : IParser
 	{
@@ -23,7 +23,7 @@ namespace ReportManager
 			return results;
 		}
 
-		public TestCaseModel GetInfo(WindowsElement element, TestCaseModel _case, string xPath = null, string name=null, string accessibilityId = null)
+		public TestCaseModel GetInfo(WindowsElement element, WindowsDriver<WindowsElement> _driver, TestCaseModel _case, string xPath = null, string name=null, string accessibilityId = null)
 		{
 			if(element == null){
 				if(xPath != null){
@@ -38,11 +38,12 @@ namespace ReportManager
 			else{
 				_case.element.TagName = element.TagName;
 				if(element.TagName.EndsWith("Button")){
-					_case.screenshot = element.GetScreenshot().AsBase64EncodedString;
+					_case.screenshot = _driver.GetScreenshot().AsByteArray;
 				}
 				_case.element.Text = element.Text;
 				_case.element.Size = element.Size;
 				_case.element.Location = element.Location;
+				_case.result = true;
 			}
 
 			return _case;
