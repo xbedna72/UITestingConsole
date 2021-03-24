@@ -84,3 +84,4 @@ C:\Users\MayBee\source\repos\xbedna72\UITestingConsole\UITests\AppiumUITests\obj
 C:\Users\MayBee\source\repos\xbedna72\UITestingConsole\UITests\AppiumUITests\obj\Debug\AppiumUITests.csproj.CopyComplete
 C:\Users\MayBee\source\repos\xbedna72\UITestingConsole\UITests\AppiumUITests\obj\Debug\AppiumUITests.dll
 C:\Users\MayBee\source\repos\xbedna72\UITestingConsole\UITests\AppiumUITests\obj\Debug\AppiumUITests.pdb
+C:\Users\MayBee\source\repos\xbedna72\UITestingConsole\UITests\AppiumUITests\bin\Debug\System.Drawing.Common.dll

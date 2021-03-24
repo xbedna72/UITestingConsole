@@ -69,7 +69,6 @@ namespace ReportManager
 		public int num;
 		public bool result;
 		public string info = "";
-		public byte[] screenshot = null;
 		public Element element = null;
 
 		public TestCaseModel(int _caseNum)
@@ -83,6 +82,13 @@ namespace ReportManager
 	{
 		public string TagName;
 		public string Text;
+		public Point Location;
+		public Size Size;
+	}
+
+	public class MainWindow
+	{
+		public byte[] screenshot = null;
 		public Point Location;
 		public Size Size;
 	}

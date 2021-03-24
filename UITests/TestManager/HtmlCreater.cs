@@ -20,7 +20,7 @@ namespace ReportManager
 				foreach(TestCaseModel testCase in model.cases){
 					try{
 						fileContent += Test(testCase);
-					}catch{
+					}catch(Exception e){
 						fileContent += $"<div><p>Unable to generate test case informations<p></div>\n";
 					}
 				}
