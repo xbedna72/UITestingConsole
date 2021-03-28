@@ -68,7 +68,7 @@ namespace ReportManager
 
 		public static void Initialize(TestContext context)
 		{
-			application = "Microsoft.WindowsCalculator_8wekyb3d8bbwe!App"; //context.Properties["appName"].ToString();
+			application = context.Properties["appname"].ToString(); //"Microsoft.WindowsCalculator_8wekyb3d8bbwe!App";
 			contextProperties = context.Properties;
 			winAppDriver = System.Diagnostics.Process.Start(@"C:\Program Files (x86)\Windows Application Driver\WinAppDriver.exe");
 			ActualReportModel = new ReportModel("name");

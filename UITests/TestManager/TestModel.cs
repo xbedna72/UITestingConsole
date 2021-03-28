@@ -70,11 +70,13 @@ namespace ReportManager
 		public bool result;
 		public string info = "";
 		public Element element = null;
+		public MainWindow window = null;
 
 		public TestCaseModel(int _caseNum)
 		{
 			num = _caseNum;
 			element = new Element();
+			window = new MainWindow();
 		}
 	}
 
@@ -89,7 +91,7 @@ namespace ReportManager
 	public class MainWindow
 	{
 		public byte[] screenshot = null;
-		public Point Location;
+		public Point Position;
 		public Size Size;
 	}
 }

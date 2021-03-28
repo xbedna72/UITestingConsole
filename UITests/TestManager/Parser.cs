@@ -38,11 +38,18 @@ namespace ReportManager
 			else{
 				_case.element.TagName = element.TagName;
 				if(element.TagName.EndsWith("Button")){
-					_case.screenshot = _driver.GetScreenshot().AsByteArray;
+					try{
+						_case.window.screenshot = _driver.GetScreenshot().AsByteArray;
+						//_case.window.Size = _driver.Manage().Window.Size;
+						//_case.window.Position = _driver.Manage().Window.Position;
+						_case.element.Size = element.Size;
+						_case.element.Location = element.Location;
+					}
+					catch{
+						_case.window.screenshot = null;
+					}
 				}
 				_case.element.Text = element.Text;
-				_case.element.Size = element.Size;
-				_case.element.Location = element.Location;
 				_case.result = true;
 			}
 

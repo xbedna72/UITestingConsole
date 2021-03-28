@@ -114,6 +114,7 @@ namespace UITestingConsole
 			else
 			{
 				InputAgumentsProcess(tm);
+				
 			}
 			tm.Process(settingObject);
 			return;
@@ -133,7 +134,6 @@ namespace UITestingConsole
 			settingObject.sourceProject = BuildFlag ? slnPath.Replace(@"\\", @"\") : null;
 			InfoMessage("Done.");
 			InfoMessage("Preparing Runsettingfile.");
-			Parser.InsertAppNameParameter(settingObject.application);
 		}
 
 		#region SettingFile
@@ -256,18 +256,6 @@ namespace UITestingConsole
 				try
 				{
 					CreateDirectory(directory);
-				}
-				catch (Exception e)
-				{
-					ErrorMessage(e.Message.ToString());
-				}
-			}
-
-			if (!Directory.Exists(@"C:\TEMP\Results")){
-				InfoMessage("TEMP directory is missing.");
-				try
-				{
-					CreateDirectory(@"C:\TEMP\Results");
 				}
 				catch (Exception e)
 				{

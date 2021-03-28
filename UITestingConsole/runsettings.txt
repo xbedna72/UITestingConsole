@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RunSettings>
 	<TestRunParameters>
-		<Parameter name="appName" value="***" />
+		<Parameter name="appname" value="*appname*" />
+		<Parameter name"winappdriverpath" value="*winappdriverpath*" />
+		<Parameter name"resultfolder" value="*resultfolder*" />
 	</TestRunParameters>
 </RunSettings>

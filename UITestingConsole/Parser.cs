@@ -34,11 +34,12 @@ namespace UITestingConsole
 				{
 					System.Xml.Serialization.XmlSerializer writer = new System.Xml.Serialization.XmlSerializer(typeof(SettingObject));
 					var path = $"{_path}{_settingObject.settingFileName}.xml";
-					
-					if(File.Exists(path)){
+
+					if (File.Exists(path))
+					{
 						File.Delete(path);
 					}
-					
+
 					using (FileStream file = File.OpenWrite(path))
 					{
 						writer.Serialize(file, _settingObject);
@@ -52,10 +53,12 @@ namespace UITestingConsole
 			}
 		}
 
-		public static void InsertAppNameParameter(string appName){
+		public static void InsertAppNameParameter(string _string, int _parameter)
+		{
 			var path = Environment.CurrentDirectory.Replace("bin\\Debug", "runsettings.txt");
 			string text = File.ReadAllText(path);
-			text = text.Replace("***", appName);
+			text = text.Replace("*appname*", appName);
+
 			File.WriteAllText(path, text);
 		}
 
@@ -63,7 +66,7 @@ namespace UITestingConsole
 		{
 			var path = Environment.CurrentDirectory.Replace("bin\\Debug", "runsettings.txt");
 			string text = File.ReadAllText(path);
-			text = text.Replace(appName, "***");
+			text = text.Replace(appName, "*appname*");
 			File.WriteAllText(path, text);
 		}
 	}
