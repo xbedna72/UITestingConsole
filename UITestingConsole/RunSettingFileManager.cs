@@ -6,7 +6,22 @@ using System.Threading.Tasks;
 
 namespace UITestingConsole
 {
-	class RunSettingFileManager
+	public class RunSettingFileManager
 	{
+		public string content = "";
+
+		public RunSettingFileManager(){
+			content += $"<?xml version=\"1.0\" encoding=\"utf - 8\"?>\n" +
+			$"<RunSettings>\n<TestRunParameters>\n";
+		}
+
+		public void AddParameter(string _parameter, int _parameter){
+			
+		}
+
+		public void Final() 
+		{
+			content += $"</TestRunParameters>\n</RunSettings>\n";
+		}
 	}
 }
