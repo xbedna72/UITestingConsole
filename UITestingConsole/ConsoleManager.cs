@@ -114,8 +114,9 @@ namespace UITestingConsole
 			else
 			{
 				InputAgumentsProcess(tm);
-				
 			}
+			var settingFile = new RunSettingFileManager();
+			
 			tm.Process(settingObject);
 			return;
 		}

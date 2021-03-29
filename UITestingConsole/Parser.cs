@@ -53,15 +53,6 @@ namespace UITestingConsole
 			}
 		}
 
-		public static void InsertAppNameParameter(string _string, int _parameter)
-		{
-			var path = Environment.CurrentDirectory.Replace("bin\\Debug", "runsettings.txt");
-			string text = File.ReadAllText(path);
-			text = text.Replace("*appname*", appName);
-
-			File.WriteAllText(path, text);
-		}
-
 		public static void UpdateRunsetting(string appName)
 		{
 			var path = Environment.CurrentDirectory.Replace("bin\\Debug", "runsettings.txt");
