@@ -135,7 +135,9 @@ namespace UITestingConsole
 											{
 												consoleManager.resultsDirestory = args[i].ToString();
 												i++;
-											}else{
+											}
+											else
+											{
 												consoleManager.ErrorMessage("Input path to results directtory does not exists.");
 												break;
 											}

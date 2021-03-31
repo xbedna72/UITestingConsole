@@ -115,8 +115,8 @@ namespace UITestingConsole
 			{
 				InputAgumentsProcess(tm);
 			}
-			var settingFile = new RunSettingFileManager();
-			
+
+			RunSettingFileManager.CreateSettingFile(settingObject);
 			tm.Process(settingObject);
 			return;
 		}
@@ -126,9 +126,8 @@ namespace UITestingConsole
 			InfoMessage("Parsing values of inpput parameters into setting object.");
 			settingObject = new SettingObject();
 			_tm.TestBuild(testName);
-			settingObject.testProjectPath = _tm.GetTestProjectPath(testName, adapterPath);
-			settingObject.testProjectPath = settingObject.testProjectPath.Replace(@"\\", @"\");
-			settingObject.resultsDirectory = settingObject.resultsDirectory == null ? @"C:\TEMP\Results" : settingObject.resultsDirectory.Replace(@"\\", @"\");
+			settingObject.testProjectPath = _tm.GetTestProjectPath(testName, adapterPath).Replace(@"\\", @"\");
+			settingObject.resultsDirectory = settingObject.resultsDirectory == null ? null : settingObject.resultsDirectory.Replace(@"\\", @"\");
 			settingObject.testAdapterPath = adapterPath.Replace(@"\\", @"\");
 			settingObject.application = application.Replace(@"\\", @"\");
 			settingObject.buildRequest = BuildFlag;

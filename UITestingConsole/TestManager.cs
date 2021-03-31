@@ -56,7 +56,7 @@ namespace UITestingConsole
 			args += $"&& cd C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\Common7\\Tools && vstest.console.exe {_object.testProjectPath}";
 			args += $" /TestAdapterPath:{_object.testAdapterPath}";
 			args += $" /Settings:{GetRunSettings()}";
-			args += $" /ResultsDirectory:{_object.resultsDirectory}";
+			//args += $" /ResultsDirectory:{_object.resultsDirectory}";
 			System.Diagnostics.Process prc = new System.Diagnostics.Process();
 			prc.StartInfo.FileName = devCmd;
 			prc.StartInfo.Arguments = args;
@@ -78,10 +78,8 @@ namespace UITestingConsole
 		}
 		public void TestBuild(string _path)
 		{
-			InfoMessage("Preparing for test building process.");
 			string[] _string = Regex.Split(_path, "(.+)\\\\(.+)$");
 			RunScript(_string[1], _string[2], false.ToString());
-			InfoMessage("Done.");
 		}
 
 		private void RunScript(string _path, string _name, string _flag)
@@ -103,13 +101,6 @@ namespace UITestingConsole
 			return result;
 		}
 
-		public string GetTestResultsPath(string _path)
-		{
-			string[] _string = Regex.Split(_path, "(.+)\\\\(.+)$");
-
-			return _string[1];
-		}
-
 		private string GetScriptsDirectory()
 		{
 			string path = Regex.Replace(Directory.GetCurrentDirectory(), @"\\bin\\Debug", @"\Scripts");
@@ -124,7 +115,7 @@ namespace UITestingConsole
 
 		private void TearDown(SettingObject _object)
 		{
-			Parser.UpdateRunsetting(_object.application);
+			RunSettingFileManager.DeleteCreatedSettingFile();
 		}
 	}
 }
