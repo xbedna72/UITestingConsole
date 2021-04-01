@@ -53,7 +53,7 @@ namespace ReportManager
 				root.Manage().Timeouts().ImplicitWait =
 					TimeSpan.FromSeconds(5);
 			}
-			ActualReportModel.NewMethod(context.TestName, root);
+			ActualReportModel.NewMethod(root);
 			return true;
 		}
 
@@ -71,7 +71,8 @@ namespace ReportManager
 		{
 			application = context.Properties["application"].ToString(); //"Microsoft.WindowsCalculator_8wekyb3d8bbwe!App";
 			winAppDriver = System.Diagnostics.Process.Start(@"C:\Program Files (x86)\Windows Application Driver\WinAppDriver.exe");
-			ActualReportModel = new ReportModel(context.Properties["testProject"].ToString());
+			ActualReportModel = new ReportModel(context.FullyQualifiedTestClassName);
+			ActualReportModel.testProjectPath = context.Properties["testProjectPath"].ToString();
 			resultDirectory = context.Properties["resultDirectory"].ToString();
 		}
 

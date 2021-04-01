@@ -38,14 +38,14 @@ namespace UITestingConsole
 
 			if (settingObject.testProjectPath != null)
 			{
-				AddParameter("testProject", settingObject.testProjectPath);
+				AddParameter("testProjectPath", settingObject.testProjectPath);
 			}
 			Final();
 		}
 
 		public static void AddParameter(string _name, string _value)
 		{
-			content += $"\t<Parameter name=\"{_name}\" value=\"{_value}\" />\n";
+			content += $"\t\t<Parameter name=\"{_name}\" value=\"{_value}\" />\n";
 		}
 
 		public static void Final()
@@ -73,14 +73,14 @@ namespace UITestingConsole
 
 		public static void DeleteCreatedSettingFile()
 		{
-			//try
-			//{
-			//	File.Delete(Environment.CurrentDirectory.Replace("bin\\Debug", "runsettings.txt"));
-			//}
-			//catch (Exception e)
-			//{
-			//	throw new Exception($"Unable to delete runsettingfile.: {e.ToString()}");
-			//}
+			try
+			{
+				File.Delete(Environment.CurrentDirectory.Replace("bin\\Debug", "runsettings.txt"));
+			}
+			catch (Exception e)
+			{
+				throw new Exception($"Unable to delete runsettingfile.: {e.ToString()}");
+			}
 		}
 	}
 }

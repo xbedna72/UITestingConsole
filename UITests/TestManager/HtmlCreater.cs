@@ -14,8 +14,7 @@ namespace ReportManager
 		public HtmlCreater(ReportModel _report, string _path)
 		{
 			actualReport = _report;
-			filePath = $"C:\\Users\\MayBee\\Desktop\\Results";
-			filePath = GenerateResultFile();
+			filePath = GenerateResultFile(_path);
 			fileContent = StartOfHtml();
 			foreach (TestMethodModel model in actualReport.methods)
 			{
@@ -35,12 +34,12 @@ namespace ReportManager
 			File.WriteAllText(filePath, fileContent);
 		}
 
-		private string GenerateResultFile()
+		private string GenerateResultFile(string _path)
 		{
 			string _fileName = "Report-";
 			string date = DateTime.Now.ToString("yyyy-dd-M--HH-mm-ss");
 			_fileName = $"{_fileName}{date}.html";
-			this.filePath = $"{this.filePath}\\{_fileName}";
+			this.filePath = $"{_path}\\{_fileName}";
 			return this.filePath;
 		}
 
@@ -58,7 +57,8 @@ namespace ReportManager
 			$"img {{ width: 1000px;}}" +
 			$"#errorP{{ color: red; font-size: 20px; }}" +
 			$"</style>\n" +
-			$"</head>\n<body>\n";
+			$"</head>\n<body>\n" +
+			$"<h3>{actualReport.testProjectName}</h3>\n<h4>{actualReport.testProjectPath}</h4>";
 		}
 
 		private string Test(TestCaseModel _model)
@@ -72,7 +72,6 @@ namespace ReportManager
 				try
 				{
 					byte[] image = RenderButton(_model);
-					//string imageString = CutOutMainWindow(image, _model);
 					if (image != null)
 					{
 						test += $"<p>\nScreenshot</p>\n<img src=\"data:image/gif;base64,{Convert.ToBase64String(image)}\">\n";
@@ -114,6 +113,7 @@ namespace ReportManager
 			return imageBytes;
 		}
 
+		//Get Size of window does not work. This mathod is prepared for future updates.
 		private string CutOutMainWindow(byte[] _image, TestCaseModel _model)
 		{
 			System.Drawing.Rectangle rec = new System.Drawing.Rectangle(_model.window.Position, _model.window.Size);
