@@ -68,7 +68,7 @@ namespace ReportManager
 
 		public static void Initialize(TestContext context)
 		{
-			application = context.Properties["appname"].ToString(); //"Microsoft.WindowsCalculator_8wekyb3d8bbwe!App";
+			application = context.Properties["appname"].ToString(); //"Microsoft.WindowsCalculator_8wekyb3d8bbwe!App"; //
 			contextProperties = context.Properties;
 			winAppDriver = System.Diagnostics.Process.Start(@"C:\Program Files (x86)\Windows Application Driver\WinAppDriver.exe");
 			ActualReportModel = new ReportModel("name");
@@ -76,17 +76,15 @@ namespace ReportManager
 
 		public static void FinalTasks()
 		{
-			AppiumOptions options = new AppiumOptions();
-			options.AddAdditionalCapability("app", application);
-			options.AddAdditionalCapability("platformName", "windows");
-			options.AddAdditionalCapability("automationName", "windows");
-			desktopSession = new WindowsDriver<WindowsElement>(new Uri(WindowsApplicationDriverUrl), options);
-			foreach(var handle in desktopSession.WindowHandles){
-				desktopSession.SwitchTo().Window(handle);
-				desktopSession.Close();
+			if(desktopSession != null){
+				foreach (var handle in desktopSession.WindowHandles)
+				{
+					desktopSession.SwitchTo().Window(handle);
+					desktopSession.Close();
+				}
+				desktopSession.Quit();
+				desktopSession = null;
 			}
-			desktopSession.Quit();
-			desktopSession = null;
 
 			winAppDriver.Kill();
 			winAppDriver.WaitForExit();
