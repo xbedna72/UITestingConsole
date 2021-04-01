@@ -56,7 +56,7 @@ namespace UITestingConsole
 			args += $"&& cd C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\Common7\\Tools && vstest.console.exe {_object.testProjectPath}";
 			args += $" /TestAdapterPath:{_object.testAdapterPath}";
 			args += $" /Settings:{GetRunSettings()}";
-			//args += $" /ResultsDirectory:{_object.resultsDirectory}";
+			args += $" /ResultsDirectory:{_object.resultsDirectory}";
 			System.Diagnostics.Process prc = new System.Diagnostics.Process();
 			prc.StartInfo.FileName = devCmd;
 			prc.StartInfo.Arguments = args;
@@ -116,6 +116,10 @@ namespace UITestingConsole
 		private void TearDown(SettingObject _object)
 		{
 			RunSettingFileManager.DeleteCreatedSettingFile();
+		}
+
+		private void GetDebugFolder(string _path){
+			string[] result = Regex.Split(_path, @"\\(\w+)\..+$");
 		}
 	}
 }

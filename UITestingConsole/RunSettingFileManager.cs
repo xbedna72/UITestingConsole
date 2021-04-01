@@ -15,7 +15,7 @@ namespace UITestingConsole
 		public static void CreateSettingFile(SettingObject _object)
 		{
 			settingObject = _object;
-			content += $"<?xml version=\"1.0\" encoding=\"utf - 8\"?>\n" +
+			content += $"<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" +
 			$"<RunSettings>\n<TestRunParameters>\n";
 			if (settingObject.application != null)
 			{
