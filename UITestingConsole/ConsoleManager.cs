@@ -127,7 +127,7 @@ namespace UITestingConsole
 			settingObject = new SettingObject();
 			_tm.TestBuild(testName);
 			settingObject.testProjectPath = _tm.GetTestProjectPath(testName, adapterPath).Replace(@"\\", @"\");
-			settingObject.resultsDirectory = settingObject.resultsDirectory == null ? null : settingObject.resultsDirectory.Replace(@"\\", @"\");
+			settingObject.resultsDirectory = settingObject.resultsDirectory == null ? _tm.GetTestResultsFolder(testName) : settingObject.resultsDirectory.Replace(@"\\", @"\");
 			settingObject.testAdapterPath = adapterPath.Replace(@"\\", @"\");
 			settingObject.application = application.Replace(@"\\", @"\");
 			settingObject.buildRequest = BuildFlag;

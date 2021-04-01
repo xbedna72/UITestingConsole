@@ -16,7 +16,7 @@ namespace UITestingConsole
 		{
 			settingObject = _object;
 			content += $"<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" +
-			$"<RunSettings>\n<TestRunParameters>\n";
+			$"<RunSettings>\n\t<TestRunParameters>\n";
 			if (settingObject.application != null)
 			{
 				AddParameter("application", settingObject.application);
@@ -25,10 +25,6 @@ namespace UITestingConsole
 			if (settingObject.resultsDirectory != null)
 			{
 				AddParameter("resultDirectory", settingObject.resultsDirectory);
-			}
-			else
-			{
-				AddParameter("resultDirectory", "null");
 			}
 
 			if (settingObject.sourceProject != null)
@@ -49,12 +45,12 @@ namespace UITestingConsole
 
 		public static void AddParameter(string _name, string _value)
 		{
-			content += $"<Parameter name=\"{_name}\" value=\"{_value}\" />\n";
+			content += $"\t<Parameter name=\"{_name}\" value=\"{_value}\" />\n";
 		}
 
 		public static void Final()
 		{
-			content += $"</TestRunParameters>\n</RunSettings>\n";
+			content += $"\t</TestRunParameters>\n</RunSettings>\n";
 			CreateRunSettingFile(content);
 		}
 
@@ -77,14 +73,14 @@ namespace UITestingConsole
 
 		public static void DeleteCreatedSettingFile()
 		{
-			try
-			{
-				File.Delete(Environment.CurrentDirectory.Replace("bin\\Debug", "runsettings.txt"));
-			}
-			catch (Exception e)
-			{
-				throw new Exception($"Unable to delete runsettingfile.: {e.ToString()}");
-			}
+			//try
+			//{
+			//	File.Delete(Environment.CurrentDirectory.Replace("bin\\Debug", "runsettings.txt"));
+			//}
+			//catch (Exception e)
+			//{
+			//	throw new Exception($"Unable to delete runsettingfile.: {e.ToString()}");
+			//}
 		}
 	}
 }

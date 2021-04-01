@@ -20,6 +20,7 @@ namespace ReportManager
 		protected static WindowsDriver<WindowsElement> desktopSession;
 		protected static WindowsDriver<WindowsElement> root;
 		protected static string application = string.Empty;
+		protected static string resultDirectory = string.Empty;
 		static System.Diagnostics.Process winAppDriver = null;
 		public static ReportModel ActualReportModel = null;
 		public static System.Collections.IDictionary contextProperties = null;
@@ -68,10 +69,10 @@ namespace ReportManager
 
 		public static void Initialize(TestContext context)
 		{
-			application = context.Properties["appname"].ToString(); //"Microsoft.WindowsCalculator_8wekyb3d8bbwe!App"; //
-			contextProperties = context.Properties;
+			application = context.Properties["application"].ToString(); //"Microsoft.WindowsCalculator_8wekyb3d8bbwe!App";
 			winAppDriver = System.Diagnostics.Process.Start(@"C:\Program Files (x86)\Windows Application Driver\WinAppDriver.exe");
-			ActualReportModel = new ReportModel("name");
+			ActualReportModel = new ReportModel(context.Properties["testProject"].ToString());
+			resultDirectory = context.Properties["resultDirectory"].ToString();
 		}
 
 		public static void FinalTasks()
@@ -90,7 +91,7 @@ namespace ReportManager
 			winAppDriver.WaitForExit();
 			winAppDriver.Dispose();
 
-			new HtmlCreater(ActualReportModel, contextProperties["TestResultsDirectory"].ToString());
+			new HtmlCreater(ActualReportModel, resultDirectory);
 		}
 	}
 }

@@ -10,7 +10,7 @@ namespace ReportManager
 {
 	public class ReportModel
 	{
-		public string testProjectName = string.Empty;
+		public string testProject = string.Empty;
 		public IList<TestMethodModel> methods = null;
 		private TestMethodModel actualMethod = null;
 		private static IParser _parser;
@@ -20,17 +20,17 @@ namespace ReportManager
 		{
 			Initialize(_projectName);
 		}
-		public void Initialize(string _testName)
+		public void Initialize(string _testProject)
 		{
 			_parser = ParserFactory.GetParserObj();
-			testProjectName = _testName;
+			testProject = _testProject;
 			methods = new List<TestMethodModel>();
 		}
 
 		public void NewMethod(string _methodName, WindowsDriver<WindowsElement> _driver)
 		{
 			driver = _driver;
-			var _newMethod = new TestMethodModel(this.testProjectName, methods.Count + 1);
+			var _newMethod = new TestMethodModel(this.testProject, methods.Count + 1);
 			methods.Add(_newMethod);
 			actualMethod = _newMethod;
 		}

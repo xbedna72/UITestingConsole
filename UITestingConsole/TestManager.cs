@@ -63,7 +63,7 @@ namespace UITestingConsole
 			prc.StartInfo.CreateNoWindow = true;
 			prc.StartInfo.RedirectStandardInput = true;
 			prc.StartInfo.RedirectStandardOutput = true;
-			prc.StartInfo.RedirectStandardError = false;
+			prc.StartInfo.RedirectStandardError = true;
 			prc.StartInfo.UseShellExecute = false;
 			InfoMessage("Process Start");
 			prc.Start();
@@ -118,8 +118,21 @@ namespace UITestingConsole
 			RunSettingFileManager.DeleteCreatedSettingFile();
 		}
 
-		private void GetDebugFolder(string _path){
-			string[] result = Regex.Split(_path, @"\\(\w+)\..+$");
+		public string GetTestResultsFolder(string _path)
+		{
+			string[] res1 = Regex.Split(_path, @"\\");
+			string result = "";
+			for (int i = 0; i < res1.Length; i++)
+			{
+				if (i == res1.Length - 1)
+				{
+					string[] str = Regex.Split(res1[i], @"\.");
+					result += $"{str[0]}\\TestResults";
+					break;
+				}
+				result += $"{res1[i]}\\";
+			}
+			return result;
 		}
 	}
 }
