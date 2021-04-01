@@ -52,13 +52,5 @@ namespace UITestingConsole
 				}
 			}
 		}
-
-		public static void UpdateRunsetting(string appName)
-		{
-			var path = Environment.CurrentDirectory.Replace("bin\\Debug", "runsettings.txt");
-			string text = File.ReadAllText(path);
-			text = text.Replace(appName, "*appname*");
-			File.WriteAllText(path, text);
-		}
 	}
 }
