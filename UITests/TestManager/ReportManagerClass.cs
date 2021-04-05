@@ -24,6 +24,7 @@ namespace ReportManager
 		static System.Diagnostics.Process winAppDriver = null;
 		public static ReportModel ActualReportModel = null;
 		public static System.Collections.IDictionary contextProperties = null;
+
 		public static bool Setup(TestContext context)
 		{
 			if (desktopSession == null)

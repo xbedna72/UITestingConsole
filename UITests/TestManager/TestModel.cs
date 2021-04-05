@@ -24,7 +24,7 @@ namespace ReportManager
 		public void Initialize(string _testProject)
 		{
 			_parser = ParserFactory.GetParserObj();
-			testProjectName = _testProject;
+			testProjectName = _parser.ParseProjectName(_testProject);
 			methods = new List<TestMethodModel>();
 		}
 
@@ -63,7 +63,6 @@ namespace ReportManager
 		}
 	}
 
-	//Per element
 	public class TestCaseModel
 	{
 		public int num;

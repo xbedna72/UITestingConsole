@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace ReportManager
 {
@@ -9,6 +10,7 @@ namespace ReportManager
 	{
 		IList<string> GetResults();
 		TestCaseModel GetInfo(WindowsElement element, WindowsDriver<WindowsElement> _driver, TestCaseModel _case, string xPath = null, string name=null, string accessibilityId = null);
+		string ParseProjectName(string _name);
 	}
 	public class Parser : IParser
 	{
@@ -40,8 +42,6 @@ namespace ReportManager
 				if(element.TagName.EndsWith("Button")){
 					try{
 						_case.window.screenshot = _driver.GetScreenshot().AsByteArray;
-						//_case.window.Size = _driver.Manage().Window.Size;
-						//_case.window.Position = _driver.Manage().Window.Position;
 						_case.element.Size = element.Size;
 						_case.element.Location = element.Location;
 					}
@@ -54,6 +54,11 @@ namespace ReportManager
 			}
 
 			return _case;
+		}
+
+		public string ParseProjectName(string _name){
+			string[] str = Regex.Split(_name, @"\.");
+			return str[str.Length - 1].ToString();
 		}
 
 		private static string CreateHash(DateTime date)

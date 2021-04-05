@@ -58,7 +58,7 @@ namespace ReportManager
 			$"#errorP{{ color: red; font-size: 20px; }}" +
 			$"</style>\n" +
 			$"</head>\n<body>\n" +
-			$"<h3>{actualReport.testProjectName}</h3>\n<h4>{actualReport.testProjectPath}</h4>";
+			$"<div id=\"header\"><h3>{actualReport.testProjectName}</h3>\n<h4>{actualReport.testProjectPath}</h4></div>";
 		}
 
 		private string Test(TestCaseModel _model)
