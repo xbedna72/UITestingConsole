@@ -57,7 +57,7 @@ namespace UITestingConsole
 
 		//try
 		//{
-		//	Loop();
+		//	Loop();  
 		//}
 		//catch (Exception e)
 		//{
@@ -164,7 +164,7 @@ namespace UITestingConsole
 
 														consoleManager.slnPath = args[i];
 														consoleManager.BuildFlag = true;
-														return true;
+														return false;
 													}
 													else
 													{
@@ -175,7 +175,7 @@ namespace UITestingConsole
 												consoleManager.ErrorMessage($"Unknown parameters on position: {i}");
 												break;
 											}
-											return true;
+											return false;
 										}
 										else
 										{
@@ -216,14 +216,12 @@ namespace UITestingConsole
 							Console.WriteLine("Help text.");
 							return true;
 						}
-						break;
 					}
 				}
 				catch (Exception e)
 				{
 					e.ToString();
 					consoleManager.ErrorMessage("Wrong formate of input arguments. Run with \"?\" or \"-h\" for help.");
-					break;
 				}
 			}
 			consoleManager.ErrorInput = true;
