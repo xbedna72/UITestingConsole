@@ -31,201 +31,199 @@ namespace UITestingConsole
 			{
 				var helpFlag = ParseInputArguments(args);
 
-				if (!helpFlag && consoleManager.ErrorInput)
+				if (consoleManager.ErrorInput)
 				{
 					consoleManager.ErrorEnd("End...");
-				}
-				else if (consoleManager.Run)
-				{
-					try
-					{
-						consoleManager.Process();
-						consoleManager.End();
-					}
-					catch (Exception e)
-					{
-						consoleManager.ErrorEnd(e.ToString());
-					}
-
 				}
 				else if (helpFlag)
 				{
 					consoleManager.End();
 				}
+
+				try
+				{
+					consoleManager.Process();
+					consoleManager.End();
+				}
+				catch (Exception e)
+				{
+					consoleManager.ErrorEnd(e.ToString());
+				}
 			}
 
-			try
-			{
-				Loop();
-			}
-			catch (Exception e)
-			{
-				consoleManager.ErrorMessage(e.Message.ToString());
-			}
-
+			consoleManager.ErrorMessage("No arguments passed. Invalid input. Console ends.");
 			consoleManager.End();
 		}
 
-		static void Loop()
-		{
-			while (true)
-			{
-				Console.Write(">> ");
-				consoleManager.input = Console.ReadLine().Split(' ');
-				int r = consoleManager.Decision();
-				switch (r)
-				{
-					case 0:
-						return;
-					case 1:
-						Console.WriteLine("Run");
-						consoleManager.Run = true;
-						break;
-					case 2:
-						consoleManager.NewSettingFile();
-						break;
-					case 3:
-						if (!consoleManager.SetSettingFile())
-						{
-							consoleManager.ErrorMessage("Unable to set setting file.");
-						}
-						break;
-					case 4:
-						consoleManager.ShowAllSettingFiles();
-						break;
-					default:
-						consoleManager.ErrorMessage("Unknown command or wrong format of argument.");
-						break;
-				}
-				if (consoleManager.Run)
-				{
-					consoleManager.Process();
-				}
-			}
-		}
+		//try
+		//{
+		//	Loop();
+		//}
+		//catch (Exception e)
+		//{
+		//	consoleManager.ErrorMessage(e.ToString());
+		//}
+
+		//Loop method for interacting using, planning to finishe in next release
+		//static void Loop()
+		//{
+		//	while (true)
+		//	{
+		//		Console.Write(">> ");
+		//		consoleManager.input = Console.ReadLine().Split(' ');
+		//		int r = consoleManager.Decision();
+		//		switch (r)
+		//		{
+		//			case 0:
+		//				return;
+		//			case 1:
+		//				Console.WriteLine("Run");
+		//				consoleManager.Run = true;
+		//				break;
+		//			case 2:
+		//				consoleManager.NewSettingFile();
+		//				break;
+		//			case 3:
+		//				if (!consoleManager.SetSettingFile())
+		//				{
+		//					consoleManager.ErrorMessage("Unable to set setting file.");
+		//				}
+		//				break;
+		//			case 4:
+		//				consoleManager.ShowAllSettingFiles();
+		//				break;
+		//			default:
+		//				consoleManager.ErrorMessage("Unknown command or wrong format of argument.");
+		//				break;
+		//		}
+		//		if (consoleManager.Run)
+		//		{
+		//			consoleManager.Process();
+		//		}
+		//	}
+		//}
 
 		static bool ParseInputArguments(string[] args)
 		{
 			for (int i = 0; i < args.Count(); i++)
 			{
-				if (args[i].Equals("-a", StringComparison.OrdinalIgnoreCase))
+				try
 				{
-					consoleManager.Run = true;
-					i++;
-					try
+					if (args[i].Equals("/TestSolutionPath:"))
 					{
-						if (args[i].Equals("/TestSolutionPath:"))
+						i++;
+						if (Regex.IsMatch(args[i], "[A-Z]:(\\\\(.+))+.sln$"))
 						{
+							consoleManager.testName = args[i];
 							i++;
-							if (Regex.IsMatch(args[i], "[A-Z]:(\\\\(.+))+.sln$"))
+							if (args[i].Equals("/TestAdapterPath:"))
 							{
-								consoleManager.testName = args[i];
 								i++;
-								if (args[i].Equals("/TestAdapterPath:"))
+								if (args[i].Length > 0)
 								{
+									consoleManager.adapterPath = args[i];
 									i++;
-									if (args[i].Length > 0)
+									if (args[i].Equals("/TestResultsDirectory"))
 									{
-										consoleManager.adapterPath = args[i];
 										i++;
-										if (args[i].Equals("/TestResultsDirectory"))
+										if (Directory.Exists(args[i].ToString()))
 										{
+											consoleManager.resultsDirestory = args[i].ToString();
 											i++;
-											if (Directory.Exists(args[i].ToString()))
-											{
-												consoleManager.resultsDirestory = args[i].ToString();
-												i++;
-											}
-											else
-											{
-												consoleManager.ErrorMessage("Input path to results directtory does not exists.");
-												break;
-											}
-										}
-										if (args[i].Equals("/Application:"))
-										{
-											i++;
-											if (args[i].Length > 0)
-											{
-												consoleManager.application = args[i];
-												if (i + 1 < args.Count())
-												{
-													i++;
-													if (args[i].Equals("-b", StringComparison.OrdinalIgnoreCase))
-													{
-														i++;
-														if (Regex.IsMatch(args[i], "[A-Z]:(\\\\(.+))+.sln$"))
-														{
-															consoleManager.slnPath = args[i];
-															consoleManager.BuildFlag = true;
-															return true;
-														}
-														else
-														{
-															consoleManager.ErrorMessage($"The path or name of solution is wrong or missing.");
-															break;
-														}
-													}
-													consoleManager.ErrorMessage($"Unknown parameters on position: {i}");
-													break;
-												}
-												return true;
-											}
-											else
-											{
-												consoleManager.ErrorMessage("Wrong format of Application name. Absolute path with name of .exe file.");
-												break;
-											}
 										}
 										else
 										{
-											consoleManager.ErrorMessage("Parameter Application in bad format or missing.");
+											consoleManager.ErrorMessage("Input path to results directtory does not exists.");
+											break;
 										}
 									}
 									else
 									{
-										consoleManager.ErrorMessage("Wrong format of Application name. Absolute path with name of .exe file.");
+										consoleManager.resultsDirestory = null;
+									}
+
+									if (args[i].Equals("/Application:"))
+									{
+										i++;
+										if (args[i].Length > 0)
+										{
+											consoleManager.application = args[i];
+											if (i + 1 < args.Count())
+											{
+												i++;
+												if (args[i].Equals("-b", StringComparison.OrdinalIgnoreCase))
+												{
+													i++;
+													if (Regex.IsMatch(args[i], "[A-Z]:(\\\\(.+))+.sln$"))
+													{
+														if (args.Count() > i + 1)
+														{
+															consoleManager.ErrorMessage($"Too mutch passed arguments.");
+															break;
+														}
+
+														consoleManager.slnPath = args[i];
+														consoleManager.BuildFlag = true;
+														return true;
+													}
+													else
+													{
+														consoleManager.ErrorMessage($"The path or name of solution is wrong or missing.");
+														break;
+													}
+												}
+												consoleManager.ErrorMessage($"Unknown parameters on position: {i}");
+												break;
+											}
+											return true;
+										}
+										else
+										{
+											consoleManager.ErrorMessage("Wrong format of Application name. Absolute path with name of .exe file.");
+											break;
+										}
+									}
+									else
+									{
+										consoleManager.ErrorMessage("Parameter Application in bad format or missing.");
 									}
 								}
 								else
 								{
-									consoleManager.ErrorMessage("Parameter TestAdapterPath is missing.");
+									consoleManager.ErrorMessage("Wrong format of Application name. Absolute path with name of .exe file.");
 								}
 							}
 							else
 							{
-								consoleManager.ErrorMessage("Wrong format of Test solution absolute path. File type .sln.");
+								consoleManager.ErrorMessage("Parameter TestAdapterPath is missing.");
 							}
-							break;
 						}
-						else if (args[i + 1].Equals("/SettingFile:"))
+						else
 						{
-							consoleManager.actualSettingFile = args[i + 2];
-							return true;
+							consoleManager.ErrorMessage("Wrong format of Test solution absolute path. File type .sln.");
 						}
-						consoleManager.ErrorMessage("Undefined input parameter.");
 						break;
 					}
-					catch (Exception e)
+					else if (args[i + 1].Equals("/SettingFile:"))
 					{
-						e.ToString();
-						consoleManager.ErrorMessage("Wrong formate of input arguments. Run with \"?\" or \"-h\" for help.");
-						break;
-					}
-				}
-				else if (args[i].Equals("?", StringComparison.OrdinalIgnoreCase) || args[i].Equals("-h", StringComparison.OrdinalIgnoreCase))
-				{
-					if (args.Count() == 1)
-					{
-						Console.WriteLine("Help text.");
+						consoleManager.actualSettingFile = args[i + 2];
 						return true;
 					}
-					break;
+					else if (args[i].Equals("?", StringComparison.OrdinalIgnoreCase) || args[i].Equals("-h", StringComparison.OrdinalIgnoreCase) || args[i].Equals("help", StringComparison.OrdinalIgnoreCase))
+					{
+						if (args.Count() == 1)
+						{
+							Console.WriteLine("Help text.");
+							return true;
+						}
+						break;
+					}
 				}
-				else
+				catch (Exception e)
 				{
-					consoleManager.ErrorInput = true;
-					return false;
+					e.ToString();
+					consoleManager.ErrorMessage("Wrong formate of input arguments. Run with \"?\" or \"-h\" for help.");
+					break;
 				}
 			}
 			consoleManager.ErrorInput = true;

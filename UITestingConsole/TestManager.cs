@@ -67,11 +67,6 @@ namespace UITestingConsole
 			prc.StartInfo.UseShellExecute = false;
 			InfoMessage("Process Start");
 			prc.Start();
-			while (!prc.HasExited)
-			{
-				InfoMessage(prc.StandardOutput.ReadToEnd());
-			}
-			InfoMessage("Waiting for exit");
 			prc.WaitForExit();
 			InfoMessage("End of tests");
 			TearDown(_object);
