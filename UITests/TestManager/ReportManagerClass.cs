@@ -17,8 +17,8 @@ namespace ReportManager
 	public class ReportManagerClass
 	{
 		protected const string WindowsApplicationDriverUrl = "http://127.0.0.1:4723";
+		protected static WindowsDriver<WindowsElement> desktopSessionMain;
 		protected static WindowsDriver<WindowsElement> desktopSession;
-		protected static WindowsDriver<WindowsElement> root;
 		protected static string application = string.Empty;
 		protected static string resultDirectory = string.Empty;
 		static System.Diagnostics.Process winAppDriver = null;
@@ -27,44 +27,44 @@ namespace ReportManager
 
 		public static bool Setup(TestContext context)
 		{
-			if (desktopSession == null)
+			if (desktopSessionMain == null)
 			{
 				AppiumOptions options = new AppiumOptions();
 				options.AddAdditionalCapability("app", application);
 				options.AddAdditionalCapability("platformName", "windows");
 				options.AddAdditionalCapability("automationName", "windows");
-				desktopSession = new WindowsDriver<WindowsElement>(new Uri(WindowsApplicationDriverUrl), options);
+				desktopSessionMain = new WindowsDriver<WindowsElement>(new Uri(WindowsApplicationDriverUrl), options);
+				if (desktopSessionMain == null || desktopSessionMain.SessionId == null)
+				{
+					return false;
+				}
+			}
+
+			if (desktopSession == null)
+			{
+				AppiumOptions opts = new AppiumOptions();
+				opts.AddAdditionalCapability("app", "Root");
+				desktopSession = new WindowsDriver<WindowsElement>(new Uri(WindowsApplicationDriverUrl), opts);
+
 				if (desktopSession == null || desktopSession.SessionId == null)
 				{
 					return false;
 				}
-			}
 
-			if (root == null)
-			{
-				AppiumOptions opts = new AppiumOptions();
-				opts.AddAdditionalCapability("app", "Root");
-				root = new WindowsDriver<WindowsElement>(new Uri(WindowsApplicationDriverUrl), opts);
-
-				if (root == null || root.SessionId == null)
-				{
-					return false;
-				}
-
-				root.Manage().Timeouts().ImplicitWait =
+				desktopSession.Manage().Timeouts().ImplicitWait =
 					TimeSpan.FromSeconds(5);
 			}
-			ActualReportModel.NewMethod(root);
+			ActualReportModel.NewMethod(desktopSession);
 			return true;
 		}
 
 		public static void TearDown()
 		{
-			if (root != null)
+			if (desktopSession != null)
 			{
-				root.Close();
-				root.Quit();
-				root = null;
+				desktopSession.Close();
+				desktopSession.Quit();
+				desktopSession = null;
 			}
 		}
 
@@ -77,23 +77,31 @@ namespace ReportManager
 			resultDirectory = context.Properties["resultDirectory"].ToString();
 		}
 
+		public static void Initialize(string _resultDirectory, string _application){
+			application = _application;
+			winAppDriver = System.Diagnostics.Process.Start(@"C:\Program Files (x86)\Windows Application Driver\WinAppDriver.exe");
+			resultDirectory = _resultDirectory;
+		}
+
 		public static void FinalTasks()
 		{
-			if(desktopSession != null){
-				foreach (var handle in desktopSession.WindowHandles)
+			if(desktopSessionMain != null){
+				foreach (var handle in desktopSessionMain.WindowHandles)
 				{
-					desktopSession.SwitchTo().Window(handle);
-					desktopSession.Close();
+					desktopSessionMain.SwitchTo().Window(handle);
+					desktopSessionMain.Close();
 				}
-				desktopSession.Quit();
-				desktopSession = null;
+				desktopSessionMain.Quit();
+				desktopSessionMain = null;
 			}
 
 			winAppDriver.Kill();
 			winAppDriver.WaitForExit();
 			winAppDriver.Dispose();
 
-			new HtmlCreater(ActualReportModel, resultDirectory);
+			if(ActualReportModel != null){
+				new HtmlCreater(ActualReportModel, resultDirectory);
+			}
 		}
 	}
 }
