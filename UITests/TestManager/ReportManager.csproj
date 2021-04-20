@@ -2,6 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageId>AuTeReporter</PackageId>
+    <Authors>Marie Bednářová</Authors>
+    <Company>Brno University of Technology, Faculty of Information Technology</Company>
+    <Product>Library</Product>
+    <AssemblyName>AuTeReporter</AssemblyName>
+    <RootNamespace>AuTeReporter</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

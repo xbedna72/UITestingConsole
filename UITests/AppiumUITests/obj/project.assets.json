@@ -146,7 +146,7 @@
           }
         }
       },
-      "ReportManager/1.0.0": {
+      "AuTeReporter/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
@@ -155,10 +155,10 @@
           "System.Drawing.Common": "5.0.2"
         },
         "compile": {
-          "bin/placeholder/ReportManager.dll": {}
+          "bin/placeholder/AuTeReporter.dll": {}
         },
         "runtime": {
-          "bin/placeholder/ReportManager.dll": {}
+          "bin/placeholder/AuTeReporter.dll": {}
         }
       }
     },
@@ -277,7 +277,7 @@
           "ref/netstandard2.0/System.Management.Automation.dll": {}
         }
       },
-      "ReportManager/1.0.0": {
+      "AuTeReporter/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
@@ -286,10 +286,10 @@
           "System.Drawing.Common": "5.0.2"
         },
         "compile": {
-          "bin/placeholder/ReportManager.dll": {}
+          "bin/placeholder/AuTeReporter.dll": {}
         },
         "runtime": {
-          "bin/placeholder/ReportManager.dll": {}
+          "bin/placeholder/AuTeReporter.dll": {}
         }
       }
     },
@@ -411,7 +411,7 @@
           "runtimes/win-x64/lib/netstandard2.0/System.Management.Automation.dll": {}
         }
       },
-      "ReportManager/1.0.0": {
+      "AuTeReporter/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
@@ -420,10 +420,10 @@
           "System.Drawing.Common": "5.0.2"
         },
         "compile": {
-          "bin/placeholder/ReportManager.dll": {}
+          "bin/placeholder/AuTeReporter.dll": {}
         },
         "runtime": {
-          "bin/placeholder/ReportManager.dll": {}
+          "bin/placeholder/AuTeReporter.dll": {}
         }
       }
     },
@@ -545,7 +545,7 @@
           "runtimes/win-x86/lib/netstandard2.0/System.Management.Automation.dll": {}
         }
       },
-      "ReportManager/1.0.0": {
+      "AuTeReporter/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
@@ -554,10 +554,10 @@
           "System.Drawing.Common": "5.0.2"
         },
         "compile": {
-          "bin/placeholder/ReportManager.dll": {}
+          "bin/placeholder/AuTeReporter.dll": {}
         },
         "runtime": {
-          "bin/placeholder/ReportManager.dll": {}
+          "bin/placeholder/AuTeReporter.dll": {}
         }
       }
     }
@@ -920,7 +920,7 @@
         "system.management.automation.nuspec"
       ]
     },
-    "ReportManager/1.0.0": {
+    "AuTeReporter/1.0.0": {
       "type": "project",
       "path": "../TestManager/ReportManager.csproj",
       "msbuildProject": "../TestManager/ReportManager.csproj"
@@ -929,9 +929,9 @@
   "projectFileDependencyGroups": {
     ".NETFramework,Version=v4.7.2": [
       "Appium.WebDriver >= 4.1.1",
+      "AuTeReporter >= 1.0.0",
       "MSTest.TestAdapter >= 2.1.2",
       "MSTest.TestFramework >= 2.1.2",
-      "ReportManager >= 1.0.0",
       "Selenium.WebDriver >= 3.141.0",
       "System.Management.Automation >= 6.1.0"
     ]
