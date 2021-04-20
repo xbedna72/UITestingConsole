@@ -14,5 +14,13 @@ namespace ReportManager
 			Unknown=7,
 			NotRunnable=8
 		}
+
+		public enum Actions{
+			Find=0,
+			Click=1,
+			SendKey=2,
+			CheckAtribute=3,
+			Note=4
+		}
 	}
 }
