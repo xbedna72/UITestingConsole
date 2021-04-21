@@ -31,9 +31,9 @@ namespace ReportManager
 					System.Threading.Thread.Sleep(500);
 				}
 			}
-			if (ReportManagerClass.ActualReportModel != null)
+			if (ReportManager.ActualReportModel != null)
 			{
-				ReportManagerClass.ActualReportModel.NewCase(uiTarget, xPath: xPath);
+				ReportManager.ActualReportModel.NewCase(uiTarget, xPath: xPath);
 			}
 			return uiTarget;
 		}
@@ -62,8 +62,8 @@ namespace ReportManager
 					System.Threading.Thread.Sleep(500);
 				}
 			}
-			if(ReportManagerClass.ActualReportModel != null){
-				ReportManagerClass.ActualReportModel.NewCase(uiTarget, accessibilityId: accessibilityId);
+			if(ReportManager.ActualReportModel != null){
+				ReportManager.ActualReportModel.NewCase(uiTarget, accessibilityId: accessibilityId);
 			}
 			return uiTarget;
 		}
@@ -92,9 +92,9 @@ namespace ReportManager
 					System.Threading.Thread.Sleep(1000);
 				}
 			}
-			if (ReportManagerClass.ActualReportModel != null)
+			if (ReportManager.ActualReportModel != null)
 			{
-				ReportManagerClass.ActualReportModel.NewCase(uiTarget, name: name);
+				ReportManager.ActualReportModel.NewCase(uiTarget, name: name);
 			}
 			return uiTarget;
 		}
