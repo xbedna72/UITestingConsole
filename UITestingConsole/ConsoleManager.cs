@@ -20,11 +20,14 @@ namespace UITestingConsole
 		private bool runFlag = false;
 		private bool errorInputFlag = false;
 		private bool buildFlag = false;
+		private bool sendFlag = false;
+
 		public string testName = null;
 		public string executable = null;
 		public string slnPath = null;
 		public string adapterPath = null;
 		public string resultsDirestory = null;
+		public string emailsPath = null;
 
 		public bool Run
 		{
@@ -40,6 +43,11 @@ namespace UITestingConsole
 		{
 			get { return buildFlag; }
 			set { buildFlag = value; }
+		}
+		public bool SendFlag
+		{
+			get { return sendFlag; }
+			set { sendFlag = value; }
 		}
 		#endregion
 

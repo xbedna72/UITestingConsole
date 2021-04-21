@@ -154,17 +154,11 @@ namespace UITestingConsole
 												if (args[i].Equals("-b", StringComparison.OrdinalIgnoreCase))
 												{
 													i++;
-													if (Regex.IsMatch(args[i], "[A-Z]:(\\\\(.+))+.sln$"))
+													if (args.Count() <= i && Regex.IsMatch(args[i], "[A-Z]:(\\\\(.+))+.sln$"))
 													{
-														if (args.Count() > i + 1)
-														{
-															consoleManager.ErrorMessage($"Too mutch passed arguments.");
-															break;
-														}
-
 														consoleManager.slnPath = args[i];
 														consoleManager.BuildFlag = true;
-														return false;
+														i++;
 													}
 													else
 													{
@@ -172,8 +166,27 @@ namespace UITestingConsole
 														break;
 													}
 												}
-												consoleManager.ErrorMessage($"Unknown parameters on position: {i}");
-												break;
+
+												if (args[i].Equals("-s", StringComparison.OrdinalIgnoreCase))
+												{
+													i++;
+													if (args.Count() <= i && Regex.IsMatch(args[i], @".+\\emails\.xml$"))
+													{
+														consoleManager.emailsPath = args[i];
+														consoleManager.SendFlag = true;
+													}
+													else
+													{
+														consoleManager.ErrorMessage($"The path to file with emails is wrong or missing.");
+														break;
+													}
+												}
+												
+												if(args.Count() > i + 1)
+												{
+													consoleManager.ErrorMessage($"Unknown parameters on position: {i}");
+													break;
+												}
 											}
 											return false;
 										}
