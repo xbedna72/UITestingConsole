@@ -32,7 +32,7 @@ namespace UITestingConsole
 			}
 		}
 
-		public void Process(SettingObject _object)
+		public void Run(SettingObject _object)
 		{
 			InfoMessage("Process.");
 			if (_object != null)

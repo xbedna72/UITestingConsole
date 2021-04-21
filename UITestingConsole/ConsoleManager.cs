@@ -117,7 +117,7 @@ namespace UITestingConsole
 			}
 
 			RunSettingFileManager.CreateSettingFile(settingObject);
-			tm.Process(settingObject);
+			tm.Run(settingObject);
 			return;
 		}
 
