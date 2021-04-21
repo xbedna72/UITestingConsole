@@ -39,7 +39,7 @@ namespace ReportManager
 		public void NewCase(WindowsElement windowsElement, string xPath = null, string name = null, string accessibilityId = null)
 		{
 			var newElement = new TestCaseModel(actualMethod.cases.Count + 1);
-			newElement = _parser.GetInfo(windowsElement, driver, newElement, xPath: xPath, name: name, accessibilityId: accessibilityId);
+			newElement = _parser.SetInfo(windowsElement, driver, newElement, xPath: xPath, name: name, accessibilityId: accessibilityId);
 			actualMethod.cases.Add(newElement);
 			if(!newElement.result)
 			{

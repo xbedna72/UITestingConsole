@@ -9,7 +9,7 @@ namespace ReportManager
 	public interface IParser
 	{
 		IList<string> GetResults();
-		TestCaseModel GetInfo(WindowsElement element, WindowsDriver<WindowsElement> _driver, TestCaseModel _case, string xPath = null, string name=null, string accessibilityId = null);
+		TestCaseModel SetInfo(WindowsElement element, WindowsDriver<WindowsElement> _driver, TestCaseModel _case, string xPath = null, string name=null, string accessibilityId = null);
 		string ParseProjectName(string _name);
 	}
 	public class Parser : IParser
@@ -25,7 +25,7 @@ namespace ReportManager
 			return results;
 		}
 
-		public TestCaseModel GetInfo(WindowsElement element, WindowsDriver<WindowsElement> _driver, TestCaseModel _case, string xPath = null, string name=null, string accessibilityId = null)
+		public TestCaseModel SetInfo(WindowsElement element, WindowsDriver<WindowsElement> _driver, TestCaseModel _case, string xPath = null, string name=null, string accessibilityId = null)
 		{
 			if(element == null){
 				if(xPath != null){
