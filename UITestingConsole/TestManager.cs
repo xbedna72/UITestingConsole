@@ -34,47 +34,46 @@ namespace UITestingConsole
 
 		public void Run(SettingObject _object)
 		{
-			InfoMessage("Process.");
 			if (_object != null)
 			{
-				if (_object.buildRequest)
+				InfoMessage("Preparing for execution of vstest console.");
+				string args = string.Empty;
+				args += $"&& cd C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\Common7\\Tools && vstest.console.exe {_object.testProjectPath}";
+				args += $" /TestAdapterPath:{_object.testAdapterPath}";
+				args += $" /Settings:{GetRunSettings()}";
+				args += $" /ResultsDirectory:{_object.resultsDirectory}";
+				System.Diagnostics.Process prc = new System.Diagnostics.Process();
+				prc.StartInfo.FileName = devCmd;
+				prc.StartInfo.Arguments = args;
+				prc.StartInfo.CreateNoWindow = true;
+				prc.StartInfo.RedirectStandardInput = true;
+				prc.StartInfo.RedirectStandardOutput = true;
+				prc.StartInfo.RedirectStandardError = true;
+				prc.StartInfo.UseShellExecute = false;
+				InfoMessage("Process Start");
+				prc.Start();
+				string str = "";
+				while (!prc.HasExited)
 				{
-					InfoMessage("Building solution of system udner test.");
-					string[] _string = Regex.Split(_object.sourceProject, "(.+)\\\\(.+)$");
-					RunScript(_string[0], _string[1], true.ToString());
+					str += prc.StandardOutput.ReadToEnd();
 				}
-				RunDevCmd(_object);
+				InfoMessage(str);
+				TearDown(_object);
 				return;
 			}
 			throw new Exception("Setting object not defined.");
 		}
 
-		private void RunDevCmd(SettingObject _object)
-		{
-			InfoMessage("Preparing for execution of vstest console.");
-			string args = string.Empty;
-			args += $"&& cd C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\Common7\\Tools && vstest.console.exe {_object.testProjectPath}";
-			args += $" /TestAdapterPath:{_object.testAdapterPath}";
-			args += $" /Settings:{GetRunSettings()}";
-			args += $" /ResultsDirectory:{_object.resultsDirectory}";
-			System.Diagnostics.Process prc = new System.Diagnostics.Process();
-			prc.StartInfo.FileName = devCmd;
-			prc.StartInfo.Arguments = args;
-			prc.StartInfo.CreateNoWindow = true;
-			prc.StartInfo.RedirectStandardInput = true;
-			prc.StartInfo.RedirectStandardOutput = true;
-			prc.StartInfo.RedirectStandardError = true;
-			prc.StartInfo.UseShellExecute = false;
-			InfoMessage("Process Start");
-			prc.Start();
-			prc.WaitForExit();
-			InfoMessage("End of tests");
-			TearDown(_object);
-		}
 		public void TestBuild(string _path)
 		{
 			string[] _string = Regex.Split(_path, "(.+)\\\\(.+)$");
 			RunScript(_string[1], _string[2], false.ToString());
+		}
+
+		public void ProjectPullAndBuild(string _project)
+		{
+			string[] _string = Regex.Split(_project, "(.+)\\\\(.+)$");
+			RunScript(_string[0], _string[1], true.ToString());
 		}
 
 		private void RunScript(string _path, string _name, string _flag)
@@ -92,6 +91,11 @@ namespace UITestingConsole
 			string[] _string = Regex.Split(_projectPath, "(.+)\\\\(.+)$");
 			string[] _name = Regex.Split(_string[2], "(.+)\\..+$");
 			var result = $"{_adapterPath}\\{_name[1]}.dll";
+
+			if (!File.Exists(result))
+			{
+				throw new Exception("Path to test project of tests does not exists.");
+			}
 
 			return result;
 		}
@@ -126,6 +130,10 @@ namespace UITestingConsole
 					break;
 				}
 				result += $"{res1[i]}\\";
+			}
+			if (!File.Exists(result))
+			{
+				throw new Exception("Path to test result directory of tests does not exists.");
 			}
 			return result;
 		}

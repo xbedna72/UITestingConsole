@@ -21,7 +21,7 @@ namespace UITestingConsole
 		private bool errorInputFlag = false;
 		private bool buildFlag = false;
 		public string testName = null;
-		public string application = null;
+		public string executable = null;
 		public string slnPath = null;
 		public string adapterPath = null;
 		public string resultsDirestory = null;
@@ -116,30 +116,49 @@ namespace UITestingConsole
 				InputAgumentsProcess(tm);
 			}
 
+			LastControl();
+			if (settingObject.buildRequest)
+			{
+				tm.ProjectPullAndBuild(settingObject.sourceProject);
+			}
 			RunSettingFileManager.CreateSettingFile(settingObject);
 			tm.Run(settingObject);
 			return;
 		}
 
+		private void LastControl(){
+			if(!File.Exists(settingObject.testProjectPath)){
+				throw new Exception("Path to project of tests does not exists.");
+			}
+			if(!File.Exists(settingObject.testAdapterPath)){
+				throw new Exception("Path to test adapter of tests does not exists.");
+			}
+			if (!File.Exists(settingObject.executable))
+			{
+				throw new Exception("Path to executable file does not exists.");
+			}
+			if (!File.Exists(settingObject.sourceProject))
+			{
+				throw new Exception("Path to source project file does not exists.");
+			}
+			return;
+		}
+
 		private void InputAgumentsProcess(TestManager _tm)
 		{
-			InfoMessage("Parsing values of inpput parameters into setting object.");
 			settingObject = new SettingObject();
 			_tm.TestBuild(testName);
 			settingObject.testProjectPath = _tm.GetTestProjectPath(testName, adapterPath).Replace(@"\\", @"\");
 			settingObject.resultsDirectory = settingObject.resultsDirectory == null ? _tm.GetTestResultsFolder(testName) : settingObject.resultsDirectory.Replace(@"\\", @"\");
 			settingObject.testAdapterPath = adapterPath.Replace(@"\\", @"\");
-			settingObject.application = application.Replace(@"\\", @"\");
+			settingObject.executable = executable.Replace(@"\\", @"\");
 			settingObject.buildRequest = BuildFlag;
 			settingObject.sourceProject = BuildFlag ? slnPath.Replace(@"\\", @"\") : null;
-			InfoMessage("Done.");
-			InfoMessage("Preparing Runsettingfile.");
 		}
 
 		#region SettingFile
 		public void ShowAllSettingFiles()
 		{
-			InfoMessage("Show all Setting files.\n\n");
 			string[] all = Directory.GetFiles(directory);
 			var formate = String.Format("{0,20} {1,20}\n\n", "LastWriteTime", "Name");
 			FileInfo fi = null;

@@ -123,7 +123,7 @@ namespace UITestingConsole
 								{
 									consoleManager.adapterPath = args[i];
 									i++;
-									if (args[i].Equals("/TestResultsDirectory"))
+									if (args[i].Equals("/TestResultsDirectory:"))
 									{
 										i++;
 										if (Directory.Exists(args[i].ToString()))
@@ -142,12 +142,12 @@ namespace UITestingConsole
 										consoleManager.resultsDirestory = null;
 									}
 
-									if (args[i].Equals("/Application:"))
+									if (args[i].Equals("/Executable:"))
 									{
 										i++;
 										if (args[i].Length > 0)
 										{
-											consoleManager.application = args[i];
+											consoleManager.executable = args[i];
 											if (i + 1 < args.Count())
 											{
 												i++;
@@ -168,7 +168,7 @@ namespace UITestingConsole
 													}
 													else
 													{
-														consoleManager.ErrorMessage($"The path or name of solution is wrong or missing.");
+														consoleManager.ErrorMessage($"The path or name of solution project is wrong or missing.");
 														break;
 													}
 												}
@@ -179,7 +179,7 @@ namespace UITestingConsole
 										}
 										else
 										{
-											consoleManager.ErrorMessage("Wrong format of Application name. Absolute path with name of .exe file.");
+											consoleManager.ErrorMessage("Wrong format of Executable path. Absolute path with name of .exe file.");
 											break;
 										}
 									}
@@ -204,11 +204,11 @@ namespace UITestingConsole
 						}
 						break;
 					}
-					else if (args[i + 1].Equals("/SettingFile:"))
-					{
-						consoleManager.actualSettingFile = args[i + 2];
-						return true;
-					}
+					//else if (args[i + 1].Equals("/SettingFile:"))
+					//{
+					//	consoleManager.actualSettingFile = args[i + 2];
+					//	return true;
+					//}
 					else if (args[i].Equals("?", StringComparison.OrdinalIgnoreCase) || args[i].Equals("-h", StringComparison.OrdinalIgnoreCase) || args[i].Equals("help", StringComparison.OrdinalIgnoreCase))
 					{
 						if (args.Count() == 1)

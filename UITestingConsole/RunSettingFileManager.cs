@@ -17,9 +17,9 @@ namespace UITestingConsole
 			settingObject = _object;
 			content += $"<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" +
 			$"<RunSettings>\n\t<TestRunParameters>\n";
-			if (settingObject.application != null)
+			if (settingObject.executable != null)
 			{
-				AddParameter("application", settingObject.application);
+				AddParameter("application", settingObject.executable);
 			}
 
 			if (settingObject.resultsDirectory != null)
