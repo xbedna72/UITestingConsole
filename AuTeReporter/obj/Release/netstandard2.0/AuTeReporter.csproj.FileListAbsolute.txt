@@ -1,0 +1,9 @@
+C:\Users\MayBee\Desktop\AuTeReporter\bin\Release\netstandard2.0\AuTeReporter.deps.json
+C:\Users\MayBee\Desktop\AuTeReporter\bin\Release\netstandard2.0\AuTeReporter.dll
+C:\Users\MayBee\Desktop\AuTeReporter\bin\Release\netstandard2.0\AuTeReporter.pdb
+C:\Users\MayBee\Desktop\AuTeReporter\obj\Release\netstandard2.0\AuTeReporter.csprojAssemblyReference.cache
+C:\Users\MayBee\Desktop\AuTeReporter\obj\Release\netstandard2.0\AuTeReporter.AssemblyInfoInputs.cache
+C:\Users\MayBee\Desktop\AuTeReporter\obj\Release\netstandard2.0\AuTeReporter.AssemblyInfo.cs
+C:\Users\MayBee\Desktop\AuTeReporter\obj\Release\netstandard2.0\AuTeReporter.csproj.CoreCompileInputs.cache
+C:\Users\MayBee\Desktop\AuTeReporter\obj\Release\netstandard2.0\AuTeReporter.dll
+C:\Users\MayBee\Desktop\AuTeReporter\obj\Release\netstandard2.0\AuTeReporter.pdb

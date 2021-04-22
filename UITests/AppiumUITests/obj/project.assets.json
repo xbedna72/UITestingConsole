@@ -96,20 +96,6 @@
           "lib/net45/WebDriver.dll": {}
         }
       },
-      "System.Drawing.Common/5.0.2": {
-        "type": "package",
-        "frameworkAssemblies": [
-          "System",
-          "System.Drawing",
-          "mscorlib"
-        ],
-        "compile": {
-          "ref/net461/System.Drawing.Common.dll": {}
-        },
-        "runtime": {
-          "lib/net461/System.Drawing.Common.dll": {}
-        }
-      },
       "System.Management.Automation/6.1.0": {
         "type": "package",
         "compile": {
@@ -144,21 +130,6 @@
             "assetType": "runtime",
             "rid": "win-x86"
           }
-        }
-      },
-      "AuTeReporter/1.0.0": {
-        "type": "project",
-        "framework": ".NETStandard,Version=v2.0",
-        "dependencies": {
-          "Appium.WebDriver": "4.1.1",
-          "MSTest.TestFramework": "2.1.2",
-          "System.Drawing.Common": "5.0.2"
-        },
-        "compile": {
-          "bin/placeholder/AuTeReporter.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/AuTeReporter.dll": {}
         }
       }
     },
@@ -257,39 +228,10 @@
           "lib/net45/WebDriver.dll": {}
         }
       },
-      "System.Drawing.Common/5.0.2": {
-        "type": "package",
-        "frameworkAssemblies": [
-          "System",
-          "System.Drawing",
-          "mscorlib"
-        ],
-        "compile": {
-          "ref/net461/System.Drawing.Common.dll": {}
-        },
-        "runtime": {
-          "lib/net461/System.Drawing.Common.dll": {}
-        }
-      },
       "System.Management.Automation/6.1.0": {
         "type": "package",
         "compile": {
           "ref/netstandard2.0/System.Management.Automation.dll": {}
-        }
-      },
-      "AuTeReporter/1.0.0": {
-        "type": "project",
-        "framework": ".NETStandard,Version=v2.0",
-        "dependencies": {
-          "Appium.WebDriver": "4.1.1",
-          "MSTest.TestFramework": "2.1.2",
-          "System.Drawing.Common": "5.0.2"
-        },
-        "compile": {
-          "bin/placeholder/AuTeReporter.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/AuTeReporter.dll": {}
         }
       }
     },
@@ -388,20 +330,6 @@
           "lib/net45/WebDriver.dll": {}
         }
       },
-      "System.Drawing.Common/5.0.2": {
-        "type": "package",
-        "frameworkAssemblies": [
-          "System",
-          "System.Drawing",
-          "mscorlib"
-        ],
-        "compile": {
-          "ref/net461/System.Drawing.Common.dll": {}
-        },
-        "runtime": {
-          "lib/net461/System.Drawing.Common.dll": {}
-        }
-      },
       "System.Management.Automation/6.1.0": {
         "type": "package",
         "compile": {
@@ -409,21 +337,6 @@
         },
         "runtime": {
           "runtimes/win-x64/lib/netstandard2.0/System.Management.Automation.dll": {}
-        }
-      },
-      "AuTeReporter/1.0.0": {
-        "type": "project",
-        "framework": ".NETStandard,Version=v2.0",
-        "dependencies": {
-          "Appium.WebDriver": "4.1.1",
-          "MSTest.TestFramework": "2.1.2",
-          "System.Drawing.Common": "5.0.2"
-        },
-        "compile": {
-          "bin/placeholder/AuTeReporter.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/AuTeReporter.dll": {}
         }
       }
     },
@@ -522,20 +435,6 @@
           "lib/net45/WebDriver.dll": {}
         }
       },
-      "System.Drawing.Common/5.0.2": {
-        "type": "package",
-        "frameworkAssemblies": [
-          "System",
-          "System.Drawing",
-          "mscorlib"
-        ],
-        "compile": {
-          "ref/net461/System.Drawing.Common.dll": {}
-        },
-        "runtime": {
-          "lib/net461/System.Drawing.Common.dll": {}
-        }
-      },
       "System.Management.Automation/6.1.0": {
         "type": "package",
         "compile": {
@@ -543,21 +442,6 @@
         },
         "runtime": {
           "runtimes/win-x86/lib/netstandard2.0/System.Management.Automation.dll": {}
-        }
-      },
-      "AuTeReporter/1.0.0": {
-        "type": "project",
-        "framework": ".NETStandard,Version=v2.0",
-        "dependencies": {
-          "Appium.WebDriver": "4.1.1",
-          "MSTest.TestFramework": "2.1.2",
-          "System.Drawing.Common": "5.0.2"
-        },
-        "compile": {
-          "bin/placeholder/AuTeReporter.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/AuTeReporter.dll": {}
         }
       }
     }
@@ -859,48 +743,6 @@
         "selenium.webdriver.nuspec"
       ]
     },
-    "System.Drawing.Common/5.0.2": {
-      "sha512": "rvr/M1WPf24ljpvvrVd74+NdjRUJu1bBkspkZcnzSZnmAUQWSvanlQ0k/hVHk+cHufZbZfu7vOh/vYc0q5Uu/A==",
-      "type": "package",
-      "path": "system.drawing.common/5.0.2",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "Icon.png",
-        "LICENSE.TXT",
-        "THIRD-PARTY-NOTICES.TXT",
-        "lib/MonoAndroid10/_._",
-        "lib/MonoTouch10/_._",
-        "lib/net461/System.Drawing.Common.dll",
-        "lib/netcoreapp3.0/System.Drawing.Common.dll",
-        "lib/netcoreapp3.0/System.Drawing.Common.xml",
-        "lib/netstandard2.0/System.Drawing.Common.dll",
-        "lib/xamarinios10/_._",
-        "lib/xamarinmac20/_._",
-        "lib/xamarintvos10/_._",
-        "lib/xamarinwatchos10/_._",
-        "ref/MonoAndroid10/_._",
-        "ref/MonoTouch10/_._",
-        "ref/net461/System.Drawing.Common.dll",
-        "ref/netcoreapp3.0/System.Drawing.Common.dll",
-        "ref/netcoreapp3.0/System.Drawing.Common.xml",
-        "ref/netstandard2.0/System.Drawing.Common.dll",
-        "ref/xamarinios10/_._",
-        "ref/xamarinmac20/_._",
-        "ref/xamarintvos10/_._",
-        "ref/xamarinwatchos10/_._",
-        "runtimes/unix/lib/netcoreapp2.0/System.Drawing.Common.dll",
-        "runtimes/unix/lib/netcoreapp3.0/System.Drawing.Common.dll",
-        "runtimes/unix/lib/netcoreapp3.0/System.Drawing.Common.xml",
-        "runtimes/win/lib/netcoreapp2.0/System.Drawing.Common.dll",
-        "runtimes/win/lib/netcoreapp3.0/System.Drawing.Common.dll",
-        "runtimes/win/lib/netcoreapp3.0/System.Drawing.Common.xml",
-        "system.drawing.common.5.0.2.nupkg.sha512",
-        "system.drawing.common.nuspec",
-        "useSharedDesignerContext.txt",
-        "version.txt"
-      ]
-    },
     "System.Management.Automation/6.1.0": {
       "sha512": "aYRjMUp7MYxs7UcldGtQjZ98BkSTR0M2LH3l4A7C6tJgi9c0M0eo57pVMsefTySmaRIje+3FNoajGkfEJIGMzg==",
       "type": "package",
@@ -919,17 +761,11 @@
         "system.management.automation.6.1.0.nupkg.sha512",
         "system.management.automation.nuspec"
       ]
-    },
-    "AuTeReporter/1.0.0": {
-      "type": "project",
-      "path": "../TestManager/ReportManager.csproj",
-      "msbuildProject": "../TestManager/ReportManager.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETFramework,Version=v4.7.2": [
       "Appium.WebDriver >= 4.1.1",
-      "AuTeReporter >= 1.0.0",
       "MSTest.TestAdapter >= 2.1.2",
       "MSTest.TestFramework >= 2.1.2",
       "Selenium.WebDriver >= 3.141.0",
@@ -962,11 +798,7 @@
       },
       "frameworks": {
         "net472": {
-          "projectReferences": {
-            "C:\\Users\\MayBee\\source\\repos\\xbedna72\\UITestingConsole\\UITests\\TestManager\\ReportManager.csproj": {
-              "projectPath": "C:\\Users\\MayBee\\source\\repos\\xbedna72\\UITestingConsole\\UITests\\TestManager\\ReportManager.csproj"
-            }
-          }
+          "projectReferences": {}
         }
       }
     },

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "l5fjIlXOuFvW1BvPuYHwp+fVjr53768v4Y76iUfRzZCgirG33Owe2U5mhJ7oX7iu8t1aCRUmp9f9glsYccFsgA==",
+  "dgSpecHash": "Ijtknve/ve7J33eMIViyGzPmIjhkianGaj1pysMhcNa+cHi9omrIwDLOj4kRgNRgX2c05CV8MytiGLiSjUc/Qg==",
   "success": true,
   "projectFilePath": "C:\\Users\\MayBee\\source\\repos\\xbedna72\\UITestingConsole\\UITests\\AppiumUITests\\AppiumUITests.csproj",
   "expectedPackageFiles": [
@@ -12,7 +12,6 @@
     "C:\\Users\\MayBee\\.nuget\\packages\\newtonsoft.json\\12.0.1\\newtonsoft.json.12.0.1.nupkg.sha512",
     "C:\\Users\\MayBee\\.nuget\\packages\\selenium.support\\3.141.0\\selenium.support.3.141.0.nupkg.sha512",
     "C:\\Users\\MayBee\\.nuget\\packages\\selenium.webdriver\\3.141.0\\selenium.webdriver.3.141.0.nupkg.sha512",
-    "C:\\Users\\MayBee\\.nuget\\packages\\system.drawing.common\\5.0.2\\system.drawing.common.5.0.2.nupkg.sha512",
     "C:\\Users\\MayBee\\.nuget\\packages\\system.management.automation\\6.1.0\\system.management.automation.6.1.0.nupkg.sha512"
   ],
   "logs": []
