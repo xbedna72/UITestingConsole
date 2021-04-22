@@ -1,8 +1,0 @@
-C:\Users\MayBee\source\repos\xbedna72\UITestingConsole\UITests\TestManager\bin\x64\Release\netstandard2.0\AuTeReporter.deps.json
-C:\Users\MayBee\source\repos\xbedna72\UITestingConsole\UITests\TestManager\bin\x64\Release\netstandard2.0\AuTeReporter.dll
-C:\Users\MayBee\source\repos\xbedna72\UITestingConsole\UITests\TestManager\bin\x64\Release\netstandard2.0\AuTeReporter.pdb
-C:\Users\MayBee\source\repos\xbedna72\UITestingConsole\UITests\TestManager\obj\x64\Release\netstandard2.0\ReportManager.AssemblyInfoInputs.cache
-C:\Users\MayBee\source\repos\xbedna72\UITestingConsole\UITests\TestManager\obj\x64\Release\netstandard2.0\ReportManager.AssemblyInfo.cs
-C:\Users\MayBee\source\repos\xbedna72\UITestingConsole\UITests\TestManager\obj\x64\Release\netstandard2.0\ReportManager.csproj.CoreCompileInputs.cache
-C:\Users\MayBee\source\repos\xbedna72\UITestingConsole\UITests\TestManager\obj\x64\Release\netstandard2.0\AuTeReporter.dll
-C:\Users\MayBee\source\repos\xbedna72\UITestingConsole\UITests\TestManager\obj\x64\Release\netstandard2.0\AuTeReporter.pdb

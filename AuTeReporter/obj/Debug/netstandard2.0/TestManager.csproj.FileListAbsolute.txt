@@ -1,9 +1,0 @@
-C:\Projekty\PMS2.0-LW\src\UITests\src\TestManager\obj\Debug\netstandard2.0\TestManager.csprojAssemblyReference.cache
-C:\Projekty\PMS2.0-LW\src\UITests\src\TestManager\obj\Debug\netstandard2.0\TestManager.AssemblyInfoInputs.cache
-C:\Projekty\PMS2.0-LW\src\UITests\src\TestManager\obj\Debug\netstandard2.0\TestManager.AssemblyInfo.cs
-C:\Projekty\PMS2.0-LW\src\UITests\src\TestManager\obj\Debug\netstandard2.0\TestManager.csproj.CoreCompileInputs.cache
-C:\Projekty\PMS2.0-LW\src\UITests\src\TestManager\bin\Debug\netstandard2.0\TestManager.deps.json
-C:\Projekty\PMS2.0-LW\src\UITests\src\TestManager\bin\Debug\netstandard2.0\TestManager.dll
-C:\Projekty\PMS2.0-LW\src\UITests\src\TestManager\bin\Debug\netstandard2.0\TestManager.pdb
-C:\Projekty\PMS2.0-LW\src\UITests\src\TestManager\obj\Debug\netstandard2.0\TestManager.dll
-C:\Projekty\PMS2.0-LW\src\UITests\src\TestManager\obj\Debug\netstandard2.0\TestManager.pdb

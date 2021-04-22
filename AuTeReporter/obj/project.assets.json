@@ -3386,11 +3386,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\MayBee\\Desktop\\AuTeReporter\\AuTeReporter.csproj",
+      "projectUniqueName": "C:\\Users\\MayBee\\source\\repos\\xbedna72\\UITestingConsole\\AuTeReporter\\AuTeReporter.csproj",
       "projectName": "AuTeReporter",
-      "projectPath": "C:\\Users\\MayBee\\Desktop\\AuTeReporter\\AuTeReporter.csproj",
+      "projectPath": "C:\\Users\\MayBee\\source\\repos\\xbedna72\\UITestingConsole\\AuTeReporter\\AuTeReporter.csproj",
       "packagesPath": "C:\\Users\\MayBee\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\MayBee\\Desktop\\AuTeReporter\\obj\\",
+      "outputPath": "C:\\Users\\MayBee\\source\\repos\\xbedna72\\UITestingConsole\\AuTeReporter\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\MayBee\\AppData\\Roaming\\NuGet\\NuGet.Config",

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "XJG8EHB/ocYxAkc4wBzMnRLrUZC9fhVXALoxJR5l6p3HVyvbSHpauSxH+inuKzFLz06/7WAU+mRCnIDJ/VsFeQ==",
+  "dgSpecHash": "4CSCdo2hEFqGXAd1xjYzivjOC681lPWSuGRn5UBGEb17tf6qnZGGlmwfBz0eyrjUFIe/hq5OcwIfLWEsZpMVLA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\MayBee\\Desktop\\AuTeReporter\\AuTeReporter.csproj",
+  "projectFilePath": "C:\\Users\\MayBee\\source\\repos\\xbedna72\\UITestingConsole\\AuTeReporter\\AuTeReporter.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\MayBee\\.nuget\\packages\\appium.webdriver\\4.1.1\\appium.webdriver.4.1.1.nupkg.sha512",
     "C:\\Users\\MayBee\\.nuget\\packages\\castle.core\\4.3.1\\castle.core.4.3.1.nupkg.sha512",
