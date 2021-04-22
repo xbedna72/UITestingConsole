@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{866B57D1-C239-49ED-ABEE-AC088D646C56}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>UITestingConsole</RootNamespace>
-    <AssemblyName>UITestingConsole</AssemblyName>
+    <RootNamespace>AuTeR</RootNamespace>
+    <AssemblyName>AuTeR</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
