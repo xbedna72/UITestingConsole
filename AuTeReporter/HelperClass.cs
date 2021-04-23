@@ -7,7 +7,7 @@ namespace ReportManager
 {
 	public static class Helper
 	{
-		public static WindowsElement FindByXPath(
+		public static WindowsElement FindElementByXPath(
 			this WindowsDriver<WindowsElement> MyDesktopSession,
 			string xPath,
 			int nTryCount = 3)
@@ -31,14 +31,14 @@ namespace ReportManager
 					System.Threading.Thread.Sleep(500);
 				}
 			}
-			if (ReportManagerClass.ActualReportModel != null)
+			if (ReportManager.ActualReportModel != null)
 			{
-				ReportManagerClass.ActualReportModel.NewCase(uiTarget, xPath: xPath);
+				ReportManager.ActualReportModel.NewCase(uiTarget, xPath: xPath);
 			}
 			return uiTarget;
 		}
 
-		public static WindowsElement FindByAccessibilityId(
+		public static WindowsElement FindElementByAccessibilityId(
 			this WindowsDriver<WindowsElement> MyDesktopSession,
 			string accessibilityId,
 			int nTryCount = 3)
@@ -62,13 +62,13 @@ namespace ReportManager
 					System.Threading.Thread.Sleep(500);
 				}
 			}
-			if(ReportManagerClass.ActualReportModel != null){
-				ReportManagerClass.ActualReportModel.NewCase(uiTarget, accessibilityId: accessibilityId);
+			if(ReportManager.ActualReportModel != null){
+				ReportManager.ActualReportModel.NewCase(uiTarget, accessibilityId: accessibilityId);
 			}
 			return uiTarget;
 		}
 
-		public static WindowsElement FindByName(
+		public static WindowsElement FindElementByName(
 			this WindowsDriver<WindowsElement> MyDesktopSession,
 			string name,
 			int nTryCount = 3)
@@ -92,9 +92,9 @@ namespace ReportManager
 					System.Threading.Thread.Sleep(1000);
 				}
 			}
-			if (ReportManagerClass.ActualReportModel != null)
+			if (ReportManager.ActualReportModel != null)
 			{
-				ReportManagerClass.ActualReportModel.NewCase(uiTarget, name: name);
+				ReportManager.ActualReportModel.NewCase(uiTarget, name: name);
 			}
 			return uiTarget;
 		}

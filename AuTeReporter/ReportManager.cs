@@ -5,7 +5,7 @@ using System;
 
 namespace ReportManager
 {
-	public class ReportManagerClass
+	public class ReportManager
 	{
 		protected const string WindowsApplicationDriverUrl = "http://127.0.0.1:4723";
 		protected static WindowsDriver<WindowsElement> desktopSessionMain;
