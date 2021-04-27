@@ -21,7 +21,7 @@ namespace ReportManager
 
 		private static void ParseContent(){
 			content += StartOfHtml();
-			WriteLine();
+			Write();
 			foreach (TestMethodModel model in actualReport.methods)
 			{
 				foreach (TestCaseModel testCase in model.cases)
@@ -29,17 +29,16 @@ namespace ReportManager
 					try
 					{
 						content += Test(testCase);
-						WriteLine();
 					}
 					catch (Exception e)
 					{
 						content += $"<div id=\"error\"><p>Unable to generate test case informations<p></div>\n";
-						WriteLine();
 					}
+					Write();
 				}
 			}
 			content += EndOfHtml();
-			WriteLine();
+			Write();
 		}
 
 		private string GenerateResultFile(string _path)
@@ -146,9 +145,10 @@ namespace ReportManager
 			return Convert.ToBase64String(imageResult);
 		}
 
-		private static async void WriteLine(){
-			using (StreamWriter file = new StreamWriter(filePath, append: true)){
-				await file.WriteLineAsync(content);
+		private static async void Write(){
+			using (StreamWriter file = new StreamWriter(filePath, append: true))
+			{
+				await file.WriteAsync(content);
 				content = "";
 			}
 		}

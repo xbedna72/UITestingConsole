@@ -7,7 +7,7 @@ namespace ReportManager
 {
 	public static class Helper
 	{
-		public static WindowsElement FindElementByXPath(
+		public static WindowsElement FindByXPath(
 			this WindowsDriver<WindowsElement> MyDesktopSession,
 			string xPath,
 			int nTryCount = 3)
@@ -38,7 +38,7 @@ namespace ReportManager
 			return uiTarget;
 		}
 
-		public static WindowsElement FindElementByAccessibilityId(
+		public static WindowsElement FindByAccessibilityId(
 			this WindowsDriver<WindowsElement> MyDesktopSession,
 			string accessibilityId,
 			int nTryCount = 3)
@@ -68,7 +68,7 @@ namespace ReportManager
 			return uiTarget;
 		}
 
-		public static WindowsElement FindElementByName(
+		public static WindowsElement FindByName(
 			this WindowsDriver<WindowsElement> MyDesktopSession,
 			string name,
 			int nTryCount = 3)
