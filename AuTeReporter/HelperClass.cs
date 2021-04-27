@@ -7,7 +7,7 @@ namespace ReportManager
 {
 	public static class Helper
 	{
-		public static WindowsElement FindByXPath(
+		public static WindowsElement FindElementByXPath(
 			this WindowsDriver<WindowsElement> MyDesktopSession,
 			string xPath,
 			int nTryCount = 3)
@@ -38,7 +38,7 @@ namespace ReportManager
 			return uiTarget;
 		}
 
-		public static WindowsElement FindByAccessibilityId(
+		public static WindowsElement FindElementByAccessibilityId(
 			this WindowsDriver<WindowsElement> MyDesktopSession,
 			string accessibilityId,
 			int nTryCount = 3)
@@ -68,7 +68,7 @@ namespace ReportManager
 			return uiTarget;
 		}
 
-		public static WindowsElement FindByName(
+		public static WindowsElement FindElementByName(
 			this WindowsDriver<WindowsElement> MyDesktopSession,
 			string name,
 			int nTryCount = 3)
@@ -97,14 +97,6 @@ namespace ReportManager
 				ReportManager.ActualReportModel.NewCase(uiTarget, name: name);
 			}
 			return uiTarget;
-		}
-
-		public static void Note(string _note){
-			if (ReportManager.ActualReportModel != null)
-			{
-				ReportManager.ActualReportModel.NewNote(_note);
-			}
-			return;
 		}
 	}
 }

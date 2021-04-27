@@ -40,18 +40,11 @@ namespace ReportManager
 		{
 			var newElement = new TestCaseModel(actualMethod.cases.Count + 1);
 			newElement = _parser.SetInfo(windowsElement, driver, newElement, xPath: xPath, name: name, accessibilityId: accessibilityId);
-			newElement.action = Actions.Find;
 			actualMethod.cases.Add(newElement);
 			if(!newElement.result)
 			{
 				actualMethod.testMethodResult = Enums.TestResult.Failed;
 			}
-		}
-
-		public void NewNote(string _string){
-			var newElement = new TestCaseModel(actualMethod.cases.Count + 1);
-			newElement = _parser.SetNote(newElement, _string);
-			actualMethod.cases.Add(newElement);
 		}
 	}
 
@@ -78,7 +71,6 @@ namespace ReportManager
 		public string info = "";
 		public Element element = null;
 		public MainWindow window = null;
-		public Enums.Actions action = Enums.Actions.None;
 
 		public TestCaseModel(int _caseNum)
 		{

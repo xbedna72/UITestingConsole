@@ -11,7 +11,6 @@ namespace ReportManager
 		IList<string> GetResults();
 		TestCaseModel SetInfo(WindowsElement element, WindowsDriver<WindowsElement> _driver, TestCaseModel _case, string xPath = null, string name=null, string accessibilityId = null);
 		string ParseProjectName(string _name);
-		TestCaseModel SetNote(TestCaseModel _case, string _note);
 	}
 	public class Parser : IParser
 	{
@@ -41,14 +40,12 @@ namespace ReportManager
 			else{
 				_case.element.TagName = element.TagName;
 				if(element.TagName.EndsWith("Button")){
-					try
-					{
+					try{
 						_case.window.screenshot = _driver.GetScreenshot().AsByteArray;
 						_case.element.Size = element.Size;
 						_case.element.Location = element.Location;
 					}
-					catch
-					{
+					catch{
 						_case.window.screenshot = null;
 					}
 				}
@@ -56,13 +53,6 @@ namespace ReportManager
 				_case.result = true;
 			}
 
-			return _case;
-		}
-
-		public TestCaseModel SetNote(TestCaseModel _case, string _note){
-			_case.result = true;
-			_case.info = _note;
-			_case.action = Enums.Actions.Note;
 			return _case;
 		}
 

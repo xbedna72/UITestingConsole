@@ -54,7 +54,7 @@ namespace UITestingConsole
 		ConsoleManager()
 		{
 			var path = Directory.GetCurrentDirectory();
-			//directory = Regex.Replace(path, @"\\bin\\Debug.*", @"\SettingDirectory\");
+			directory = Regex.Replace(path, @"\\bin\\Debug.*", @"\SettingDirectory\");
 		}
 
 		private static readonly object padlock = new object();
@@ -138,18 +138,16 @@ namespace UITestingConsole
 			if(!File.Exists(settingObject.testProjectPath)){
 				throw new Exception("Path to project of tests does not exists.");
 			}
-			if(!Directory.Exists(settingObject.testAdapterPath)){
+			if(!File.Exists(settingObject.testAdapterPath)){
 				throw new Exception("Path to test adapter of tests does not exists.");
 			}
-			if (!Directory.Exists(settingObject.resultsDirectory))
+			if (!File.Exists(settingObject.executable))
 			{
-				throw new Exception("Path to test result directory of tests does not exists.");
+				throw new Exception("Path to executable file does not exists.");
 			}
-			if(settingObject.sourceProject != null){
-				if (!File.Exists(settingObject.sourceProject))
-				{
-					throw new Exception("Path to source project file does not exists.");
-				}
+			if (!File.Exists(settingObject.sourceProject))
+			{
+				throw new Exception("Path to source project file does not exists.");
 			}
 			return;
 		}
@@ -159,7 +157,7 @@ namespace UITestingConsole
 			settingObject = new SettingObject();
 			_tm.TestBuild(testName);
 			settingObject.testProjectPath = _tm.GetTestProjectPath(testName, adapterPath).Replace(@"\\", @"\");
-			settingObject.resultsDirectory = resultsDirestory.Replace(@"\\", @"\");
+			settingObject.resultsDirectory = settingObject.resultsDirectory == null ? _tm.GetTestResultsFolder(testName) : settingObject.resultsDirectory.Replace(@"\\", @"\");
 			settingObject.testAdapterPath = adapterPath.Replace(@"\\", @"\");
 			settingObject.executable = executable.Replace(@"\\", @"\");
 			settingObject.buildRequest = BuildFlag;
@@ -281,6 +279,7 @@ namespace UITestingConsole
 			}
 			else
 			{
+				InfoMessage("Creating SettingDirectory.");
 				try
 				{
 					CreateDirectory(directory);

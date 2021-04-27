@@ -13,8 +13,7 @@ namespace UITestingConsole
 		public void ErrorMessage(string _message)
 		{
 			Console.ForegroundColor = ConsoleColor.Red;
-			string error = "[ERROR:AuTeR.exe]:" + _message;
-			Console.WriteLine(error);
+			Console.WriteLine(_message);
 			Console.ForegroundColor = ConsoleColor.White;
 		}
 
@@ -31,6 +30,9 @@ namespace UITestingConsole
 
 		public void End()
 		{
+			Console.ForegroundColor = ConsoleColor.Green;
+			Console.WriteLine("Closing Console.");
+			Console.ForegroundColor = ConsoleColor.White;
 			Thread.Sleep(1000);
 			Environment.Exit(0);
 		}

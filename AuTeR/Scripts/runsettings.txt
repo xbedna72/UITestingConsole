@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RunSettings>
-	<TestRunParameters>
-		<Parameter name="application" value="Microsoft.WindowsCalculator_8wekyb3d8bbwe!App" />
-		<Parameter name="resultDirectory" value="C:\Tools" />
-		<Parameter name="sourceProject" value="null" />
-		<Parameter name="testProjectPath" value="C:\Users\MayBee\source\repos\xbedna72\UITestingConsole\UITests\AppiumUITests\bin\Debug\AppiumUITests.dll" />
-	</TestRunParameters>
-</RunSettings>

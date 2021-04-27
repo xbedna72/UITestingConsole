@@ -102,13 +102,13 @@ namespace UITestingConsole
 
 		private string GetScriptsDirectory()
 		{
-			string path = Regex.Replace(Directory.GetCurrentDirectory(), @"\\bin\\Release", @"\Scripts");
+			string path = Regex.Replace(Directory.GetCurrentDirectory(), @"\\bin\\Debug", @"\Scripts");
 			return path;
 		}
 
 		private string GetRunSettings()
 		{
-			string path = Regex.Replace(Directory.GetCurrentDirectory(), @"\\bin\\Release", @"\Scripts\runsettings.txt");
+			string path = Regex.Replace(Directory.GetCurrentDirectory(), @"\\bin\\Debug", @"\runsettings.txt");
 			return path;
 		}
 
