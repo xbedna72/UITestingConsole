@@ -24,8 +24,14 @@ namespace UITestingConsole
 		public static void Main(string[] args)
 		{
 			consoleManager = ConsoleManager.Instance;
-			consoleManager.InfoMessage("Starting console.");
-			consoleManager.StartControl();
+			consoleManager.InfoMessage("**********************************************************************\n" +
+										"** AuTeR 2021 Automated Tester v1.0\n" +
+										"** This tool was made as automated MSTest runner. The tool provides work with repository before test run.\n" +
+										"** Author: Marie Bednřová\n" +
+										"** Brno University of Technology - Faculty of Information Technology\n" +
+										"** Year: 2021\n" +
+										"**********************************************************************\n");
+			//consoleManager.StartControl();
 
 			if (args.Count() > 0)
 			{
@@ -51,7 +57,7 @@ namespace UITestingConsole
 				}
 			}
 
-			consoleManager.ErrorMessage("No arguments passed. Invalid input. Console ends.");
+			consoleManager.ErrorMessage("No arguments passed.");
 			consoleManager.End();
 		}
 
