@@ -11,6 +11,7 @@ namespace ReportManager
 		IList<string> GetResults();
 		TestCaseModel SetInfo(WindowsElement element, WindowsDriver<WindowsElement> _driver, TestCaseModel _case, string xPath = null, string name=null, string accessibilityId = null);
 		string ParseProjectName(string _name);
+		TestCaseModel SetNote(TestCaseModel _case, string _note);
 	}
 	public class Parser : IParser
 	{
@@ -53,6 +54,13 @@ namespace ReportManager
 				_case.result = true;
 			}
 
+			return _case;
+		}
+
+		public TestCaseModel SetNote(TestCaseModel _case, string _note){
+			_case.result = true;
+			_case.info = _note;
+			_case.action = Enums.Actions.Note;
 			return _case;
 		}
 

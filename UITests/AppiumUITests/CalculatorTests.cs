@@ -19,8 +19,8 @@ namespace TestEditMaterializeCard
         [AssemblyInitialize()]
         public static void AssemblyInitialize(TestContext context)
         {
-            Initialize(@"C:\Users\MayBee\Desktop", "Microsoft.WindowsCalculator_8wekyb3d8bbwe!App"); //Initialize(context);
-		}
+            Initialize(context); //Initialize(@"C:\Users\MayBee\Desktop", "Microsoft.WindowsCalculator_8wekyb3d8bbwe!App");
+        }
 
         [AssemblyCleanup()]
         public static void AssemblyCleanup()

@@ -2,36 +2,44 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ReportManager
 {
 	public class HtmlCreater
 	{
-		string filePath;
-		private ReportModel actualReport = null;
-		string fileContent = "";
+		static string filePath;
+		static private ReportModel actualReport = null;
+		static string content = "";
 
 		public HtmlCreater(ReportModel _report, string _path)
 		{
 			actualReport = _report;
 			filePath = GenerateResultFile(_path);
-			fileContent = StartOfHtml();
+			ParseContent();
+		}
+
+		private static void ParseContent(){
+			content += StartOfHtml();
+			WriteLine();
 			foreach (TestMethodModel model in actualReport.methods)
 			{
 				foreach (TestCaseModel testCase in model.cases)
 				{
 					try
 					{
-						fileContent += Test(testCase);
+						content += Test(testCase);
+						WriteLine();
 					}
 					catch (Exception e)
 					{
-						fileContent += $"<div><p>Unable to generate test case informations<p></div>\n";
+						content += $"<div id=\"error\"><p>Unable to generate test case informations<p></div>\n";
+						WriteLine();
 					}
 				}
 			}
-			fileContent += EndOfHtml();
-			File.WriteAllText(filePath, fileContent);
+			content += EndOfHtml();
+			WriteLine();
 		}
 
 		private string GenerateResultFile(string _path)
@@ -39,16 +47,11 @@ namespace ReportManager
 			string _fileName = "Report-";
 			string date = DateTime.Now.ToString("yyyy-dd-M--HH-mm-ss");
 			_fileName = $"{_fileName}{date}.html";
-			this.filePath = $"{_path}\\{_fileName}";
-			return this.filePath;
+			filePath = $"{_path}\\{_fileName}";
+			return filePath;
 		}
 
-		private void ParseContent()
-		{
-			fileContent += StartOfHtml();
-		}
-
-		private string StartOfHtml()
+		private static string StartOfHtml()
 		{
 			return $"<!DOCTYPE html>\n<html>" +
 			$"<head>\n<link type=\"text/css\">\n" +
@@ -58,40 +61,46 @@ namespace ReportManager
 			$"#errorP{{ color: red; font-size: 20px; }}" +
 			$"</style>\n" +
 			$"</head>\n<body>\n" +
-			$"<div id=\"header\"><h3>{actualReport.testProjectName}</h3>\n<h4>{actualReport.testProjectPath}</h4></div>";
+			$"<div id=\"header\"><h3>{actualReport.testProjectName}</h3>\n<h4>{actualReport.testProjectPath}</h4>\n" +
+			$"</div>";
 		}
 
-		private string Test(TestCaseModel _model)
+		private static string Test(TestCaseModel _model)
 		{
-			string result = _model.result == true ? "SUCCESS" : "FAILED";
-			string test = $"<div>\n<h3>\nTest case: {_model.num}\n" +
-			$"<p>\nFind {_model.element.TagName}</p>\n" +
-			$"<p\n>Result {result}</p>\n";
-			if (_model.window.screenshot != null)
-			{
-				try
+			string test = "";
+			if (_model.action == Enums.Actions.Note){
+				test += $"<div id=\"note\"><p>{_model.info}</p></div>";
+			}else{
+				string result = _model.result == true ? "SUCCESS" : "FAILED";
+				test += $"<div id=\"test\">\n<h4>\nTest case: {_model.num}</h4>\n" +
+				$"<p>\nFind {_model.element.TagName}</p>\n" +
+				$"<p\n>Result: {result}</p>\n";
+				if (_model.window.screenshot != null)
 				{
-					byte[] image = RenderButton(_model);
-					if (image != null)
+					try
 					{
-						test += $"<p>\nScreenshot</p>\n<img src=\"data:image/gif;base64,{Convert.ToBase64String(image)}\">\n";
+						byte[] image = RenderButton(_model);
+						if (image != null)
+						{
+							test += $"<div><p>\nScreenshot</p>\n<img src=\"data:image/gif;base64,{Convert.ToBase64String(image)}\">\n";
+						}
+					}
+					catch
+					{
+						test += $"<p>\nScreenshot</p><p id=\"errorI\">Unable to show image of element.</p></div>\n";
 					}
 				}
-				catch
-				{
-					test += $"<p>\nScreenshot</p><p id=\"errorP\">Unable to show image of element.</p>\n";
-				}
+				test += $"</div>\n";
 			}
-			test += $"</h3>\n</div>\n";
 			return test;
 		}
 
-		private string EndOfHtml()
+		private static string EndOfHtml()
 		{
 			return $"</body>\n</html>\n";
 		}
 
-		private byte[] RenderButton(TestCaseModel _model)
+		private static byte[] RenderButton(TestCaseModel _model)
 		{
 			System.Drawing.Image image;
 			using (MemoryStream ms = new MemoryStream(_model.window.screenshot))
@@ -135,6 +144,13 @@ namespace ReportManager
 			}
 			target.Dispose();
 			return Convert.ToBase64String(imageResult);
+		}
+
+		private static async void WriteLine(){
+			using (StreamWriter file = new StreamWriter(filePath, append: true)){
+				await file.WriteLineAsync(content);
+				content = "";
+			}
 		}
 	}
 }

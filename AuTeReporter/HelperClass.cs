@@ -98,5 +98,13 @@ namespace ReportManager
 			}
 			return uiTarget;
 		}
+
+		public static void Note(string _note){
+			if (ReportManager.ActualReportModel != null)
+			{
+				ReportManager.ActualReportModel.NewNote(_note);
+			}
+			return;
+		}
 	}
 }
