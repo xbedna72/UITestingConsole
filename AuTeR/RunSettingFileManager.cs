@@ -56,7 +56,7 @@ namespace UITestingConsole
 
 		private static void CreateRunSettingFile(string _content)
 		{
-			var path = Environment.CurrentDirectory.Replace("bin\\Debug", "runsettings.txt");
+			var path = Environment.CurrentDirectory.Replace("bin\\Release", "Scripts\\runsettings.txt");
 			try
 			{
 				using (FileStream fs = File.Create(path))
@@ -75,7 +75,7 @@ namespace UITestingConsole
 		{
 			try
 			{
-				File.Delete(Environment.CurrentDirectory.Replace("bin\\Debug", "runsettings.txt"));
+				File.Delete(Environment.CurrentDirectory.Replace("bin\\Release", "Scripts\\runsettings.txt"));
 			}
 			catch (Exception e)
 			{

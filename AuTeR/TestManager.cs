@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Text.RegularExpressions;
 using System.IO;
 using System.Management.Automation;
+using System.Collections.ObjectModel;
 
 namespace UITestingConsole
 {
@@ -79,11 +80,12 @@ namespace UITestingConsole
 		private void RunScript(string _path, string _name, string _flag)
 		{
 			_path = _path.Replace(@"\\", @"\");
+			
 			PowerShell ps = PowerShell.Create();
-			ps.AddScript($"cd {GetScriptsDirectory()}");
+			ps.AddScript($"Set-Location -Path \"{GetScriptsDirectory()}\"");
 			ps.AddScript($".\\gitScript.ps1 {_path} {_name} {_flag}");
-			ps.Invoke();
-			ps.Dispose();
+			
+
 		}
 
 		public string GetTestProjectPath(string _projectPath, string _adapterPath)
@@ -94,7 +96,7 @@ namespace UITestingConsole
 
 			if (!File.Exists(result))
 			{
-				throw new Exception("Path to test project of tests does not exists.");
+				throw new Exception("Path to test adapter file does not exists. Maite because of failer of build process.");
 			}
 
 			return result;
@@ -102,13 +104,13 @@ namespace UITestingConsole
 
 		private string GetScriptsDirectory()
 		{
-			string path = Regex.Replace(Directory.GetCurrentDirectory(), @"\\bin\\Debug", @"\Scripts");
+			string path = Regex.Replace(Directory.GetCurrentDirectory(), @"\\bin\\Release", @"\Scripts");
 			return path;
 		}
 
 		private string GetRunSettings()
 		{
-			string path = Regex.Replace(Directory.GetCurrentDirectory(), @"\\bin\\Debug", @"\runsettings.txt");
+			string path = Regex.Replace(Directory.GetCurrentDirectory(), @"\\bin\\Release", @"\Scripts\runsettings.txt");
 			return path;
 		}
 
