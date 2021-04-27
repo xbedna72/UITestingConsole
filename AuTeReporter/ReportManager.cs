@@ -71,10 +71,12 @@ namespace ReportManager
 			resultDirectory = context.Properties["resultDirectory"].ToString();
 		}
 
-		public static void Initialize(string _resultDirectory, string _application)
+		public static void Initialize(string _application, string _resultDirectory)
 		{
 			application = _application;
 			winAppDriver = System.Diagnostics.Process.Start(@"C:\Program Files (x86)\Windows Application Driver\WinAppDriver.exe");
+			ActualReportModel = new ReportModel("test");
+			ActualReportModel.testProjectPath = "Test";
 			resultDirectory = _resultDirectory;
 		}
 
