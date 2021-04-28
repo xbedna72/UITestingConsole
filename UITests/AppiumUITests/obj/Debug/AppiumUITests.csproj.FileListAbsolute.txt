@@ -14,6 +14,7 @@ C:\Users\MayBee\source\repos\xbedna72\UITestingConsole\UITests\AppiumUITests\bin
 C:\Users\MayBee\source\repos\xbedna72\UITestingConsole\UITests\AppiumUITests\bin\Debug\WebDriver.dll
 C:\Users\MayBee\source\repos\xbedna72\UITestingConsole\UITests\AppiumUITests\bin\Debug\AuTeReporter.dll
 C:\Users\MayBee\source\repos\xbedna72\UITestingConsole\UITests\AppiumUITests\bin\Debug\AuTeReporter.pdb
+C:\Users\MayBee\source\repos\xbedna72\UITestingConsole\UITests\AppiumUITests\obj\Debug\AppiumUITests.csprojAssemblyReference.cache
 C:\Users\MayBee\source\repos\xbedna72\UITestingConsole\UITests\AppiumUITests\obj\Debug\AppiumUITests.csproj.CoreCompileInputs.cache
 C:\Users\MayBee\source\repos\xbedna72\UITestingConsole\UITests\AppiumUITests\obj\Debug\AppiumUITests.csproj.CopyComplete
 C:\Users\MayBee\source\repos\xbedna72\UITestingConsole\UITests\AppiumUITests\obj\Debug\AppiumUITests.dll

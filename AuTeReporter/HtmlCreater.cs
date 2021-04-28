@@ -12,6 +12,7 @@ namespace ReportManager
 	{
 		static string filePath;
 		protected static ReportModel actualReport = null;
+		static string content = "";
 
 		public HtmlCreater(ReportModel _report, string _path)
 		{
@@ -20,53 +21,46 @@ namespace ReportManager
 			ParseIntoHtml();
 		}
 
-		private static void ParseIntoHtml(){
-			var content = new BlockingCollection<string>(50);
-
-			Task.Run(() =>
+		private void ParseIntoHtml()
+		{
+			content += StartOfHtml();
+			Write();
+			foreach (TestMethodModel model in actualReport.methods)
 			{
-				string i = "";
-				while (!content.IsCompleted)
+				foreach (TestCaseModel testCase in model.cases)
 				{
 					try
 					{
-						i = content.Take();
-						using (StreamWriter file = new StreamWriter(@"C:\Tools\logg.txt", append: true))
-						{
-							file.Write(i);
-						}
+						content += Test(testCase);
 					}
-					catch (InvalidOperationException)
+					catch (Exception e)
 					{
-						break;
+						content += $"<div><p>Unable to generate test case informations<p></div>\n";
 					}
-					Thread.SpinWait(100000);
+					Write();
 				}
-			});
-
-			Task.Run(() => {
-				string test;
-				content.Add(StartOfHtml());
-				foreach (TestMethodModel model in actualReport.methods)
-				{
-					foreach (TestCaseModel testCase in model.cases)
-					{
-						try
-						{
-							test = Test(testCase);
-							content.Add(test);
-						}
-						catch (Exception e)
-						{
-							content.Add($"<div><p>Unable to generate test case informations<p></div>\n");
-						}
-					}
-				}
-				content.Add(EndOfHtml());
-			});
+			}
+			content += EndOfHtml();
+			Write();
 		}
 
-		private static string GenerateResultFile(string _path)
+		private void Write()
+		{
+			try
+			{
+				using (StreamWriter file = new StreamWriter(@"C:\Tools\logg.txt", append: true))
+				{
+					file.Write(content);
+				}
+			}
+			catch
+			{
+
+			}
+			content = "";
+		}
+
+		private string GenerateResultFile(string _path)
 		{
 			string _fileName = "Report-";
 			string date = DateTime.Now.ToString("yyyy-dd-M--HH-mm-ss");
@@ -93,29 +87,30 @@ namespace ReportManager
 			string result = string.Empty;
 			string test = string.Empty;
 
-			if (_model.action == Enums.Actions.Note){
+			if (_model.action == Enums.Actions.Note)
+			{
 				test = $"<div>\n<h3>\nTest case: {_model.num}\n" +
 				$"<p>\nNote: {_model.info}</p>\n";
 			}
-			else{
+			else
+			{
 				result = _model.result == true ? "SUCCESS" : "FAILED";
 				test = $"<div>\n<h3>\nTest case: {_model.num}\n" +
 				$"<p>\nFind {_model.element.TagName}</p>\n" +
 				$"<p\n>Result {result}</p>\n";
 				if (_model.element.screenshot != null)
 				{
-					test += Convert.ToBase64String(_model.element.screenshot);
 					try
 					{
-						//byte[] image = RenderButton(_model);
-						//if (image != null)
-						//{
-						//	test += $"<p>\nScreenshot</p>\n<img src=\"data:image/gif;base64,{Convert.ToBase64String(image)}\">\n";
-						//}
+						byte[] image = RenderButton(_model);
+						if (image != null)
+						{
+							test += $"<p>\nScreenshot</p>\n<img src=\"data:image/gif;base64,{Convert.ToBase64String(image)}\">\n";
+						}
 					}
-					catch
+					catch(Exception e)
 					{
-						test += $"<p>\nScreenshot</p><p id=\"errorP\">Unable to show image of element.</p>\n";
+						test += $"<p>\nScreenshot</p><p id=\"errorP\">{e.ToString()}</p>\n";
 					}
 				}
 			}
@@ -145,6 +140,7 @@ namespace ReportManager
 			using (MemoryStream ms = new MemoryStream())
 			{
 				image.Save(ms, image.RawFormat);
+				image.Save("C:\\Tools", System.Drawing.Imaging.ImageFormat.Jpeg);
 				imageBytes = ms.ToArray();
 			}
 			return imageBytes;
