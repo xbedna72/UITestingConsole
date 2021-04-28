@@ -46,6 +46,12 @@ namespace ReportManager
 				actualMethod.testMethodResult = Enums.TestResult.Failed;
 			}
 		}
+
+		public void NewNote(string note){
+			var newElement = new TestCaseModel(actualMethod.cases.Count + 1);
+			newElement = _parser.SetNote(note, newElement);
+			actualMethod.cases.Add(newElement);
+		}
 	}
 
 	public class TestMethodModel
@@ -70,13 +76,12 @@ namespace ReportManager
 		public bool result;
 		public string info = "";
 		public Element element = null;
-		public MainWindow window = null;
+		public Enums.Actions action = Enums.Actions.None;
 
 		public TestCaseModel(int _caseNum)
 		{
 			num = _caseNum;
 			element = new Element();
-			window = new MainWindow();
 		}
 	}
 
@@ -86,12 +91,6 @@ namespace ReportManager
 		public string Text;
 		public Point Location;
 		public Size Size;
-	}
-
-	public class MainWindow
-	{
 		public byte[] screenshot = null;
-		public Point Position;
-		public Size Size;
 	}
 }

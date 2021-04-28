@@ -11,6 +11,8 @@ namespace ReportManager
 		IList<string> GetResults();
 		TestCaseModel SetInfo(WindowsElement element, WindowsDriver<WindowsElement> _driver, TestCaseModel _case, string xPath = null, string name=null, string accessibilityId = null);
 		string ParseProjectName(string _name);
+
+		TestCaseModel SetNote(string note, TestCaseModel _case);
 	}
 	public class Parser : IParser
 	{
@@ -27,6 +29,7 @@ namespace ReportManager
 
 		public TestCaseModel SetInfo(WindowsElement element, WindowsDriver<WindowsElement> _driver, TestCaseModel _case, string xPath = null, string name=null, string accessibilityId = null)
 		{
+			_case.action = Enums.Actions.Find;
 			if(element == null){
 				if(xPath != null){
 					_case.info = $"Unable to find element with xPath: {xPath}\n";
@@ -41,12 +44,12 @@ namespace ReportManager
 				_case.element.TagName = element.TagName;
 				if(element.TagName.EndsWith("Button")){
 					try{
-						_case.window.screenshot = _driver.GetScreenshot().AsByteArray;
+						_case.element.screenshot = _driver.GetScreenshot().AsByteArray;
 						_case.element.Size = element.Size;
 						_case.element.Location = element.Location;
 					}
 					catch{
-						_case.window.screenshot = null;
+						_case.element.screenshot = null;
 					}
 				}
 				_case.element.Text = element.Text;
@@ -65,6 +68,13 @@ namespace ReportManager
 		{
 			string val = new TimeSpan(date.Ticks).ToString();
 			return val;
+		}
+
+		public TestCaseModel SetNote(string note, TestCaseModel _case){
+			_case.info = note;
+			_case.result = true;
+			_case.action = Enums.Actions.Note;
+			return _case;
 		}
 	}
 

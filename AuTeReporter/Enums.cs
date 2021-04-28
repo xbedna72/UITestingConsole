@@ -20,7 +20,8 @@ namespace ReportManager
 			Click=1,
 			SendKey=2,
 			CheckAtribute=3,
-			Note=4
+			Note=4,
+			None=5
 		}
 	}
 }

@@ -1,54 +1,81 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace ReportManager
 {
 	public class HtmlCreater
 	{
-		string filePath;
-		private ReportModel actualReport = null;
-		string fileContent = "";
+		static string filePath;
+		protected static ReportModel actualReport = null;
 
 		public HtmlCreater(ReportModel _report, string _path)
 		{
 			actualReport = _report;
 			filePath = GenerateResultFile(_path);
-			fileContent = StartOfHtml();
-			foreach (TestMethodModel model in actualReport.methods)
+			ParseIntoHtml();
+		}
+
+		private static void ParseIntoHtml(){
+			var content = new BlockingCollection<string>(50);
+
+			Task.Run(() =>
 			{
-				foreach (TestCaseModel testCase in model.cases)
+				string i = "";
+				while (!content.IsCompleted)
 				{
 					try
 					{
-						fileContent += Test(testCase);
+						i = content.Take();
+						using (StreamWriter file = new StreamWriter(@"C:\Tools\logg.txt", append: true))
+						{
+							file.Write(i);
+						}
 					}
-					catch (Exception e)
+					catch (InvalidOperationException)
 					{
-						fileContent += $"<div><p>Unable to generate test case informations<p></div>\n";
+						break;
+					}
+					Thread.SpinWait(100000);
+				}
+			});
+
+			Task.Run(() => {
+				string test;
+				content.Add(StartOfHtml());
+				foreach (TestMethodModel model in actualReport.methods)
+				{
+					foreach (TestCaseModel testCase in model.cases)
+					{
+						try
+						{
+							test = Test(testCase);
+							content.Add(test);
+						}
+						catch (Exception e)
+						{
+							content.Add($"<div><p>Unable to generate test case informations<p></div>\n");
+						}
 					}
 				}
-			}
-			fileContent += EndOfHtml();
-			File.WriteAllText(filePath, fileContent);
+				content.Add(EndOfHtml());
+			});
 		}
 
-		private string GenerateResultFile(string _path)
+		private static string GenerateResultFile(string _path)
 		{
 			string _fileName = "Report-";
 			string date = DateTime.Now.ToString("yyyy-dd-M--HH-mm-ss");
 			_fileName = $"{_fileName}{date}.html";
-			this.filePath = $"{_path}\\{_fileName}";
-			return this.filePath;
+			filePath = $"{_path}\\{_fileName}";
+			return filePath;
 		}
 
-		private void ParseContent()
-		{
-			fileContent += StartOfHtml();
-		}
-
-		private string StartOfHtml()
+		private static string StartOfHtml()
 		{
 			return $"<!DOCTYPE html>\n<html>" +
 			$"<head>\n<link type=\"text/css\">\n" +
@@ -61,40 +88,50 @@ namespace ReportManager
 			$"<div id=\"header\"><h3>{actualReport.testProjectName}</h3>\n<h4>{actualReport.testProjectPath}</h4></div>";
 		}
 
-		private string Test(TestCaseModel _model)
+		private static string Test(TestCaseModel _model)
 		{
-			string result = _model.result == true ? "SUCCESS" : "FAILED";
-			string test = $"<div>\n<h3>\nTest case: {_model.num}\n" +
-			$"<p>\nFind {_model.element.TagName}</p>\n" +
-			$"<p\n>Result {result}</p>\n";
-			if (_model.window.screenshot != null)
-			{
-				try
+			string result = string.Empty;
+			string test = string.Empty;
+
+			if (_model.action == Enums.Actions.Note){
+				test = $"<div>\n<h3>\nTest case: {_model.num}\n" +
+				$"<p>\nNote: {_model.info}</p>\n";
+			}
+			else{
+				result = _model.result == true ? "SUCCESS" : "FAILED";
+				test = $"<div>\n<h3>\nTest case: {_model.num}\n" +
+				$"<p>\nFind {_model.element.TagName}</p>\n" +
+				$"<p\n>Result {result}</p>\n";
+				if (_model.element.screenshot != null)
 				{
-					byte[] image = RenderButton(_model);
-					if (image != null)
+					test += Convert.ToBase64String(_model.element.screenshot);
+					try
 					{
-						test += $"<p>\nScreenshot</p>\n<img src=\"data:image/gif;base64,{Convert.ToBase64String(image)}\">\n";
+						//byte[] image = RenderButton(_model);
+						//if (image != null)
+						//{
+						//	test += $"<p>\nScreenshot</p>\n<img src=\"data:image/gif;base64,{Convert.ToBase64String(image)}\">\n";
+						//}
 					}
-				}
-				catch
-				{
-					test += $"<p>\nScreenshot</p><p id=\"errorP\">Unable to show image of element.</p>\n";
+					catch
+					{
+						test += $"<p>\nScreenshot</p><p id=\"errorP\">Unable to show image of element.</p>\n";
+					}
 				}
 			}
 			test += $"</h3>\n</div>\n";
 			return test;
 		}
 
-		private string EndOfHtml()
+		private static string EndOfHtml()
 		{
 			return $"</body>\n</html>\n";
 		}
 
-		private byte[] RenderButton(TestCaseModel _model)
+		private static byte[] RenderButton(TestCaseModel _model)
 		{
 			System.Drawing.Image image;
-			using (MemoryStream ms = new MemoryStream(_model.window.screenshot))
+			using (MemoryStream ms = new MemoryStream(_model.element.screenshot))
 			{
 				image = System.Drawing.Image.FromStream(ms);
 			}
@@ -114,27 +151,27 @@ namespace ReportManager
 		}
 
 		//Get Size of window does not work. This mathod is prepared for future updates.
-		private string CutOutMainWindow(byte[] _image, TestCaseModel _model)
-		{
-			System.Drawing.Rectangle rec = new System.Drawing.Rectangle(_model.window.Position, _model.window.Size);
-			System.Drawing.Bitmap src;
-			using (var ms = new MemoryStream(_image))
-			{
-				src = new System.Drawing.Bitmap(ms);
-			}
+		//private string CutOutMainWindow(byte[] _image, TestCaseModel _model)
+		//{
+		//	System.Drawing.Rectangle rec = new System.Drawing.Rectangle(_model.window.Position, _model.window.Size);
+		//	System.Drawing.Bitmap src;
+		//	using (var ms = new MemoryStream(_image))
+		//	{
+		//		src = new System.Drawing.Bitmap(ms);
+		//	}
 
-			System.Drawing.Bitmap target = new System.Drawing.Bitmap(_model.window.Size.Width ,_model.window.Size.Height);
-			using(System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(target)){
-				g.DrawImage(src, new System.Drawing.Rectangle(0, 0, target.Width, target.Height), rec, System.Drawing.GraphicsUnit.Pixel);
-			}
-			src.Dispose();
-			byte[] imageResult;
-			using(var ms = new MemoryStream()){
-				target.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
-				imageResult = ms.ToArray();
-			}
-			target.Dispose();
-			return Convert.ToBase64String(imageResult);
-		}
+		//	System.Drawing.Bitmap target = new System.Drawing.Bitmap(_model.window.Size.Width ,_model.window.Size.Height);
+		//	using(System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(target)){
+		//		g.DrawImage(src, new System.Drawing.Rectangle(0, 0, target.Width, target.Height), rec, System.Drawing.GraphicsUnit.Pixel);
+		//	}
+		//	src.Dispose();
+		//	byte[] imageResult;
+		//	using(var ms = new MemoryStream()){
+		//		target.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+		//		imageResult = ms.ToArray();
+		//	}
+		//	target.Dispose();
+		//	return Convert.ToBase64String(imageResult);
+		//}
 	}
 }

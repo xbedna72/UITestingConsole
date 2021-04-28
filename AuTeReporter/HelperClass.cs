@@ -98,5 +98,16 @@ namespace ReportManager
 			}
 			return uiTarget;
 		}
+
+		public static void Note(
+			this WindowsDriver<WindowsElement> MyDesktopSession,
+			string note,
+			int nTryCount = 3)
+		{
+			if (ReportManager.ActualReportModel != null)
+			{
+				ReportManager.ActualReportModel.NewNote(note);
+			}
+		}
 	}
 }
