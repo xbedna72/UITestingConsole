@@ -1,4 +1,6 @@
-﻿using OpenQA.Selenium.Appium.Windows;
+﻿using OpenQA.Selenium.Appium;
+using OpenQA.Selenium.Appium.Windows;
+using OpenQA.Selenium.Remote;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,7 +9,7 @@ namespace ReportManager
 {
 	public static class Helper
 	{
-		public static WindowsElement FindByXPath(
+		public static WindowsElement FindElementByXPath(
 			this WindowsDriver<WindowsElement> MyDesktopSession,
 			string xPath,
 			int nTryCount = 3)

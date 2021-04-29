@@ -1,7 +1,6 @@
 C:\Users\MayBee\source\repos\xbedna72\UITestingConsole\AuTeReporter\bin\x64\Release\netstandard2.0\AuTeReporter.deps.json
 C:\Users\MayBee\source\repos\xbedna72\UITestingConsole\AuTeReporter\bin\x64\Release\netstandard2.0\AuTeReporter.dll
 C:\Users\MayBee\source\repos\xbedna72\UITestingConsole\AuTeReporter\bin\x64\Release\netstandard2.0\AuTeReporter.pdb
-C:\Users\MayBee\source\repos\xbedna72\UITestingConsole\AuTeReporter\obj\x64\Release\netstandard2.0\AuTeReporter.csprojAssemblyReference.cache
 C:\Users\MayBee\source\repos\xbedna72\UITestingConsole\AuTeReporter\obj\x64\Release\netstandard2.0\AuTeReporter.AssemblyInfoInputs.cache
 C:\Users\MayBee\source\repos\xbedna72\UITestingConsole\AuTeReporter\obj\x64\Release\netstandard2.0\AuTeReporter.AssemblyInfo.cs
 C:\Users\MayBee\source\repos\xbedna72\UITestingConsole\AuTeReporter\obj\x64\Release\netstandard2.0\AuTeReporter.csproj.CoreCompileInputs.cache
