@@ -91,4 +91,3 @@ C:\Users\MayBee\source\repos\xbedna72\UITestingConsole\AuTeRTests\obj\x64\Releas
 C:\Users\MayBee\source\repos\xbedna72\UITestingConsole\AuTeRTests\obj\x64\Release\netcoreapp3.1\AuTeRTests.dll
 C:\Users\MayBee\source\repos\xbedna72\UITestingConsole\AuTeRTests\obj\x64\Release\netcoreapp3.1\AuTeRTests.pdb
 C:\Users\MayBee\source\repos\xbedna72\UITestingConsole\AuTeRTests\obj\x64\Release\netcoreapp3.1\AuTeRTests.genruntimeconfig.cache
-C:\Users\MayBee\source\repos\xbedna72\UITestingConsole\AuTeRTests\obj\x64\Release\netcoreapp3.1\AuTeRTests.csprojAssemblyReference.cache

@@ -20,6 +20,7 @@ namespace UITestingConsole
 	{
 		public static ConsoleManager consoleManager = null;
 		public static string info = "";
+		private static string calculator = "Microsoft.WindowsCalculator_8wekyb3d8bbwe!App";
 
 		public static void Main(string[] args)
 		{
@@ -50,9 +51,7 @@ namespace UITestingConsole
 					consoleManager.ErrorEnd(e.ToString());
 				}
 			}
-
-			consoleManager.ErrorMessage("No arguments passed. Invalid input. Console ends.");
-			consoleManager.End();
+			consoleManager.ErrorEnd("No arguments passed. Invalid input.");
 		}
 
 		//try
@@ -119,7 +118,7 @@ namespace UITestingConsole
 							if (args[i].Equals("/TestAdapterPath:"))
 							{
 								i++;
-								if (args[i].Length > 0)
+								if (i < args.Count() && Directory.Exists(args[i].ToString()))
 								{
 									consoleManager.adapterPath = args[i];
 									i++;
@@ -133,7 +132,7 @@ namespace UITestingConsole
 										}
 										else
 										{
-											consoleManager.ErrorMessage("Input path to results directtory does not exists.");
+											consoleManager.ErrorMessage("Input path to results directory does not exists.");
 											break;
 										}
 									}
@@ -145,7 +144,7 @@ namespace UITestingConsole
 									if (args[i].Equals("/Executable:"))
 									{
 										i++;
-										if (args[i].Length > 0)
+										if (i < args.Count() && (Regex.IsMatch(args[i], "[A-Z]:(\\\\(.+))+.exe$") || args[i].Equals(calculator)))
 										{
 											consoleManager.executable = args[i];
 											if (i + 1 < args.Count())
@@ -159,6 +158,9 @@ namespace UITestingConsole
 														consoleManager.slnPath = args[i];
 														consoleManager.BuildFlag = true;
 														i++;
+														if(!(i < args.Count())){
+															return false;
+														}
 													}
 													else
 													{
@@ -167,26 +169,23 @@ namespace UITestingConsole
 													}
 												}
 
-												if (args[i].Equals("-s", StringComparison.OrdinalIgnoreCase))
-												{
-													i++;
-													if (args.Count() <= i && Regex.IsMatch(args[i], @".+\\emails\.xml$"))
-													{
-														consoleManager.emailsPath = args[i];
-														consoleManager.SendFlag = true;
-													}
-													else
-													{
-														consoleManager.ErrorMessage($"The path to file with emails is wrong or missing.");
-														break;
-													}
-												}
+												//if (args[i].Equals("-s", StringComparison.OrdinalIgnoreCase))
+												//{
+												//	i++;
+												//	if (args.Count() <= i && Regex.IsMatch(args[i], @".+\\emails\.xml$"))
+												//	{
+												//		consoleManager.emailsPath = args[i];
+												//		consoleManager.SendFlag = true;
+												//	}
+												//	else
+												//	{
+												//		consoleManager.ErrorMessage($"The path to file with emails is wrong or missing.");
+												//		break;
+												//	}
+												//}
 												
-												if(args.Count() > i + 1)
-												{
-													consoleManager.ErrorMessage($"Unknown parameters on position: {i}");
-													break;
-												}
+												consoleManager.ErrorMessage($"Unknown input.");
+												break;
 											}
 											return false;
 										}

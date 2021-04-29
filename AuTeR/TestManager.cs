@@ -121,21 +121,12 @@ namespace UITestingConsole
 
 		public string GetTestResultsFolder(string _path)
 		{
-			string[] res1 = Regex.Split(_path, @"\\");
-			string result = "";
-			for (int i = 0; i < res1.Length; i++)
+			string[] res1 = Regex.Split(_path, @"\\bin\\");
+			string result = $"{res1[0]}\\TestResults";
+			
+			if (!Directory.Exists(result))
 			{
-				if (i == res1.Length - 1)
-				{
-					string[] str = Regex.Split(res1[i], @"\.");
-					result += $"{str[0]}\\TestResults";
-					break;
-				}
-				result += $"{res1[i]}\\";
-			}
-			if (!File.Exists(result))
-			{
-				throw new Exception("Path to test result directory of tests does not exists.");
+				Directory.CreateDirectory(result);
 			}
 			return result;
 		}

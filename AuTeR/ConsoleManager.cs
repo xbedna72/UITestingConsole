@@ -144,10 +144,6 @@ namespace UITestingConsole
 			if(!Directory.Exists(settingObject.resultsDirectory)){
 				throw new Exception("Path to result directory does not exists.");
 			}
-			//if (!File.Exists(settingObject.executable))
-			//{
-			//	throw new Exception("Path to executable file does not exists.");
-			//}
 			if(settingObject.sourceProject != null){
 				if (!File.Exists(settingObject.sourceProject))
 				{
@@ -163,8 +159,8 @@ namespace UITestingConsole
 			settingObject = new SettingObject();
 			_tm.TestBuild(testName);
 			settingObject.testProjectPath = _tm.GetTestProjectPath(testName, adapterPath).Replace(@"\\", @"\");
-			settingObject.resultsDirectory = resultsDirestory == null ? _tm.GetTestResultsFolder(testName) : resultsDirestory.Replace(@"\\", @"\");
 			settingObject.testAdapterPath = adapterPath.Replace(@"\\", @"\");
+			settingObject.resultsDirectory = resultsDirestory == null ? _tm.GetTestResultsFolder(settingObject.testAdapterPath) : resultsDirestory.Replace(@"\\", @"\");
 			settingObject.executable = executable.Replace(@"\\", @"\");
 			settingObject.buildRequest = BuildFlag;
 			settingObject.sourceProject = BuildFlag ? slnPath.Replace(@"\\", @"\") : null;
