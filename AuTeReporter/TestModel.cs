@@ -12,19 +12,21 @@ namespace ReportManager
 	{
 		public string testProjectName = string.Empty;
 		public string testProjectPath = string.Empty;
+		public string sut = string.Empty;
 		public IList<TestMethodModel> methods = null;
-		private TestMethodModel actualMethod = null;
+		public TestMethodModel actualMethod = null;
 		private static IParser _parser;
 		private static WindowsDriver<WindowsElement> driver = null;
 
-		public ReportModel(string _projectName)
+		public ReportModel(string _projectName, string _app)
 		{
-			Initialize(_projectName);
+			Initialize(_projectName, _app);
 		}
-		public void Initialize(string _testProject)
+		public void Initialize(string _testProject, string _app)
 		{
 			_parser = ParserFactory.GetParserObj();
 			testProjectName = _parser.ParseProjectName(_testProject);
+			sut = _app;
 			methods = new List<TestMethodModel>();
 		}
 
@@ -49,7 +51,7 @@ namespace ReportManager
 			actualMethod = null;
 		}
 
-		public void NewCase(WindowsElement windowsElement, string xPath = null, string name = null, string accessibilityId = null)
+		public bool NewCase(WindowsElement windowsElement, string xPath = null, string name = null, string accessibilityId = null)
 		{
 			var newElement = new TestCaseModel(actualMethod.count + 1);
 			newElement = _parser.SetInfo(windowsElement, driver, newElement, xPath: xPath, name: name, accessibilityId: accessibilityId);
@@ -57,7 +59,11 @@ namespace ReportManager
 			if(!newElement.result)
 			{
 				actualMethod.testMethodResult = Enums.TestResult.Failed;
+				return false;
 			}
+			
+			actualMethod.testMethodResult = Enums.TestResult.Passed;
+			return true;
 		}
 
 		public void NewNote(string note){

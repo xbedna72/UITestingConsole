@@ -67,11 +67,28 @@ namespace ReportManager
 			}
 		}
 
+		public static void FailerTask(){
+			if (ActualReportModel != null)
+			{
+				ActualReportModel.EndMethod(desktopSession);
+			}
+
+			if (desktopSession != null)
+			{
+				desktopSession.Close();
+				desktopSession.Quit();
+				desktopSession = null;
+			}
+
+			FinalTasks();
+			Assert.Fail();
+		}
+
 		public static void Initialize(TestContext context)
 		{
 			application = context.Properties["application"].ToString(); //"Microsoft.WindowsCalculator_8wekyb3d8bbwe!App";
 			winAppDriver = System.Diagnostics.Process.Start(@"C:\Program Files (x86)\Windows Application Driver\WinAppDriver.exe");
-			ActualReportModel = new ReportModel(context.FullyQualifiedTestClassName);
+			ActualReportModel = new ReportModel(context.FullyQualifiedTestClassName, application);
 			ActualReportModel.testProjectPath = context.Properties["testProjectPath"].ToString();
 			resultDirectory = context.Properties["resultDirectory"].ToString();
 		}
@@ -80,7 +97,7 @@ namespace ReportManager
 		{
 			application = _application;
 			winAppDriver = System.Diagnostics.Process.Start(@"C:\Program Files (x86)\Windows Application Driver\WinAppDriver.exe");
-			ActualReportModel = new ReportModel("test");
+			ActualReportModel = new ReportModel("test", application);
 			ActualReportModel.testProjectPath = "Test";
 			resultDirectory = _resultDirectory;
 		}

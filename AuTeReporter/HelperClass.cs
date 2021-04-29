@@ -9,7 +9,7 @@ namespace ReportManager
 {
 	public static class Helper
 	{
-		public static WindowsElement FindElementByXPath(
+		public static WindowsElement FindByXPath(
 			this WindowsDriver<WindowsElement> MyDesktopSession,
 			string xPath,
 			int nTryCount = 3)
@@ -35,7 +35,9 @@ namespace ReportManager
 			}
 			if (ReportManager.ActualReportModel != null)
 			{
-				ReportManager.ActualReportModel.NewCase(uiTarget, xPath: xPath);
+				if(!ReportManager.ActualReportModel.NewCase(uiTarget, xPath: xPath)){
+					ReportManager.FailerTask();
+				}
 			}
 			return uiTarget;
 		}
@@ -65,7 +67,9 @@ namespace ReportManager
 				}
 			}
 			if(ReportManager.ActualReportModel != null){
-				ReportManager.ActualReportModel.NewCase(uiTarget, accessibilityId: accessibilityId);
+				if(!ReportManager.ActualReportModel.NewCase(uiTarget, accessibilityId: accessibilityId)){
+					ReportManager.FailerTask();
+				}
 			}
 			return uiTarget;
 		}
@@ -96,7 +100,9 @@ namespace ReportManager
 			}
 			if (ReportManager.ActualReportModel != null)
 			{
-				ReportManager.ActualReportModel.NewCase(uiTarget, name: name);
+				if(!ReportManager.ActualReportModel.NewCase(uiTarget, name: name)){
+					ReportManager.FailerTask();
+				}
 			}
 			return uiTarget;
 		}

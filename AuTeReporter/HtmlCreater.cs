@@ -77,19 +77,24 @@ namespace ReportManager
 			$"<head>\n<link type=\"text/css\">\n" +
 			$"<meta content=\"charset =UTF-8\">\n" +
 			$"<style>\n" +
-			$"body div {{margin-left: auto; margin-right: auto; width: max-content;}}" +
+			$"html{{height: 100%;}}" +
+			$"h1, h2, h3, h4, h5, h6, p, a, dt, th, td {{font - family: 'Roboto', sans-serif;}}" +
+			$"body {{height: inherit; margin: 0 auto; display: flex; flex-direction: column;}}" +
+			$"body div {{padding-left: 20px; padding-right: 20px; float:left;}}" +
+			$"h4 {{ border-bottom: 1px black solid; }}" +
 			$"#element img {{ width: 100px; }}\n" +
-			$"#window img {{ width: 400px; }}\n" +
-			$"#method img {{ width: 600px; }}\n" +
+			$"#window img {{ width: 900px; }}\n" +
+			$"#window {{background-color: whitesmoke;}}" +
+			$"#element {{background-color: whitesmoke; padding-bottom:25px;}}" +
+			$"#method img {{ width: 770px; }}\n" +
 			$"#errorP{{ color: red; font-size: 20px; }}\n" +
 			$"</style>\n" +
 			$"</head>\n<body>\n" +
-			$"<div id=\"header\"><h3>{actualReport.testProjectName}</h3>\n<h4>{actualReport.testProjectPath}</h4></div>";
+			$"<div id=\"header\"><h3>Test project name: {actualReport.testProjectName}</h3>\n<h4>Test project path: {actualReport.testProjectPath}</h4><h4>Tested application: {actualReport.sut}</h4><p>{DateTime.Now.ToString()}</p></div>";
 		}
 
 		private static string Test(TestCaseModel _model)
 		{
-			string result = string.Empty;
 			string test = string.Empty;
 
 			if (_model.action == Enums.Actions.Note)
@@ -98,20 +103,35 @@ namespace ReportManager
 			}
 			else
 			{
-				result = _model.result == true ? "SUCCESS" : "FAILED";
-				test = $"<div>\n<h4>\nTest case: #{_model.num}\n</h4>" +
-				$"<p>\nFind {_model.element.TagName}</p>\n" +
-				$"<p\n>Result {result}</p>\n";
-				if (_model.element.elementScreenshot != null)
-				{
-					try
+				test = $"<div>\n<h4>\nTest case: #{_model.num}\n</h4>";
+				if(_model.result){
+					test += $"<p style=\"color: green; font-weight: bold;\">SUCCESS</p>\n<p>\nto find element with tag name: { _model.element.TagName.Split('.')[1]}</p>\n";
+					if (_model.element.elementScreenshot != null)
 					{
-						test += $"<div id=\"window\">\n<p>View of Window:</p>\n<img src=\"data:image/gif;base64,{Convert.ToBase64String(_model.element.windowScreenshot)}\">\n</div>";
-						test += $"<h4>\nBefore click on button:</h4><div id=\"element\">\n<p>Element</p>\n<img src=\"data:image/gif;base64,{Convert.ToBase64String(_model.element.elementScreenshot)}\">\n</div>";
+						try
+						{
+							test += $"<div id=\"window\">\n<h4>View of Window:</h4>\n<img src=\"data:image/gif;base64,{Convert.ToBase64String(_model.element.windowScreenshot)}\">\n</div>";
+							test += $"<div id=\"element\">\n<h4>\nBefore click on:</h4>\n<img src=\"data:image/gif;base64,{Convert.ToBase64String(_model.element.elementScreenshot)}\">\n</div>";
+						}
+						catch (Exception e)
+						{
+							test += $"<p id=\"errorP\">Test case view not available.</p>\n";
+						}
 					}
-					catch (Exception e)
+				}
+				else{
+					test += $"<p style=\"color: red; font-weight: bold;\">FAILED</p>\n" +
+					$"<p>{_model.info}</p>";
+					if (_model.element.windowScreenshot != null)
 					{
-						test += $"<p id=\"errorP\">Test case view not available.</p>\n";
+						try
+						{
+							test += $"<div id=\"window\">\n<h4>View of Window:</h4>\n<img src=\"data:image/gif;base64,{Convert.ToBase64String(_model.element.windowScreenshot)}\">\n</div>";
+						}
+						catch (Exception e)
+						{
+							test += $"<p id=\"errorP\">Test case view not available.</p>\n";
+						}
 					}
 				}
 			}
@@ -121,7 +141,7 @@ namespace ReportManager
 
 		private string Method(TestMethodModel model){
 			string method = "";
-			method += $"<div>\n<h4>\nTest method: #{model.num}\n</h4>";
+			method += $"<div style=\"background-color:whitesmoke;\">\n<h4>\nTest method: #{model.num}\n</h4>";
 			if(model.startScreenshot != null){
 				try{
 					method += $"<div id=\"method\"><h4>\nStart screenshot before method launche.</h4>\n<img src=\"data:image/gif;base64,{Convert.ToBase64String(model.startScreenshot)}\">\n</div>";

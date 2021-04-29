@@ -39,6 +39,12 @@ namespace ReportManager
 					_case.info = $"Unable to find element with accessibilityId: {accessibilityId}\n";
 				}
 				_case.result = false;
+				try{
+					_case.element.windowScreenshot = _driver.GetScreenshot().AsByteArray;
+				}catch{
+					_case.element.windowScreenshot = null;
+				}
+				
 			}
 			else{
 				_case.element.TagName = element.TagName;

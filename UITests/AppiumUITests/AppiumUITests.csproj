@@ -27,8 +27,7 @@
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AuTeReporter, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="AuTeReporter">
       <HintPath>..\..\AuTeReporter\bin\x64\Release\netstandard2.0\AuTeReporter.dll</HintPath>
     </Reference>
     <Reference Include="System" />
