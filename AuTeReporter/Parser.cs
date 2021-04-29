@@ -44,12 +44,18 @@ namespace ReportManager
 				_case.element.TagName = element.TagName;
 				if(element.TagName.EndsWith("Button")){
 					try{
-						_case.element.screenshot = _driver.GetScreenshot().AsByteArray;
+						_case.element.elementScreenshot = element.GetScreenshot().AsByteArray;
 						_case.element.Size = element.Size;
 						_case.element.Location = element.Location;
 					}
 					catch{
-						_case.element.screenshot = null;
+						_case.element.elementScreenshot = null;
+					}
+
+					try{
+						_case.element.windowScreenshot = _driver.GetScreenshot().AsByteArray;
+					}catch{
+						_case.element.windowScreenshot = null;
 					}
 				}
 				_case.element.Text = element.Text;

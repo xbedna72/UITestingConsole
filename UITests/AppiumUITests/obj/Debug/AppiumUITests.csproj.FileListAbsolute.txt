@@ -1,3 +1,4 @@
+C:\Users\MayBee\source\repos\xbedna72\UITestingConsole\UITests\AppiumUITests\bin\Debug\System.Management.Automation.dll
 C:\Users\MayBee\source\repos\xbedna72\UITestingConsole\UITests\AppiumUITests\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
 C:\Users\MayBee\source\repos\xbedna72\UITestingConsole\UITests\AppiumUITests\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
 C:\Users\MayBee\source\repos\xbedna72\UITestingConsole\UITests\AppiumUITests\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll

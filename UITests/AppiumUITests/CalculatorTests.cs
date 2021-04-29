@@ -37,8 +37,7 @@ namespace TestEditMaterializeCard
         [ClassCleanup()]
         public static void ClassCleanup()
         {
-            TearDown();
-            
+            TearDown();    
         }
 
         [TestMethod]

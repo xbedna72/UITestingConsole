@@ -54,6 +54,11 @@ namespace ReportManager
 
 		public static void TearDown()
 		{
+			if (ActualReportModel != null)
+			{
+				ActualReportModel.EndMethod(desktopSession);
+			}
+
 			if (desktopSession != null)
 			{
 				desktopSession.Close();

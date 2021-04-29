@@ -25,9 +25,11 @@ namespace ReportManager
 		{
 			content += StartOfHtml();
 			Write();
-			foreach (TestMethodModel model in actualReport.methods)
+			foreach (TestMethodModel method in actualReport.methods)
 			{
-				foreach (TestCaseModel testCase in model.cases)
+				content += Method(method);
+				Write();
+				foreach (TestCaseModel testCase in method.cases)
 				{
 					try
 					{
@@ -48,7 +50,7 @@ namespace ReportManager
 		{
 			try
 			{
-				using (StreamWriter file = new StreamWriter(@"C:\Tools\logg.txt", append: true))
+				using (StreamWriter file = new StreamWriter(filePath, append: true))
 				{
 					file.Write(content);
 				}
@@ -75,8 +77,11 @@ namespace ReportManager
 			$"<head>\n<link type=\"text/css\">\n" +
 			$"<meta content=\"charset =UTF-8\">\n" +
 			$"<style>\n" +
-			$"img {{ width: 1000px;}}" +
-			$"#errorP{{ color: red; font-size: 20px; }}" +
+			$"body div {{margin-left: auto; margin-right: auto; width: max-content;}}" +
+			$"#element img {{ width: 100px; }}\n" +
+			$"#window img {{ width: 400px; }}\n" +
+			$"#method img {{ width: 600px; }}\n" +
+			$"#errorP{{ color: red; font-size: 20px; }}\n" +
 			$"</style>\n" +
 			$"</head>\n<body>\n" +
 			$"<div id=\"header\"><h3>{actualReport.testProjectName}</h3>\n<h4>{actualReport.testProjectPath}</h4></div>";
@@ -89,33 +94,57 @@ namespace ReportManager
 
 			if (_model.action == Enums.Actions.Note)
 			{
-				test = $"<div>\n<h3>\nTest case: {_model.num}\n" +
-				$"<p>\nNote: {_model.info}</p>\n";
+				test = $"<div>\n<h4>\nNote: {_model.info}\n</h4>";
 			}
 			else
 			{
 				result = _model.result == true ? "SUCCESS" : "FAILED";
-				test = $"<div>\n<h3>\nTest case: {_model.num}\n" +
+				test = $"<div>\n<h4>\nTest case: #{_model.num}\n</h4>" +
 				$"<p>\nFind {_model.element.TagName}</p>\n" +
 				$"<p\n>Result {result}</p>\n";
-				if (_model.element.screenshot != null)
+				if (_model.element.elementScreenshot != null)
 				{
 					try
 					{
-						byte[] image = RenderButton(_model);
-						if (image != null)
-						{
-							test += $"<p>\nScreenshot</p>\n<img src=\"data:image/gif;base64,{Convert.ToBase64String(image)}\">\n";
-						}
+						test += $"<div id=\"window\">\n<p>View of Window:</p>\n<img src=\"data:image/gif;base64,{Convert.ToBase64String(_model.element.windowScreenshot)}\">\n</div>";
+						test += $"<h4>\nBefore click on button:</h4><div id=\"element\">\n<p>Element</p>\n<img src=\"data:image/gif;base64,{Convert.ToBase64String(_model.element.elementScreenshot)}\">\n</div>";
 					}
-					catch(Exception e)
+					catch (Exception e)
 					{
-						test += $"<p>\nScreenshot</p><p id=\"errorP\">{e.ToString()}</p>\n";
+						test += $"<p id=\"errorP\">Test case view not available.</p>\n";
 					}
 				}
 			}
-			test += $"</h3>\n</div>\n";
+			test += $"\n</div>\n";
 			return test;
+		}
+
+		private string Method(TestMethodModel model){
+			string method = "";
+			method += $"<div>\n<h4>\nTest method: #{model.num}\n</h4>";
+			if(model.startScreenshot != null){
+				try{
+					method += $"<div id=\"method\"><h4>\nStart screenshot before method launche.</h4>\n<img src=\"data:image/gif;base64,{Convert.ToBase64String(model.startScreenshot)}\">\n</div>";
+				}catch{
+					method += $"<p id=\"errorP\">Method start view not available.</p>\n";
+				}
+			}
+
+			if (model.endScreenshot != null)
+			{
+				try
+				{
+					method += $"<div id=\"method\"><h4>\nEnd screenshot after method launche.</h4>\n<img src=\"data:image/gif;base64,{Convert.ToBase64String(model.endScreenshot)}\">\n</div>\n";
+				}
+				catch
+				{
+					method += $"<p id=\"errorP\">Method start view not available.</p>\n";
+				}
+			}
+
+			method += "</div>\n";
+
+			return method;
 		}
 
 		private static string EndOfHtml()
@@ -123,28 +152,28 @@ namespace ReportManager
 			return $"</body>\n</html>\n";
 		}
 
-		private static byte[] RenderButton(TestCaseModel _model)
-		{
-			System.Drawing.Image image;
-			using (MemoryStream ms = new MemoryStream(_model.element.screenshot))
-			{
-				image = System.Drawing.Image.FromStream(ms);
-			}
-			System.Drawing.Pen pen = new System.Drawing.Pen(System.Drawing.Color.Red, 3);
-			using (System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(image))
-			{
-				g.DrawRectangle(pen, _model.element.Location.X, _model.element.Location.Y, _model.element.Size.Width, _model.element.Size.Height);
-			}
-			pen.Dispose();
-			byte[] imageBytes;
-			using (MemoryStream ms = new MemoryStream())
-			{
-				image.Save(ms, image.RawFormat);
-				image.Save("C:\\Tools", System.Drawing.Imaging.ImageFormat.Jpeg);
-				imageBytes = ms.ToArray();
-			}
-			return imageBytes;
-		}
+		//private static byte[] RenderButton(TestCaseModel _model)
+		//{
+		//	System.Drawing.Image image;
+		//	using (MemoryStream ms = new MemoryStream(_model.element.screenshot))
+		//	{
+		//		image = System.Drawing.Image.FromStream(ms);
+		//	}
+		//	System.Drawing.Pen pen = new System.Drawing.Pen(System.Drawing.Color.Red, 3);
+		//	using (System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(image))
+		//	{
+		//		g.DrawRectangle(pen, _model.element.Location.X, _model.element.Location.Y, _model.element.Size.Width, _model.element.Size.Height);
+		//	}
+		//	pen.Dispose();
+		//	byte[] imageBytes;
+		//	using (MemoryStream ms = new MemoryStream())
+		//	{
+		//		image.Save(ms, image.RawFormat);
+		//		image.Save("C:\\Tools", System.Drawing.Imaging.ImageFormat.Jpeg);
+		//		imageBytes = ms.ToArray();
+		//	}
+		//	return imageBytes;
+		//}
 
 		//Get Size of window does not work. This mathod is prepared for future updates.
 		//private string CutOutMainWindow(byte[] _image, TestCaseModel _model)

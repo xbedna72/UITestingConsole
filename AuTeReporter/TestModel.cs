@@ -34,13 +34,26 @@ namespace ReportManager
 			var _newMethod = new TestMethodModel(methods.Count + 1);
 			methods.Add(_newMethod);
 			actualMethod = _newMethod;
+			try
+			{
+				actualMethod.startScreenshot = _driver.GetScreenshot().AsByteArray;
+			}
+			catch{}
+		}
+
+		public void EndMethod(WindowsDriver<WindowsElement> _driver){
+			try{
+				actualMethod.endScreenshot = _driver.GetScreenshot().AsByteArray;
+			}catch{}
+			driver = null;
+			actualMethod = null;
 		}
 
 		public void NewCase(WindowsElement windowsElement, string xPath = null, string name = null, string accessibilityId = null)
 		{
-			var newElement = new TestCaseModel(actualMethod.cases.Count + 1);
+			var newElement = new TestCaseModel(actualMethod.count + 1);
 			newElement = _parser.SetInfo(windowsElement, driver, newElement, xPath: xPath, name: name, accessibilityId: accessibilityId);
-			actualMethod.cases.Add(newElement);
+			actualMethod.AddCase(newElement);
 			if(!newElement.result)
 			{
 				actualMethod.testMethodResult = Enums.TestResult.Failed;
@@ -50,7 +63,7 @@ namespace ReportManager
 		public void NewNote(string note){
 			var newElement = new TestCaseModel(actualMethod.cases.Count + 1);
 			newElement = _parser.SetNote(note, newElement);
-			actualMethod.cases.Add(newElement);
+			actualMethod.AddCase(newElement);
 		}
 	}
 
@@ -60,13 +73,22 @@ namespace ReportManager
 		public int num;
 		public Enums.TestResult testMethodResult = Enums.TestResult.Unknown;
 		public IList<TestCaseModel> cases = null;
-		public string startScreenshot = null;
-		public string endScreenshot = null;
+		public byte[] startScreenshot = null;
+		public byte[] endScreenshot = null;
+		public int count = 0;
 
 		public TestMethodModel(int _num)
 		{
 			num = _num;
 			cases = new List<TestCaseModel>();
+		}
+		public void AddCase(TestCaseModel _case){
+			if(_case.action == Actions.Note){
+				cases.Add(_case);
+			}else{
+				count += 1;
+				cases.Add(_case);
+			}
 		}
 	}
 
@@ -91,6 +113,7 @@ namespace ReportManager
 		public string Text;
 		public Point Location;
 		public Size Size;
-		public byte[] screenshot = null;
+		public byte[] elementScreenshot = null;
+		public byte[] windowScreenshot = null;
 	}
 }
