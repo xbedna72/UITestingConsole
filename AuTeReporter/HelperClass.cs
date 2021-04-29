@@ -7,6 +7,7 @@ using System.Text;
 
 namespace ReportManager
 {
+	//Zdroj: https://github.com/microsoft/WinAppDriver/blob/master/Tests/AbsoluteXPath/DesktopSession.cs
 	public static class Helper
 	{
 		public static WindowsElement FindByXPath(

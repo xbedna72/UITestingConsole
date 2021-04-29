@@ -5,6 +5,7 @@ using System;
 
 namespace ReportManager
 {
+	//Zdroj: https://github.com/microsoft/WinAppDriver/blob/master/Tests/AbsoluteXPath/DesktopSession.cs
 	public class ReportManager
 	{
 		protected const string WindowsApplicationDriverUrl = "http://127.0.0.1:4723";
