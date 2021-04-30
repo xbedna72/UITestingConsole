@@ -44,7 +44,7 @@ namespace UITestingConsole
 				args += $" /TestAdapterPath:{_object.testAdapterPath}";
 				args += $" /Settings:{GetRunSettings()}";
 				args += $" /ResultsDirectory:{_object.resultsDirectory}";
-				System.Diagnostics.Process prc = new System.Diagnostics.Process();
+				Process prc = new Process();
 				prc.StartInfo.FileName = devCmd;
 				prc.StartInfo.Arguments = args;
 				prc.StartInfo.CreateNoWindow = true;
