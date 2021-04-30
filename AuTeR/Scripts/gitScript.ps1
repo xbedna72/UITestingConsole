@@ -1,7 +1,3 @@
-$path = $args[0]
-$name = $args[1]
-$pull = $args[2]
-
 if(!(Test-Path $path)){
 	throw "Path does not exists"
 }
@@ -11,7 +7,7 @@ if($pull -eq $True){
 	Set-Location $path
        	$output3 = Invoke-Expression -Command "git pull" 2>&1
        	if($output3 -match 'failed'){
-           	throw "Pull failed"
+           	throw $output3
 	}
 }
 
@@ -22,7 +18,7 @@ $output1 = Invoke-Expression -Command ".\devenv.com $path\$name /Clean" 2>&1
 if($output1 -match '0 failed'){
     Write-Host $output1   
 }else{
-    throw "Clean failed"
+    throw $output1
 }
 
 $output2 = Invoke-Expression -Command ".\devenv.com $path\$name /Build" 2>&1

@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 using System.IO;
 using System.Management.Automation;
 using System.Collections.ObjectModel;
+using System.Collections;
 
 namespace UITestingConsole
 {
@@ -68,24 +69,85 @@ namespace UITestingConsole
 		public void TestBuild(string _path)
 		{
 			string[] _string = Regex.Split(_path, "(.+)\\\\(.+)$");
-			RunScript(_string[1], _string[2], false.ToString());
+			RunScript(_string[1], _string[2], false);
 		}
 
 		public void ProjectPullAndBuild(string _project)
 		{
 			string[] _string = Regex.Split(_project, "(.+)\\\\(.+)$");
-			RunScript(_string[0], _string[1], true.ToString());
+			RunScript(_string[0], _string[1], true);
 		}
 
-		private void RunScript(string _path, string _name, string _flag)
+		private void RunScript(string _path, string _name, bool _flag)
 		{
-			_path = _path.Replace(@"\\", @"\");
-			
-			PowerShell ps = PowerShell.Create();
-			ps.AddScript($"Set-Location -Path \"{GetScriptsDirectory()}\"");
-			ps.AddScript($".\\gitScript.ps1 {_path} {_name} {_flag}");
-			
+			string path = _path.Replace(@"\\", @"\");
+			if(_flag){
+				Pull(path);
+			}
+			Clean(path, _name);
+			Build(path, _name);
+		}
 
+		private void Clean(string _path, string _name){
+			Process process = new Process();
+			process.StartInfo.FileName = @"C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\devenv.com";
+			process.StartInfo.Arguments = $"{_path}\\{_name} /Clean";
+			process.StartInfo.CreateNoWindow = true;
+			process.StartInfo.RedirectStandardInput = true;
+			process.StartInfo.RedirectStandardOutput = true;
+			process.StartInfo.RedirectStandardError = true;
+			process.StartInfo.UseShellExecute = false;
+			process.Start();
+			string str = "";
+			while (!process.HasExited)
+			{
+				str += process.StandardOutput.ReadToEnd();
+			}
+			InfoMessage($"Clean action: {str}");
+		}
+
+		private void Build(string _path, string _name)
+		{
+			Process process = new Process();
+			process.StartInfo.FileName = @"C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\devenv.com";
+			process.StartInfo.Arguments = $"{_path}\\{_name} /Build";
+			process.StartInfo.CreateNoWindow = true;
+			process.StartInfo.RedirectStandardInput = true;
+			process.StartInfo.RedirectStandardOutput = true;
+			process.StartInfo.RedirectStandardError = true;
+			process.StartInfo.UseShellExecute = false;
+			process.Start();
+			string str = "";
+			while (!process.HasExited)
+			{
+				str += process.StandardOutput.ReadToEnd();
+			}
+			if (!str.Contains("0 failed"))
+			{
+				throw new Exception($"Clean action failed: {str}");
+			}
+		}
+
+		private void Pull(string _path){
+			Process process = new Process();
+			process.StartInfo.WorkingDirectory = _path;
+			process.StartInfo.FileName = "C:\\Windows\\System32\\cmd.exe";
+			process.StartInfo.Arguments = $"git pull";
+			process.StartInfo.CreateNoWindow = true;
+			process.StartInfo.RedirectStandardInput = true;
+			process.StartInfo.RedirectStandardOutput = true;
+			process.StartInfo.RedirectStandardError = true;
+			process.StartInfo.UseShellExecute = false;
+			process.Start();
+			string str = "";
+			while (!process.HasExited)
+			{
+				str += process.StandardOutput.ReadToEnd();
+			}
+			if (!str.Contains("Clean: 1 succeeded, 0 failed, 0 skipped"))
+			{
+				throw new Exception($"Clean action failed: {str}");
+			}
 		}
 
 		public string GetTestProjectPath(string _projectPath, string _adapterPath)

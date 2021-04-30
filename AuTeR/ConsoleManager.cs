@@ -54,7 +54,7 @@ namespace UITestingConsole
 		ConsoleManager()
 		{
 			var path = Directory.GetCurrentDirectory();
-			directory = Regex.Replace(path, @"\\bin\\Debug.*", @"\SettingDirectory\");
+			directory = Regex.Replace(path, @"\\bin\\Release.*", @"\SettingDirectory\");
 		}
 
 		private static readonly object padlock = new object();

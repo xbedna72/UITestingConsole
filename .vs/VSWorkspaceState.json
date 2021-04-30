@@ -1,9 +1,7 @@
 {
   "ExpandedNodes": [
-    "",
-    "\\UITestingConsole",
-    "\\UITests\\AppiumUITests"
+    ""
   ],
-  "SelectedNode": "\\UITestingConsole\\UITestingConsole.sln",
+  "SelectedNode": "\\AuTeRTests.sln",
   "PreviewInSolutionExplorer": false
 }
