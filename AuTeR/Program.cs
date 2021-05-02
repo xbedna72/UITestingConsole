@@ -150,7 +150,7 @@ namespace UITestingConsole
 											if (i + 1 < args.Count())
 											{
 												i++;
-												if (args[i].Equals("-b", StringComparison.OrdinalIgnoreCase))
+												if (args[i].Equals("-p", StringComparison.OrdinalIgnoreCase))
 												{
 													i++;
 													if (args.Count() <= i && Regex.IsMatch(args[i], "[A-Z]:(\\\\(.+))+.sln$"))
