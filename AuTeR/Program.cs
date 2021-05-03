@@ -26,7 +26,7 @@ namespace UITestingConsole
 		{
 			consoleManager = ConsoleManager.Instance;
 			consoleManager.InfoMessage("Starting console.");
-			consoleManager.StartControl();
+			// consoleManager.StartControl();
 
 			if (args.Count() > 0)
 			{
@@ -122,27 +122,29 @@ namespace UITestingConsole
 								{
 									consoleManager.adapterPath = args[i];
 									i++;
+									if(!(i < args.Count())){
+										consoleManager.ErrorMessage("Not defined executable file. Wrong input.");
+										break;
+									}
+
 									if (args[i].Equals("/TestResultsDirectory:"))
 									{
 										i++;
-										if (Directory.Exists(args[i].ToString()))
+										if (i < args.Count() && Directory.Exists(args[i].ToString()))
 										{
 											consoleManager.resultsDirestory = args[i].ToString();
 											i++;
 										}
 										else
 										{
-											consoleManager.ErrorMessage("Input path to results directory does not exists.");
+											consoleManager.ErrorMessage("Input path to results directory is empty or not exists.");
 											break;
 										}
-									}
-									else
-									{
-										consoleManager.resultsDirestory = null;
 									}
 
 									if (args[i].Equals("/Executable:"))
 									{
+										consoleManager.resultsDirestory = null;
 										i++;
 										if (i < args.Count() && (Regex.IsMatch(args[i], "[A-Z]:(\\\\(.+))+.exe$") || args[i].Equals(calculator)))
 										{
@@ -164,7 +166,7 @@ namespace UITestingConsole
 													}
 													else
 													{
-														consoleManager.ErrorMessage($"The path or name of solution project is wrong or missing.");
+														consoleManager.ErrorMessage($"The path or name of solution project is wrong or empty.");
 														break;
 													}
 												}
@@ -191,18 +193,18 @@ namespace UITestingConsole
 										}
 										else
 										{
-											consoleManager.ErrorMessage("Wrong format of Executable path. Absolute path with name of .exe file.");
+											consoleManager.ErrorMessage("Wrong format or empty string of Executable path.");
 											break;
 										}
 									}
 									else
 									{
-										consoleManager.ErrorMessage("Parameter Application in bad format or missing.");
+										consoleManager.ErrorMessage("Unknown parameter. Wrong input.");
 									}
 								}
 								else
 								{
-									consoleManager.ErrorMessage("Wrong format of Application name. Absolute path with name of .exe file.");
+									consoleManager.ErrorMessage("Wrong format or empty string to adapter location.");
 								}
 							}
 							else
@@ -228,6 +230,9 @@ namespace UITestingConsole
 							Console.WriteLine("Help text.");
 							return true;
 						}
+					}else{
+						consoleManager.ErrorMessage("Unknown command. Invalid input.");
+						break;
 					}
 				}
 				catch (Exception e)

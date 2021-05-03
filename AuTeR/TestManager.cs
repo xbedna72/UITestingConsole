@@ -126,6 +126,7 @@ namespace UITestingConsole
 			{
 				throw new Exception($"Clean action failed: {str}");
 			}
+			InfoMessage($"Build action: {str}");
 		}
 
 		private void Pull(string _path){
@@ -148,6 +149,7 @@ namespace UITestingConsole
 			{
 				throw new Exception($"Clean action failed: {str}");
 			}
+			InfoMessage($"Pull action: {str}");
 		}
 
 		public string GetTestProjectPath(string _projectPath, string _adapterPath)

@@ -12,12 +12,14 @@ namespace AuTeRTests
 		string testAdapterPath = "";
 		ProcessStartInfo start = null;
 		private static string calculator = "Microsoft.WindowsCalculator_8wekyb3d8bbwe!App";
+		string output = "";
+		string errors = "";
 
 		[TestInitialize]
-		public void Initialize(){
+		public void Initialize() {
 			string environment = Environment.CurrentDirectory;
-			pathToExe = environment.Replace(@"AuTeRTests\bin\x64\Release\netcoreapp3.1", @"AuTeR\bin\Release\AuTeR.exe");
-			testSolutionPath = environment.Replace(@"AuTeRTests\bin\x64\Release\netcoreapp3.1", @"UITests\AppiumUITests\AppiumUITests.sln");
+			pathToExe = environment.Replace(@"AuTeRTests\bin\x64\Release\netcoreapp3.1", @"AuTeR\bin\x64\Release\AuTeR.exe");
+			testSolutionPath = environment.Replace(@"AuTeRTests\bin\x64\Release\netcoreapp3.1", @"UITests\AppiumUITests.sln");
 			testAdapterPath = environment.Replace(@"AuTeRTests\bin\x64\Release\netcoreapp3.1", @"UITests\AppiumUITests\bin\Debug");
 			start = new ProcessStartInfo();
 		}
@@ -45,8 +47,7 @@ namespace AuTeRTests
 			proc.WaitForExit();
 
 			// get output to testing console.
-			System.Console.WriteLine(proc.StandardOutput.ReadToEnd());
-			System.Console.Write(proc.StandardError.ReadToEnd());
+			errors += proc.StandardOutput.ReadToEnd();
 
 			// return exit code
 			return proc.ExitCode;
@@ -56,360 +57,158 @@ namespace AuTeRTests
 		public void EmptyString()
 		{
 			Assert.AreEqual(1, StartConsoleApplication(""));
+			Assert.IsTrue(errors.Contains("No arguments passed. Invalid input."));
 		}
 
 		[TestMethod]
-		public void RandomString(){
-			start.FileName = pathToExe;
-			start.Arguments = "cnaOCASNYV9E8FU}}}}}}}}}}}}}}PL>|MIOAOEHFESFAYNFOAIEHFV7E8F03doihvagfueibcba8ec";
-			start.WindowStyle = ProcessWindowStyle.Hidden;
-			start.CreateNoWindow = true;
-			using (Process proc = Process.Start(start))
-			{
-				proc.WaitForExit();
-				Assert.AreEqual(proc.ExitCode, 1);
-			}
-
+		public void RandomString() {
+			Assert.AreEqual(1, StartConsoleApplication("cnaOCASNYV9E8FU}}}}}}}}}}}}}}PL>|MIOAOEHFESFAYNFOAIEHFV7E8F03doihvagfueibcba8ec"));
+			Assert.IsTrue(errors.Contains("Unknown command. Invalid input."));
 		}
+
 		[TestMethod]
-		public void WrongTestSolutionPathFormat(){
-			start.FileName = pathToExe;
-			start.Arguments = "/TestSolutionPath: vDIUVOAEU FAOEIFOE FSOEI W33F798GDVbasebc";
-			start.WindowStyle = ProcessWindowStyle.Hidden;
-			start.CreateNoWindow = true;
-			using (Process proc = Process.Start(start))
-			{
-				proc.WaitForExit();
-				Assert.AreEqual(proc.ExitCode, 1);
-			}
+		public void WrongTestSolutionPathFormat() {
+			Assert.AreEqual(1, StartConsoleApplication("/TestSolutionPath: vDIUVOAEU FAOEIFOE FSOEI W33F798GDVbasebc"));
+			Assert.IsTrue(errors.Contains("Wrong format of Test solution absolute path.File type.sln."));
 		}
 
 		[TestMethod]
 		public void WrongTestSolutionPathFormat2()
 		{
-			start.FileName = pathToExe;
-			start.Arguments = "/TestSolutionPath: vDIUVOAEU FAOEIFOEFSOEI W33F798GDVbasebc.sln";
-			start.WindowStyle = ProcessWindowStyle.Hidden;
-			start.CreateNoWindow = true;
-			using (Process proc = Process.Start(start))
-			{
-				proc.WaitForExit();
-				Assert.AreEqual(proc.ExitCode, 1);
-			}
+			Assert.AreEqual(1, StartConsoleApplication("/TestSolutionPath: vDIUVOAEU FAOEIFOEFSOEI W33F798GDVbasebc.sln"));
+			Assert.IsTrue(errors.Contains("Wrong format of Test solution absolute path.File type.sln."));
 		}
 
 		[TestMethod]
 		public void WrongTestSolutionPathFormat3()
 		{
-			start.FileName = pathToExe;
-			start.Arguments = "/TestSolutionPath: vDIUVOAEU\\Fkccccai8730vvfsEFSOEI\\W33F798GDVbasebc.sln";
-			start.WindowStyle = ProcessWindowStyle.Hidden;
-			start.CreateNoWindow = true;
-			using (Process proc = Process.Start(start))
-			{
-				proc.WaitForExit();
-				Assert.AreEqual(proc.ExitCode, 1);
-			}
+			Assert.AreEqual(1, StartConsoleApplication("/TestSolutionPath: vDIUVOAEU\\Fkccccai8730vvfsEFSOEI\\W33F798GDVbasebc.sln"));
+			Assert.IsTrue(errors.Contains("Wrong format of Test solution absolute path.File type.sln."));
 		}
 
 		[TestMethod]
 		public void WrongTestSolutionPathFormat4()
 		{
-			start.FileName = pathToExe;
-			start.Arguments = "/TestSolutionPath: C:fffff\\vDIUVOAEU\\Fkccccai8730vvfsEFSOEI\\W33F798GDVbasebc.sln";
-			start.WindowStyle = ProcessWindowStyle.Hidden;
-			start.CreateNoWindow = true;
-			using (Process proc = Process.Start(start))
-			{
-				proc.WaitForExit();
-				Assert.AreEqual(proc.ExitCode, 1);
-			}
+			Assert.AreEqual(1, StartConsoleApplication("/TestSolutionPath: C:fffff\\vDIUVOAEU\\Fkccccai8730vvfsEFSOEI\\W33F798GDVbasebc.sln"));
+			Assert.IsTrue(errors.Contains("Wrong format of Test solution absolute path.File type.sln."));
 		}
 
 		[TestMethod]
 		public void WrongTestSolutionPathFormat5()
 		{
-			start.FileName = pathToExe;
-			start.Arguments = "/TestSolutionPath: C:\\vDIUVOAEU\\Fkccccai8730vvfsEFSOEI\\W33F798GDVbasebc.slnfdfbbs";
-			start.WindowStyle = ProcessWindowStyle.Hidden;
-			start.CreateNoWindow = true;
-			using (Process proc = Process.Start(start))
-			{
-				proc.WaitForExit();
-				Assert.AreEqual(proc.ExitCode, 1);
-			}
+			Assert.AreEqual(1, StartConsoleApplication("/TestSolutionPath: C:\\vDIUVOAEU\\Fkccccai8730vvfsEFSOEI\\W33F798GDVbasebc.slnfdfbbs"));
+			Assert.IsTrue(errors.Contains("Wrong format of Test solution absolute path.File type.sln."));
 		}
 
 		public void WrongTestSolutionPathFormat6()
 		{
-			start.FileName = pathToExe;
-			start.Arguments = "/TestSolutionPath: C:\\vDIUVOAEU\\Fkccccai8730vvfsEFSOEI\\W33F798GDVbasebc.s";
-			start.WindowStyle = ProcessWindowStyle.Hidden;
-			start.CreateNoWindow = true;
-			using (Process proc = Process.Start(start))
-			{
-				proc.WaitForExit();
-				Assert.AreEqual(proc.ExitCode, 1);
-			}
+			Assert.AreEqual(1, StartConsoleApplication("/TestSolutionPath: C:\\vDIUVOAEU\\Fkccccai8730vvfsEFSOEI\\W33F798GDVbasebc.s"));
+			Assert.IsTrue(errors.Contains("Wrong format of Test solution absolute path.File type.sln."));
 		}
 
 		[TestMethod]
 		public void NoTestAdapterPath()
 		{
-			start.FileName = pathToExe;
-			start.Arguments = $"/TestSolutionPath: {testSolutionPath}";
-			start.WindowStyle = ProcessWindowStyle.Hidden;
-			start.CreateNoWindow = true;
-			using (Process proc = Process.Start(start))
-			{
-				proc.WaitForExit();
-				Assert.AreEqual(proc.ExitCode, 1);
-			}
+			Assert.AreEqual(1, StartConsoleApplication($"/TestSolutionPath: {testSolutionPath}"));
+			Assert.IsTrue(errors.Contains("Parameter TestAdapterPath is missing."));
+		}
+
+		[TestMethod]
+		public void UnknownParameterAfterTestSolutionPath()
+		{
+			Assert.AreEqual(1, StartConsoleApplication($"/TestSolutionPath: C:vDIUVOAddddddddddv\\W33F798GDVbasebc.sln /Teth:"));
+			Assert.IsTrue(errors.Contains("Parameter TestAdapterPath is missing."));
 		}
 
 		[TestMethod]
 		public void NoTestAdapterPath2()
 		{
-			start.FileName = pathToExe;
-			start.Arguments = "/TestSolutionPath: C:\\vDIUVO\\Addddddddddv\\W33F798GDVbasebc.sln /TestAdapterPath:";
-			start.WindowStyle = ProcessWindowStyle.Hidden;
-			start.CreateNoWindow = true;
-			using (Process proc = Process.Start(start))
-			{
-				proc.WaitForExit();
-				Assert.AreEqual(proc.ExitCode, 1);
-			}
-		}
-
-		[TestMethod]
-		public void WrongTestAdapterPathFormat1()
-		{
-			start.FileName = pathToExe;
-			start.Arguments = $"/TestSolutionPath: C:vDIUVOAddddddddddv\\W33F798GDVbasebc.sln /Teth:";
-			start.WindowStyle = ProcessWindowStyle.Hidden;
-			start.CreateNoWindow = true;
-			using (Process proc = Process.Start(start))
-			{
-				proc.WaitForExit();
-				Assert.AreEqual(proc.ExitCode, 1);
-			}
-		}
-
-		[TestMethod]
-		public void WrongTestAdapterFormat2()
-		{
-			start.FileName = pathToExe;
-			start.Arguments = $"/TestSolutionPath: {testSolutionPath} /Teth:";
-			start.WindowStyle = ProcessWindowStyle.Hidden;
-			start.CreateNoWindow = true;
-			using (Process proc = Process.Start(start))
-			{
-				proc.WaitForExit();
-				Assert.AreEqual(proc.ExitCode, 1);
-			}
-		}
-
-		[TestMethod]
-		public void WrongTestAdapterFormat3()
-		{
-			start.FileName = pathToExe;
-			start.Arguments = $"/TestSolutionPath: {testSolutionPath} /Teth:";
-			start.WindowStyle = ProcessWindowStyle.Hidden;
-			start.CreateNoWindow = true;
-			using (Process proc = Process.Start(start))
-			{
-				proc.WaitForExit();
-				Assert.AreEqual(proc.ExitCode, 1);
-			}
-		}
-
-		[TestMethod]
-		public void WrongTestAdapterFormat4()
-		{
-			start.FileName = pathToExe;
-			start.Arguments = $"/TestSolutionPath: {testSolutionPath} /TestAdapterPath:";
-			start.WindowStyle = ProcessWindowStyle.Hidden;
-			start.CreateNoWindow = true;
-			using (Process proc = Process.Start(start))
-			{
-				proc.WaitForExit();
-				Assert.AreEqual(proc.ExitCode, 1);
-			}
+			Assert.AreEqual(1, StartConsoleApplication($"/TestSolutionPath: {testSolutionPath} /TestAdapterPath:"));
+			Assert.IsTrue(errors.Contains("Wrong format or empty string to adapter loaction."));
 		}
 
 		[TestMethod]
 		public void WrongTestAdapterFormat5()
 		{
-			start.FileName = pathToExe;
-			start.Arguments = $"/TestSolutionPath: {testSolutionPath} /TestAdapterPath: sgrgaeryab4w56 346	q3#% #52";
-			start.WindowStyle = ProcessWindowStyle.Hidden;
-			start.CreateNoWindow = true;
-			using (Process proc = Process.Start(start))
-			{
-				proc.WaitForExit();
-				Assert.AreEqual(proc.ExitCode, 1);
-			}
+			Assert.AreEqual(1, StartConsoleApplication($"/TestSolutionPath: {testSolutionPath} /TestAdapterPath: sgrgaeryab4w56 346	q3#% #52"));
+			Assert.IsTrue(errors.Contains("Wrong format or empty string to adapter loaction."));
 		}
 
 		[TestMethod]
 		public void DefinedTestResultsDirectoryButNoInput()
 		{
-			start.FileName = pathToExe;
-			start.Arguments = $"/TestSolutionPath: {testSolutionPath} /TestAdapterPath: {testAdapterPath} /TestResultsDirectory:";
-			start.WindowStyle = ProcessWindowStyle.Hidden;
-			start.CreateNoWindow = true;
-			using (Process proc = Process.Start(start))
-			{
-				proc.WaitForExit();
-				Assert.AreEqual(proc.ExitCode, 1);
-			}
+			Assert.AreEqual(1, StartConsoleApplication($"/TestSolutionPath: {testSolutionPath} /TestAdapterPath: {testAdapterPath} /TestResultsDirectory:"));
+			Assert.IsTrue(errors.Contains("Input path to results directory is empty or not exists."));
 		}
 
 		[TestMethod]
 		public void UnknownParameterAfterTestsDirectory()
 		{
-			start.FileName = pathToExe;
-			start.Arguments = $"/TestSolutionPath: {testSolutionPath} /TestAdapterPath: {testAdapterPath} /TestResultsDirectory: C:\\Tools 7s988e ef ";
-			start.WindowStyle = ProcessWindowStyle.Hidden;
-			start.CreateNoWindow = true;
-			using (Process proc = Process.Start(start))
-			{
-				proc.WaitForExit();
-				Assert.AreEqual(proc.ExitCode, 1);
-			}
+			Assert.AreEqual(1, StartConsoleApplication($"/TestSolutionPath: {testSolutionPath} /TestAdapterPath: {testAdapterPath} /TestResultsDirectory: C:\\Tools 7s988e ef "));
+			Assert.IsTrue(errors.Contains("Input path to results directory is empty or not exists."));
 		}
 
 		[TestMethod]
-		public void DefinedTestResultsDirectoryButRandomInput()
+		public void AfterAdapterPathUknowInput()
 		{
-			start.FileName = pathToExe;
-			start.Arguments = $"/TestSolutionPath: {testSolutionPath} /TestAdapterPath: {testAdapterPath} /TestResultsDirectory: C:\\.sEGreaw4565wta4y5e";
-			start.WindowStyle = ProcessWindowStyle.Hidden;
-			start.CreateNoWindow = true;
-			using (Process proc = Process.Start(start))
-			{
-				proc.WaitForExit();
-				Assert.AreEqual(proc.ExitCode, 1);
-			}
+			Assert.AreEqual(1, StartConsoleApplication($"/TestSolutionPath: {testSolutionPath} /TestAdapterPath: {testAdapterPath} /somethingElse"));
+			Assert.IsTrue(errors.Contains("Unknown parameter. Wrong input."));
 		}
 
 		[TestMethod]
 		public void NoExecutableDefined()
 		{
-			start.FileName = pathToExe;
-			start.Arguments = $"/TestSolutionPath: {testSolutionPath} /TestAdapterPath: {testAdapterPath}";
-			start.WindowStyle = ProcessWindowStyle.Hidden;
-			start.CreateNoWindow = true;
-			using (Process proc = Process.Start(start))
-			{
-				proc.WaitForExit();
-				Assert.AreEqual(proc.ExitCode, 1);
-			}
+			Assert.AreEqual(1, StartConsoleApplication($"/TestSolutionPath: {testSolutionPath} /TestAdapterPath: {testAdapterPath}"));
+			Assert.IsTrue(errors.Contains("Not defined executable file. Wrong input."));
 		}
 
 		[TestMethod]
 		public void EmptyExecutableDefined()
 		{
-			start.FileName = pathToExe;
-			start.Arguments = $"/TestSolutionPath: {testSolutionPath} /TestAdapterPath: {testAdapterPath} /Executable: ";
-			start.WindowStyle = ProcessWindowStyle.Hidden;
-			start.CreateNoWindow = true;
-			using (Process proc = Process.Start(start))
-			{
-				proc.WaitForExit();
-				Assert.AreEqual(proc.ExitCode, 1);
-			}
+			Assert.AreEqual(1, StartConsoleApplication($"/TestSolutionPath: {testSolutionPath} /TestAdapterPath: {testAdapterPath} /Executable: "));
+			Assert.IsTrue(errors.Contains("Wrong format or empty string of Executable path."));
 		}
 
 		[TestMethod]
 		public void UnknownParameter()
 		{
-			start.FileName = pathToExe;
-			start.Arguments = $"/TestSolutionPath: {testSolutionPath} /TestAdapterPath: {testAdapterPath} -eable: ";
-			start.WindowStyle = ProcessWindowStyle.Hidden;
-			start.CreateNoWindow = true;
-			using (Process proc = Process.Start(start))
-			{
-				proc.WaitForExit();
-				Assert.AreEqual(proc.ExitCode, 1);
-			}
+			Assert.AreEqual(1, StartConsoleApplication($"/TestSolutionPath: {testSolutionPath} /TestAdapterPath: {testAdapterPath} -eable: "));
+			Assert.IsTrue(errors.Contains("Unknown parameter. Wrong input."));
 		}
 
 		[TestMethod]
 		public void ExecutableDefinedWrong()
 		{
-			start.FileName = pathToExe;
 			start.Arguments = $"/TestSolutionPath: {testSolutionPath} /TestAdapterPath: {testAdapterPath} /Executable: afdiau3 e 879ef.sln";
-			start.WindowStyle = ProcessWindowStyle.Hidden;
-			start.CreateNoWindow = true;
-			using (Process proc = Process.Start(start))
-			{
-				proc.WaitForExit();
-				Assert.AreEqual(proc.ExitCode, 1);
-			}
+			Assert.IsTrue(errors.Contains("Wrong format or empty string of Executable path."));
 		}
 
 		[TestMethod]
 		public void UnknownFlag()
 		{
-			start.FileName = pathToExe;
-			start.Arguments = $"/TestSolutionPath: {testSolutionPath} /TestAdapterPath: {testAdapterPath} /Executable: {calculator} -d";
-			start.WindowStyle = ProcessWindowStyle.Hidden;
-			start.CreateNoWindow = true;
-			using (Process proc = Process.Start(start))
-			{
-				proc.WaitForExit();
-				Assert.AreEqual(proc.ExitCode, 1);
-			}
+			start.Arguments = $"/TestSolutionPath: {testSolutionPath} /TestAdapterPath: {testAdapterPath} /Executable: {calculator} -q";
+			Assert.IsTrue(errors.Contains("Unknown input."));
 		}
 
 		[TestMethod]
 		public void PullAndBuildFlagWithoutSolution()
 		{
-			start.FileName = pathToExe;
-			start.Arguments = $"/TestSolutionPath: {testSolutionPath} /TestAdapterPath: {testAdapterPath} /Executable: {calculator} -b";
-			start.WindowStyle = ProcessWindowStyle.Hidden;
-			start.CreateNoWindow = true;
-			using (Process proc = Process.Start(start))
-			{
-				proc.WaitForExit();
-				Assert.AreEqual(proc.ExitCode, 1);
-			}
+			start.Arguments = $"/TestSolutionPath: {testSolutionPath} /TestAdapterPath: {testAdapterPath} /Executable: {calculator} -p";
+			Assert.IsTrue(errors.Contains("The path or name of solution project is wrong or empty."));
 		}
 
 		[TestMethod]
 		public void PullAndBuildFlagWrongSolution()
 		{
-			start.FileName = pathToExe;
-			start.Arguments = $"/TestSolutionPath: {testSolutionPath} /TestAdapterPath: {testAdapterPath} /Executable: {calculator} -b C:\\randomgdriouhgf";
-			start.WindowStyle = ProcessWindowStyle.Hidden;
-			start.CreateNoWindow = true;
-			using (Process proc = Process.Start(start))
-			{
-				proc.WaitForExit();
-				Assert.AreEqual(proc.ExitCode, 1);
-			}
+			start.Arguments = $"/TestSolutionPath: {testSolutionPath} /TestAdapterPath: {testAdapterPath} /Executable: {calculator} -p C:\\randomgdriouhgf";
+			Assert.IsTrue(errors.Contains("The path or name of solution project is wrong or empty."));
 		}
 
 		[TestMethod]
 		public void UnknownInputInTheEnd()
 		{
-			start.FileName = pathToExe;
-			start.Arguments = $"/TestSolutionPath: {testSolutionPath} /TestAdapterPath: {testAdapterPath} /Executable: {calculator} -b C:\\Some.solution\\neco.sln bairsu ae98rq 3";
-			start.WindowStyle = ProcessWindowStyle.Hidden;
-			start.CreateNoWindow = true;
-			using (Process proc = Process.Start(start))
-			{
-				proc.WaitForExit();
-				Assert.AreEqual(1, proc.ExitCode);
-			}
+			start.Arguments = $"/TestSolutionPath: {testSolutionPath} /TestAdapterPath: {testAdapterPath} /Executable: {calculator} -p C:\\Some.solution\\neco.sln -bairsu";
+			Assert.IsTrue(errors.Contains("Unknown input."));
 		}
-
-		//Good input, but MSTests has problem with creating needed files. Access denied.
-		//[TestMethod]
-		//public void GoodInput()
-		//{
-		//	Assert.AreEqual(0, StartConsoleApplication($"/TestSolutionPath: {testSolutionPath} /TestAdapterPath: {testAdapterPath} /Executable: {calculator}"));
-		//}
 	}
 }
