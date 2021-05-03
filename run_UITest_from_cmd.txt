@@ -1,7 +1,0 @@
-Spustit> Developer Command Prompt for VS 2019
-Přejít do složky s testy> cd C:\Projekty\PMS2.0-LW\src\UITests\AppiumUITests\AppiumUITests\bin\Debug
-Spustit testy> vstest.console.exe 
-		C:\Projekty\PMS2.0-LW\src\UITests\AppiumUITests\AppiumUITests\bin\Debug\AppiumUITests.dll 
-		/TestAdapterPath:C:\Projekty\PMS2.0-LW\src\UITests\AppiumUITests\AppiumUITests\bin\Debug
-
-HOw to parse app path for WebDriver: settingrunfile parameter for vstest
