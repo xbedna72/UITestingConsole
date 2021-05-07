@@ -38,7 +38,6 @@ namespace UITestingConsole
 		{
 			if (_object != null)
 			{
-				InfoMessage("Preparing for execution of vstest console.");
 				string args = string.Empty;
 				args += $"&& cd C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\Common7\\Tools && vstest.console.exe {_object.testProjectPath}";
 				args += $" /TestAdapterPath:{_object.testAdapterPath}";
@@ -52,7 +51,7 @@ namespace UITestingConsole
 				prc.StartInfo.RedirectStandardOutput = true;
 				prc.StartInfo.RedirectStandardError = true;
 				prc.StartInfo.UseShellExecute = false;
-				InfoMessage("Process Start");
+				InfoMessage("Test process start");
 				prc.Start();
 				string str = "";
 				while (!prc.HasExited)
@@ -145,11 +144,13 @@ namespace UITestingConsole
 			{
 				str += process.StandardOutput.ReadToEnd();
 			}
-			if (!str.Contains("Clean: 1 succeeded, 0 failed, 0 skipped"))
+			if (str.Contains("Clean: 1 succeeded, 0 failed, 0 skipped") || str.Contains("Already up to date."))
 			{
+				InfoMessage($"Pull action: {str}");
+			}
+			else{
 				throw new Exception($"Clean action failed: {str}");
 			}
-			InfoMessage($"Pull action: {str}");
 		}
 
 		public string GetTestProjectPath(string _projectPath, string _adapterPath)

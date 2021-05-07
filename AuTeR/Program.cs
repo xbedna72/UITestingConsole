@@ -25,7 +25,12 @@ namespace UITestingConsole
 		public static void Main(string[] args)
 		{
 			consoleManager = ConsoleManager.Instance;
-			consoleManager.InfoMessage("Starting console.");
+			consoleManager.InfoMessage("**********************************************************************\n"+
+									"** AuTeR v1.0\n"+
+									"** Author: Marie Bednářová\n"+
+									"** Brno University of Technology - Faculty of Information Technology\n" +
+									"** Year: 2021\n" +
+									"**********************************************************************\n");
 			// consoleManager.StartControl();
 
 			if (args.Count() > 0)
@@ -227,7 +232,12 @@ namespace UITestingConsole
 					{
 						if (args.Count() == 1)
 						{
-							Console.WriteLine("Help text.");
+							Console.WriteLine("AuTeR - Automated Test Runner (Version: 1.0)\n" +
+							"Usage:\n" +
+							"\tAuTeR.exe 1st_parameter: [value] 2nd_parameter: [value] (optional)/TestResultsDirectory: [] " +
+							"\tAvailable parameters:" +
+							"\t\t/TestSolutionPath:		Absolute path to project with tests. The file should has type as .sln.\n" +
+							"\t\t/TestAdapterPath:");
 							return true;
 						}
 					}else{
