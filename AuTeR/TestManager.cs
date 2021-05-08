@@ -123,7 +123,7 @@ namespace UITestingConsole
 			}
 			if (!str.Contains("0 failed"))
 			{
-				throw new Exception($"Clean action failed: {str}");
+				throw new Exception($"Build action failed: {str}");
 			}
 			InfoMessage($"Build action done: {str}");
 		}
@@ -144,7 +144,7 @@ namespace UITestingConsole
 			{
 				str += process.StandardOutput.ReadToEnd();
 			}
-			if (str.Contains("Clean: 1 succeeded, 0 failed, 0 skipped") || str.Contains("Already up to date."))
+			if (str.Contains("Pull: 1 succeeded, 0 failed, 0 skipped") || str.Contains("Already up to date."))
 			{
 				InfoMessage($"Pull action done: {str}");
 			}
