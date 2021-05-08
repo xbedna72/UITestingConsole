@@ -236,13 +236,13 @@ namespace UITestingConsole
 							"Usage:\n" +
 							"AuTeR.exe [-h] /TestSolutionPath: [value] /TestAdapterPath: [value] [/TestResultsDirectory: [value]] /Executable: [value] [-p [value]]\n" +
 							"\nPositional parameters:\n" +
-							"\t\t/TestSolutionPath:	Absolute path to project with tests. The file should has type set as \".sln\".\n" +
-							"\t\t /TestAdapterPath:	Absolute path to folder where file of type \".dll\" will be generated after build process. Should be the path to \"\\Debug\" folder.\n" +
-							"\t\t      /Executable:	Absolute path to executable file of testing project with type set as \".exe\".\n" +
+							"\t\t/TestSolutionPath:	Absolute path to a project with a tests. The file name should contain \".sln\".\n" +
+							"\t\t /TestAdapterPath:	Absolute path to a folder where file of the type \".dll\" will be generated after build process, which will be placed in \"\\Debug\" folder.\n" +
+							"\t\t      /Executable:	Absolute path to an executable file of testing project, the name should include suffix \".exe\".\n" +
 							"Optional arguments and parameters:\n" +
-							"\t\t/TestResultsDirectory:	Absolute path to folder, where should be results saved after test run.\n" +
-							"						-p:	If pull of project with executable needed, put absolute path\n" +
-							"							to project of executable. The file should has type set as \".sln\".\n" +
+							"\t\t/TestResultsDirectory:	Absolute path to folder is where results should be saved after test run.\n" +
+							"						-p:	If a pull of an executable project is needed, put in absolute path\n" +
+							"							to project solution. The file name should include suffix \".sln\".\n" +
 							"					 -h, ?:	To show this message.\n");
 							return true;
 						}
