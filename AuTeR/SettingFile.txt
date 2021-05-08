@@ -1,4 +1,0 @@
-TestPath: [mypath]
-TestName: [mytestname]
-AppPath: [myAppPath]
-AppName: [myAppName]
