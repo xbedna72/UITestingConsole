@@ -144,13 +144,7 @@ namespace UITestingConsole
 			{
 				str += process.StandardOutput.ReadToEnd();
 			}
-			if (str.Contains("Pull: 1 succeeded, 0 failed, 0 skipped") || str.Contains("Already up to date."))
-			{
-				InfoMessage($"Pull action done: {str}");
-			}
-			else{
-				throw new Exception($"Clean action failed: {str}");
-			}
+			InfoMessage($"Pull action done: {str}");
 		}
 
 		public string GetTestProjectPath(string _projectPath, string _adapterPath)
