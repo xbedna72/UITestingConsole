@@ -27,7 +27,7 @@ namespace UITestingConsole
 			consoleManager = ConsoleManager.Instance;
 			consoleManager.InfoMessage("**********************************************************************\n"+
 									"** AuTeR v1.0\n"+
-									"** Author: Marie Bednářová\n"+
+									"** Author: Marie Bednarova\n"+
 									"** Brno University of Technology - Faculty of Information Technology\n" +
 									"** Year: 2021\n" +
 									"**********************************************************************\n");
@@ -232,23 +232,29 @@ namespace UITestingConsole
 					{
 						if (args.Count() == 1)
 						{
-							Console.WriteLine("AuTeR - Automated Test Runner (Version: 1.0)\n" +
+							Console.WriteLine("AuTeR - Automated Test Runner (Version: 1.0)\n\n" +
 							"Usage:\n" +
-							"\tAuTeR.exe 1st_parameter: [value] 2nd_parameter: [value] (optional)/TestResultsDirectory: [] " +
-							"\tAvailable parameters:" +
-							"\t\t/TestSolutionPath:		Absolute path to project with tests. The file should has type as .sln.\n" +
-							"\t\t/TestAdapterPath:");
+							"AuTeR.exe [-h] /TestSolutionPath: [value] /TestAdapterPath: [value] [/TestResultsDirectory: [value]] /Executable: [value] [-p [value]]\n" +
+							"\nPositional parameters:\n" +
+							"\t\t/TestSolutionPath:	Absolute path to project with tests. The file should has type set as \".sln\".\n" +
+							"\t\t /TestAdapterPath:	Absolute path to folder where file of type \".dll\" will be generated after build process. Should be the path to \"\\Debug\" folder.\n" +
+							"\t\t      /Executable:	Absolute path to executable file of testing project with type set as \".exe\".\n" +
+							"Optional arguments and parameters:\n" +
+							"\t\t/TestResultsDirectory:	Absolute path to folder, where should be results saved after test run.\n" +
+							"						-p:	If pull of project with executable needed, put absolute path\n" +
+							"							to project of executable. The file should has type set as \".sln\".\n" +
+							"					 -h, ?:	To show this message.\n");
 							return true;
 						}
 					}else{
-						consoleManager.ErrorMessage("Unknown command. Invalid input.");
+						consoleManager.ErrorMessage("Unknown command. Invalid input. Run with \"?\" or \"-h\" for help message.");
 						break;
 					}
 				}
 				catch (Exception e)
 				{
 					e.ToString();
-					consoleManager.ErrorMessage("Wrong formate of input arguments. Run with \"?\" or \"-h\" for help.");
+					consoleManager.ErrorMessage("Wrong formate of input arguments. Run with \"?\" or \"-h\" for help message.");
 				}
 			}
 			consoleManager.ErrorInput = true;

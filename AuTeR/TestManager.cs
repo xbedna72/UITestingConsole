@@ -51,7 +51,7 @@ namespace UITestingConsole
 				prc.StartInfo.RedirectStandardOutput = true;
 				prc.StartInfo.RedirectStandardError = true;
 				prc.StartInfo.UseShellExecute = false;
-				InfoMessage("Test process start");
+				InfoMessage("Executing test project");
 				prc.Start();
 				string str = "";
 				while (!prc.HasExited)
@@ -102,7 +102,7 @@ namespace UITestingConsole
 			{
 				str += process.StandardOutput.ReadToEnd();
 			}
-			InfoMessage($"Clean action: {str}");
+			InfoMessage($"Clean action done: {str}");
 		}
 
 		private void Build(string _path, string _name)
@@ -125,7 +125,7 @@ namespace UITestingConsole
 			{
 				throw new Exception($"Clean action failed: {str}");
 			}
-			InfoMessage($"Build action: {str}");
+			InfoMessage($"Build action done: {str}");
 		}
 
 		private void Pull(string _path){
@@ -146,7 +146,7 @@ namespace UITestingConsole
 			}
 			if (str.Contains("Clean: 1 succeeded, 0 failed, 0 skipped") || str.Contains("Already up to date."))
 			{
-				InfoMessage($"Pull action: {str}");
+				InfoMessage($"Pull action done: {str}");
 			}
 			else{
 				throw new Exception($"Clean action failed: {str}");
