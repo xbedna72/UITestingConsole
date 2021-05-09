@@ -160,20 +160,20 @@ namespace UITestingConsole
 												if (args[i].Equals("-p", StringComparison.OrdinalIgnoreCase))
 												{
 													i++;
-													if (args.Count() <= i && Regex.IsMatch(args[i], "[A-Z]:(\\\\(.+))+.sln$"))
+													if (args.Count() >= i)
 													{
-														consoleManager.slnPath = args[i];
-														consoleManager.BuildFlag = true;
-														i++;
-														if(!(i < args.Count())){
-															return false;
+														if(Directory.Exists(args[i].ToString())){
+															consoleManager.slnPath = args[i];
+															consoleManager.PullFlag = true;
+															i++;
+															if (!(i < args.Count()))
+															{
+																return false;
+															}
 														}
-													}
-													else
-													{
-														consoleManager.ErrorMessage($"The path or name of solution project is wrong or empty.");
-														break;
-													}
+													}													
+													consoleManager.ErrorMessage($"The path into a folder with project solution file is wrong or empty.");
+													break;
 												}
 
 												//if (args[i].Equals("-s", StringComparison.OrdinalIgnoreCase))
@@ -242,7 +242,7 @@ namespace UITestingConsole
 							"Optional arguments and parameters:\n" +
 							"\t\t/TestResultsDirectory:	Absolute path to folder is where results should be saved after test run.\n" +
 							"						-p:	If a pull of an executable project is needed, put in absolute path\n" +
-							"							to project solution. The file name should include suffix \".sln\".\n" +
+							"							to folder, where project solution file is placed.\n" +
 							"					 -h, ?:	To show this message.\n");
 							return true;
 						}

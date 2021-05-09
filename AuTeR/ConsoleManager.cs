@@ -19,7 +19,7 @@ namespace UITestingConsole
 		#region Params
 		private bool runFlag = false;
 		private bool errorInputFlag = false;
-		private bool buildFlag = false;
+		private bool pullFlag = false;
 		private bool sendFlag = false;
 
 		public string testName = null;
@@ -39,10 +39,10 @@ namespace UITestingConsole
 			get { return errorInputFlag; }
 			set { errorInputFlag = value; }
 		}
-		public bool BuildFlag
+		public bool PullFlag
 		{
-			get { return buildFlag; }
-			set { buildFlag = value; }
+			get { return pullFlag; }
+			set { pullFlag = value; }
 		}
 		public bool SendFlag
 		{
@@ -125,7 +125,7 @@ namespace UITestingConsole
 			}
 
 			LastControl();
-			if (settingObject.buildRequest)
+			if (settingObject.pull)
 			{
 				tm.ProjectPullAndBuild(settingObject.sourceProject);
 			}
@@ -145,7 +145,7 @@ namespace UITestingConsole
 				throw new Exception("Path to result directory does not exists.");
 			}
 			if(settingObject.sourceProject != null){
-				if (!File.Exists(settingObject.sourceProject))
+				if (!Directory.Exists(settingObject.sourceProject))
 				{
 					throw new Exception("Path to source project file does not exists.");
 				}
@@ -162,8 +162,8 @@ namespace UITestingConsole
 			settingObject.testAdapterPath = adapterPath.Replace(@"\\", @"\");
 			settingObject.resultsDirectory = resultsDirestory == null ? _tm.GetTestResultsFolder(settingObject.testAdapterPath) : resultsDirestory.Replace(@"\\", @"\");
 			settingObject.executable = executable.Replace(@"\\", @"\");
-			settingObject.buildRequest = BuildFlag;
-			settingObject.sourceProject = BuildFlag ? slnPath.Replace(@"\\", @"\") : null;
+			settingObject.pull = PullFlag;
+			settingObject.sourceProject = PullFlag ? slnPath.Replace(@"\\", @"\") : null;
 		}
 
 		#region SettingFile

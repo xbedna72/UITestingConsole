@@ -137,11 +137,18 @@ namespace UITestingConsole
 			process.StartInfo.RedirectStandardInput = true;
 			process.StartInfo.RedirectStandardOutput = true;
 			process.StartInfo.RedirectStandardError = true;
+			process.EnableRaisingEvents = true;
 			process.StartInfo.UseShellExecute = false;
 			process.Start();
 			string str = "";
+			string err = "";
 			while (!process.HasExited)
 			{
+				err += process.StandardError.ReadToEnd();
+			}
+			if(err != ""){
+				throw new Exception(err);
+			}else{
 				str += process.StandardOutput.ReadToEnd();
 			}
 			InfoMessage($"Pull action done: {str}");

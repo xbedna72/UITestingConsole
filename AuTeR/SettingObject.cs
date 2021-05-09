@@ -14,7 +14,7 @@ namespace UITestingConsole
 		public string testAdapterPath;
 		public string executable;
 		public string settingFileName;
-		public bool buildRequest;
+		public bool pull;
 		public string sourceProject;
 		public string pullRequest;
 		public string resultsDirectory;
