@@ -178,16 +178,21 @@ namespace UITestingConsole
 												if (args[i].Equals("-p", StringComparison.OrdinalIgnoreCase))
 												{
 													i++;
-													if (args.Count() >= i)
+													if (args.Count() > i)
 													{
 														if (Directory.Exists(args[i].ToString()))
 														{
 															consoleManager.slnPath = args[i];
 															consoleManager.PullFlag = true;
 															i++;
-															if (!(i < args.Count()))
+															if (i == args.Count())
 															{
 																return false;
+															}
+															else
+															{
+																consoleManager.ErrorMessage($"Unknown input.");
+																break;
 															}
 														}
 													}
