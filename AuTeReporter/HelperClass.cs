@@ -8,6 +8,7 @@ using System.Text;
 namespace ReportManager
 {
 	//Zdroj: https://github.com/microsoft/WinAppDriver/blob/master/Tests/AbsoluteXPath/DesktopSession.cs
+	//-------------------------------------------------------------------------------------------------
 	public static class Helper
 	{
 		public static WindowsElement FindByXPath(
@@ -107,7 +108,7 @@ namespace ReportManager
 			}
 			return uiTarget;
 		}
-
+		//-------------------------------------------------------------------------------------------------
 		public static void Note(
 			this WindowsDriver<WindowsElement> MyDesktopSession,
 			string note,

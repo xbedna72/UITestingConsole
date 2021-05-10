@@ -9,6 +9,7 @@ namespace ReportManager
 	//Zdroj: https://github.com/microsoft/WinAppDriver/blob/master/Tests/AbsoluteXPath/DesktopSession.cs
 	public class ReportManager
 	{
+	//--------------------------------------------------------------------------------------------------
 		private const string WindowsApplicationDriverUrl = "http://127.0.0.1:4723";
 		private const string WinAppDriverExe = @"C:\Program Files (x86)\Windows Application Driver\WinAppDriver.exe";
 		protected static WindowsDriver<WindowsElement> desktopSessionMain;
@@ -86,6 +87,7 @@ namespace ReportManager
 			FinalTasks();
 			Assert.Fail();
 		}
+		//--------------------------------------------------------------------------------------------------
 
 		public static void Initialize(TestContext context)
 		{
