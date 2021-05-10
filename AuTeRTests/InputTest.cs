@@ -194,20 +194,20 @@ namespace AuTeRTests
 		public void PullAndBuildFlagWithoutSolution()
 		{
 			start.Arguments = $"/TestSolutionPath: {testSolutionPath} /TestAdapterPath: {testAdapterPath} /Executable: {calculator} -p";
-			Assert.IsTrue(errors.Contains("The path or name of solution project is wrong or empty."));
+			Assert.IsTrue(errors.Contains("The path into a folder with project solution file is wrong or empty."));
 		}
 
 		[TestMethod]
 		public void PullAndBuildFlagWrongSolution()
 		{
 			start.Arguments = $"/TestSolutionPath: {testSolutionPath} /TestAdapterPath: {testAdapterPath} /Executable: {calculator} -p C:\\randomgdriouhgf";
-			Assert.IsTrue(errors.Contains("The path or name of solution project is wrong or empty."));
+			Assert.IsTrue(errors.Contains("The path into a folder with project solution file is wrong or empty."));
 		}
 
 		[TestMethod]
 		public void UnknownInputInTheEnd()
 		{
-			start.Arguments = $"/TestSolutionPath: {testSolutionPath} /TestAdapterPath: {testAdapterPath} /Executable: {calculator} -p C:\\Some.solution\\neco.sln -bairsu";
+			start.Arguments = $"/TestSolutionPath: {testSolutionPath} /TestAdapterPath: {testAdapterPath} /Executable: {calculator} -p C:\\Some.solution\\neco -bairsu";
 			Assert.IsTrue(errors.Contains("Unknown input."));
 		}
 	}
