@@ -25,9 +25,9 @@ namespace UITestingConsole
 		public static void Main(string[] args)
 		{
 			consoleManager = ConsoleManager.Instance;
-			consoleManager.InfoMessage("**********************************************************************\n"+
-									"** AuTeR v1.0\n"+
-									"** Author: Marie Bednarova\n"+
+			consoleManager.InfoMessage("**********************************************************************\n" +
+									"** AuTeR v1.0\n" +
+									"** Author: Marie Bednarova\n" +
 									"** Brno University of Technology - Faculty of Information Technology\n" +
 									"** Year: 2021\n" +
 									"**********************************************************************\n");
@@ -120,14 +120,26 @@ namespace UITestingConsole
 						{
 							consoleManager.testName = args[i];
 							i++;
+							if (!(i < args.Count()))
+							{
+								consoleManager.ErrorMessage("Parameter TestAdapterPath is missing.");
+								break;
+							}
 							if (args[i].Equals("/TestAdapterPath:"))
 							{
 								i++;
-								if (i < args.Count() && Directory.Exists(args[i].ToString()))
+								if ((i < args.Count()) == false)
+								{
+									consoleManager.ErrorMessage("Not defined path of test adapter.");
+									break;
+								}
+
+								if (Directory.Exists(args[i].ToString()))
 								{
 									consoleManager.adapterPath = args[i];
 									i++;
-									if(!(i < args.Count())){
+									if ((i < args.Count()) == false)
+									{
 										consoleManager.ErrorMessage("Not defined executable file. Wrong input.");
 										break;
 									}
@@ -135,14 +147,20 @@ namespace UITestingConsole
 									if (args[i].Equals("/TestResultsDirectory:"))
 									{
 										i++;
-										if (i < args.Count() && Directory.Exists(args[i].ToString()))
+										if ((i < args.Count()) == false)
+										{
+											consoleManager.ErrorMessage("Not defined path of test results directory.");
+											break;
+										}
+
+										if (Directory.Exists(args[i].ToString()))
 										{
 											consoleManager.resultsDirestory = args[i].ToString();
 											i++;
 										}
 										else
 										{
-											consoleManager.ErrorMessage("Input path to results directory is empty or not exists.");
+											consoleManager.ErrorMessage("Input path to results directory not exists.");
 											break;
 										}
 									}
@@ -162,7 +180,8 @@ namespace UITestingConsole
 													i++;
 													if (args.Count() >= i)
 													{
-														if(Directory.Exists(args[i].ToString())){
+														if (Directory.Exists(args[i].ToString()))
+														{
 															consoleManager.slnPath = args[i];
 															consoleManager.PullFlag = true;
 															i++;
@@ -171,7 +190,7 @@ namespace UITestingConsole
 																return false;
 															}
 														}
-													}													
+													}
 													consoleManager.ErrorMessage($"The path into a folder with project solution file is wrong or empty.");
 													break;
 												}
@@ -190,7 +209,7 @@ namespace UITestingConsole
 												//		break;
 												//	}
 												//}
-												
+
 												consoleManager.ErrorMessage($"Unknown input.");
 												break;
 											}
@@ -204,17 +223,17 @@ namespace UITestingConsole
 									}
 									else
 									{
-										consoleManager.ErrorMessage("Unknown parameter. Wrong input.");
+										consoleManager.ErrorMessage("Unknown parameter after /TestAdapterPath: .");
 									}
 								}
 								else
 								{
-									consoleManager.ErrorMessage("Wrong format or empty string to adapter location.");
+									consoleManager.ErrorMessage("The path to test adapter does not exists.");
 								}
 							}
 							else
 							{
-								consoleManager.ErrorMessage("Parameter TestAdapterPath is missing.");
+								consoleManager.ErrorMessage("Unknown parameter after /TestSolutionPath: .");
 							}
 						}
 						else
@@ -246,7 +265,9 @@ namespace UITestingConsole
 							"					 -h, ?:	To show this message.\n");
 							return true;
 						}
-					}else{
+					}
+					else
+					{
 						consoleManager.ErrorMessage("Unknown command. Invalid input. Run with \"?\" or \"-h\" for help message.");
 						break;
 					}
