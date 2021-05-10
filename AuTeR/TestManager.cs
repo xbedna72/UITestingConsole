@@ -186,6 +186,7 @@ namespace UITestingConsole
 			
 			if (!Directory.Exists(result))
 			{
+				InfoMessage($"Creating TestResults directory in: {result}");
 				Directory.CreateDirectory(result);
 			}
 			return result;
