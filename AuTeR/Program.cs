@@ -234,7 +234,7 @@ namespace UITestingConsole
 						{
 							Console.WriteLine("AuTeR - Automated Test Runner (Version: 1.0)\n\n" +
 							"Usage:\n" +
-							"AuTeR.exe [-h] /TestSolutionPath: [value] /TestAdapterPath: [value] [/TestResultsDirectory: [value]] /Executable: [value] [-p [value]]\n" +
+							"AuTeR.lnk [-h] /TestSolutionPath: [value] /TestAdapterPath: [value] [/TestResultsDirectory: [value]] /Executable: [value] [-p [value]]\n" +
 							"\nPositional parameters:\n" +
 							"\t\t/TestSolutionPath:	Absolute path to a project with a tests. The file name should contain \".sln\".\n" +
 							"\t\t /TestAdapterPath:	Absolute path to a folder where file of the type \".dll\" will be generated after build process, which will be placed in \"\\Debug\" folder.\n" +
