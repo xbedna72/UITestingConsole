@@ -11,7 +11,7 @@ namespace UITestingConsole
 {
 	sealed class ConsoleManager : Base
 	{
-		private static SettingObject settingObject = null;
+		public static SettingObject settingObject = null;
 		public string[] input = null;
 		public static string directory;
 		public string actualSettingFile = null;
@@ -74,6 +74,76 @@ namespace UITestingConsole
 			}
 		}
 
+		public void Process()
+		{
+			var tm = new TestManager();
+			if (actualSettingFile != null)
+			{
+				if (!GetSettingFileByName(actualSettingFile))
+				{
+					throw new Exception("Setting file was not found.");
+				}
+			}
+			else
+			{
+				InputAgumentsProcess(tm);
+			}
+
+			LastControl();
+			if (settingObject.pull)
+			{
+				tm.ProjectPullAndBuild(settingObject.sourceProject);
+			}
+			RunSettingFileManager.CreateSettingFile(settingObject);
+			Parser.SetTestDB();
+			tm.Run(settingObject);
+			return;
+		}
+
+		private void LastControl()
+		{
+			if (!File.Exists(settingObject.testProjectPath))
+			{
+				throw new Exception("Path to project of tests does not exists.");
+			}
+			if (!Directory.Exists(settingObject.testAdapterPath))
+			{
+				throw new Exception("Path to test adapter directory does not exists.");
+			}
+			if (!Directory.Exists(settingObject.resultsDirectory))
+			{
+				throw new Exception("Path to result directory does not exists.");
+			}
+			if (settingObject.sourceProject != null)
+			{
+				if (!File.Exists(settingObject.sourceProject))
+				{
+					throw new Exception("Path to source project file does not exists.");
+				}
+			}
+
+			return;
+		}
+
+		private void InputAgumentsProcess(TestManager _tm)
+		{
+			settingObject = new SettingObject();
+			_tm.TestBuild(testName);
+			settingObject.testProjectPath = _tm.GetTestProjectPath(testName, adapterPath).Replace(@"\\", @"\");
+			settingObject.testAdapterPath = adapterPath.Replace(@"\\", @"\");
+			settingObject.resultsDirectory = resultsDirestory == null ? _tm.GetTestResultsFolder(settingObject.testAdapterPath) : resultsDirestory.Replace(@"\\", @"\");
+			settingObject.executable = executable.Replace(@"\\", @"\");
+			settingObject.pull = PullFlag;
+			settingObject.sourceProject = PullFlag ? slnPath.Replace(@"\\", @"\") : null;
+		}
+
+		private void SetTestingDatabase()
+		{
+			
+		}
+
+		//Next features....................................................................................................
+		#region NextFeature
 		public int Decision()
 		{
 			if (this.input.Length == 1)
@@ -108,63 +178,7 @@ namespace UITestingConsole
 			}
 			return -2;
 		}
-
-		public void Process()
-		{
-			var tm = new TestManager();
-			if (actualSettingFile != null)
-			{
-				if (!GetSettingFileByName(actualSettingFile))
-				{
-					throw new Exception("Setting file was not found.");
-				}
-			}
-			else
-			{
-				InputAgumentsProcess(tm);
-			}
-
-			LastControl();
-			if (settingObject.pull)
-			{
-				tm.ProjectPullAndBuild(settingObject.sourceProject);
-			}
-			RunSettingFileManager.CreateSettingFile(settingObject);
-			tm.Run(settingObject);
-			return;
-		}
-
-		private void LastControl(){
-			if(!File.Exists(settingObject.testProjectPath)){
-				throw new Exception("Path to project of tests does not exists.");
-			}
-			if(!Directory.Exists(settingObject.testAdapterPath)){
-				throw new Exception("Path to test adapter directory does not exists.");
-			}
-			if(!Directory.Exists(settingObject.resultsDirectory)){
-				throw new Exception("Path to result directory does not exists.");
-			}
-			if(settingObject.sourceProject != null){
-				if (!Directory.Exists(settingObject.sourceProject))
-				{
-					throw new Exception("Path to source project file does not exists.");
-				}
-			}
-
-			return;
-		}
-
-		private void InputAgumentsProcess(TestManager _tm)
-		{
-			settingObject = new SettingObject();
-			_tm.TestBuild(testName);
-			settingObject.testProjectPath = _tm.GetTestProjectPath(testName, adapterPath).Replace(@"\\", @"\");
-			settingObject.testAdapterPath = adapterPath.Replace(@"\\", @"\");
-			settingObject.resultsDirectory = resultsDirestory == null ? _tm.GetTestResultsFolder(settingObject.testAdapterPath) : resultsDirestory.Replace(@"\\", @"\");
-			settingObject.executable = executable.Replace(@"\\", @"\");
-			settingObject.pull = PullFlag;
-			settingObject.sourceProject = PullFlag ? slnPath.Replace(@"\\", @"\") : null;
-		}
+		#endregion
 
 		#region SettingFile
 		public void ShowAllSettingFiles()

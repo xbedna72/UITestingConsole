@@ -14,6 +14,12 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static UITestingConsole.Enums;
 
+//******************************************************************************
+//autor: Marie Bednářová, rok: 2021
+//organizace: Vysoké učení technické v Brně, Fakulta informačních technologií
+//******************************************************************************
+
+
 namespace UITestingConsole
 {
 	class Program
@@ -25,14 +31,12 @@ namespace UITestingConsole
 		public static void Main(string[] args)
 		{
 			consoleManager = ConsoleManager.Instance;
-			consoleManager.InfoMessage("**********************************************************************\n" +
-									"** AuTeR v1.0\n" +
-									"** Author: Marie Bednarova\n" +
+			consoleManager.InfoMessage("**********************************************************************\n"+
+									"** AuTeR v1.0\n"+
+									"** Author: Marie Bednarova\n"+
 									"** Brno University of Technology - Faculty of Information Technology\n" +
 									"** Year: 2021\n" +
 									"**********************************************************************\n");
-			// consoleManager.StartControl();
-
 			if (args.Count() > 0)
 			{
 				var helpFlag = ParseInputArguments(args);
@@ -59,54 +63,6 @@ namespace UITestingConsole
 			consoleManager.ErrorEnd("No arguments passed. Invalid input.");
 		}
 
-		//try
-		//{
-		//	Loop();  
-		//}
-		//catch (Exception e)
-		//{
-		//	consoleManager.ErrorMessage(e.ToString());
-		//}
-
-		//Loop method for interacting using, planning to finishe in next release
-		//static void Loop()
-		//{
-		//	while (true)
-		//	{
-		//		Console.Write(">> ");
-		//		consoleManager.input = Console.ReadLine().Split(' ');
-		//		int r = consoleManager.Decision();
-		//		switch (r)
-		//		{
-		//			case 0:
-		//				return;
-		//			case 1:
-		//				Console.WriteLine("Run");
-		//				consoleManager.Run = true;
-		//				break;
-		//			case 2:
-		//				consoleManager.NewSettingFile();
-		//				break;
-		//			case 3:
-		//				if (!consoleManager.SetSettingFile())
-		//				{
-		//					consoleManager.ErrorMessage("Unable to set setting file.");
-		//				}
-		//				break;
-		//			case 4:
-		//				consoleManager.ShowAllSettingFiles();
-		//				break;
-		//			default:
-		//				consoleManager.ErrorMessage("Unknown command or wrong format of argument.");
-		//				break;
-		//		}
-		//		if (consoleManager.Run)
-		//		{
-		//			consoleManager.Process();
-		//		}
-		//	}
-		//}
-
 		static bool ParseInputArguments(string[] args)
 		{
 			for (int i = 0; i < args.Count(); i++)
@@ -128,7 +84,7 @@ namespace UITestingConsole
 							if (args[i].Equals("/TestAdapterPath:"))
 							{
 								i++;
-								if ((i < args.Count()) == false)
+								if((i < args.Count()) == false)
 								{
 									consoleManager.ErrorMessage("Not defined path of test adapter.");
 									break;
@@ -147,7 +103,7 @@ namespace UITestingConsole
 									if (args[i].Equals("/TestResultsDirectory:"))
 									{
 										i++;
-										if ((i < args.Count()) == false)
+										if((i < args.Count()) == false)
 										{
 											consoleManager.ErrorMessage("Not defined path of test results directory.");
 											break;
@@ -180,41 +136,23 @@ namespace UITestingConsole
 													i++;
 													if (args.Count() > i)
 													{
-														if (Directory.Exists(args[i].ToString()))
-														{
+														if(File.Exists(args[i].ToString())){
 															consoleManager.slnPath = args[i];
 															consoleManager.PullFlag = true;
 															i++;
 															if (i == args.Count())
 															{
 																return false;
-															}
-															else
-															{
+															}else{
 																consoleManager.ErrorMessage($"Unknown input.");
 																break;
 															}
 														}
-													}
+													}													
 													consoleManager.ErrorMessage($"The path into a folder with project solution file is wrong or empty.");
 													break;
 												}
-
-												//if (args[i].Equals("-s", StringComparison.OrdinalIgnoreCase))
-												//{
-												//	i++;
-												//	if (args.Count() <= i && Regex.IsMatch(args[i], @".+\\emails\.xml$"))
-												//	{
-												//		consoleManager.emailsPath = args[i];
-												//		consoleManager.SendFlag = true;
-												//	}
-												//	else
-												//	{
-												//		consoleManager.ErrorMessage($"The path to file with emails is wrong or missing.");
-												//		break;
-												//	}
-												//}
-
+												
 												consoleManager.ErrorMessage($"Unknown input.");
 												break;
 											}
@@ -247,11 +185,6 @@ namespace UITestingConsole
 						}
 						break;
 					}
-					//else if (args[i + 1].Equals("/SettingFile:"))
-					//{
-					//	consoleManager.actualSettingFile = args[i + 2];
-					//	return true;
-					//}
 					else if (args[i].Equals("?", StringComparison.OrdinalIgnoreCase) || args[i].Equals("-h", StringComparison.OrdinalIgnoreCase) || args[i].Equals("help", StringComparison.OrdinalIgnoreCase))
 					{
 						if (args.Count() == 1)
@@ -270,9 +203,7 @@ namespace UITestingConsole
 							"					 -h, ?:	To show this message.\n");
 							return true;
 						}
-					}
-					else
-					{
+					}else{
 						consoleManager.ErrorMessage("Unknown command. Invalid input. Run with \"?\" or \"-h\" for help message.");
 						break;
 					}

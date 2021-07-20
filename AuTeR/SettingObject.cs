@@ -18,6 +18,7 @@ namespace UITestingConsole
 		public string sourceProject;
 		public string pullRequest;
 		public string resultsDirectory;
+		public string warnings;
 		#endregion
 	}
 }

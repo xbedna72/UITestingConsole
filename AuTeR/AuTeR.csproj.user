@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <StartArguments>/TestSolutionPath: C:\Projekty\PMS2.0-LW\src\UITests\src\AppiumUITests.sln /TestAdapterPath: C:\Projekty\PMS2.0-LW\src\UITests\src\AppiumUITests\bin\Debug /Executable: C:\Projekty\PMS2.0-LW\src\Bin\Debug\FullTest.exe -p C:\Projekty\PMS2.0-LW\src\PMS2.0.sln</StartArguments>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <StartArguments>/TestSolutionPath: C:\Users\MayBee\source\repos\xbedna72\UITestingConsole\UITests\AppiumUITests.sln /TestAdapterPath: C:\Users\MayBee\source\repos\xbedna72\UITestingConsole\UITests\AppiumUITests\bin\Debug /Application: Microsoft.WindowsCalculator_8wekyb3d8bbwe!App</StartArguments>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <StartArguments>/TestSolutionPath: C:\\Users\\MayBee\\Desktop\\finalBoss\\Examples\\testProject2.sln /TestAdapterPath: C:\\Users\\MayBee\\Desktop\\finalBoss\\Examples\\testProject2\\bin\\x64\\Debug\\netcoreapp3.1 /Executable: Microsoft.WindowsCalculator_8wekyb3d8bbwe!App -p C:\\Some.solution\\neco -bairsu</StartArguments>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <StartArguments>/TestSolutionPath: C:\Users\MayBee\Desktop\testProject2\testProject2.sln /TestAdapterPath: C:\Users\MayBee\Desktop\testProject2\bin\x64\Debug\netcoreapp3.1 /Executable: Microsoft.WindowsCalculator_8wekyb3d8bbwe!App</StartArguments>
+  </PropertyGroup>
+</Project>

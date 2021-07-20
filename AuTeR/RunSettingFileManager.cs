@@ -40,6 +40,10 @@ namespace UITestingConsole
 			{
 				AddParameter("testProjectPath", settingObject.testProjectPath);
 			}
+
+			if(settingObject.warnings != null){
+				AddParameter("warnings", settingObject.warnings);
+			}
 			Final();
 		}
 
@@ -56,7 +60,8 @@ namespace UITestingConsole
 
 		private static void CreateRunSettingFile(string _content)
 		{
-			var path = Environment.CurrentDirectory + "\\runsettings.txt";
+			var path = @"C:\Users\Administrator\Documents\Tools\bin\Debug\runsettings.txt";
+			ConsoleManager.Instance.InfoMessage($"Creating runsetting file in {path}");
 			try
 			{
 				using (FileStream fs = File.Create(path))
@@ -75,7 +80,7 @@ namespace UITestingConsole
 		{
 			try
 			{
-				File.Delete(Environment.CurrentDirectory + "\\runsettings.txt");
+				File.Delete(@"C:\Users\Administrator\Documents\Tools\bin\Debug\runsettings.txt");
 			}
 			catch (Exception e)
 			{

@@ -15,7 +15,11 @@ namespace UITestingConsole
 {
 	sealed class TestManager : Base
 	{
-		private static string devCmd = @"C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\Tools\VsDevCmd.bat";
+		//Author: vanco
+		//Date: November 10, 2019
+		//Title: Execute Command Prompt commands from C#
+		//Type: Concept and source code of System.Diagnostic.Process class
+		//Url: https://code-ai.mk/execute-command-prompt-commands-from-c/
 
 		private static readonly object padlock = new object();
 		private static TestManager instance = null;
@@ -36,15 +40,18 @@ namespace UITestingConsole
 
 		public void Run(SettingObject _object)
 		{
+			string devCmd = Directory.Exists(@"C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools") ? @"C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\Tools\" : @"C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\Tools\";
 			if (_object != null)
 			{
 				string args = string.Empty;
-				args += $"&& cd C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\Common7\\Tools && vstest.console.exe {_object.testProjectPath}";
+				args += $"&& cd \"{devCmd}\" && " +
+				$"\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\TestAgent\\Common7\\IDE\\CommonExtensions\\Microsoft\\TestWindow\\vstest.console.exe\" {_object.testProjectPath}";
 				args += $" /TestAdapterPath:{_object.testAdapterPath}";
 				args += $" /Settings:{GetRunSettings()}";
 				args += $" /ResultsDirectory:{_object.resultsDirectory}";
+				InfoMessage(args);
 				Process prc = new Process();
-				prc.StartInfo.FileName = devCmd;
+				prc.StartInfo.FileName = devCmd + "VsDevCmd.bat";
 				prc.StartInfo.Arguments = args;
 				prc.StartInfo.CreateNoWindow = true;
 				prc.StartInfo.RedirectStandardInput = true;
@@ -74,42 +81,34 @@ namespace UITestingConsole
 		public void ProjectPullAndBuild(string _project)
 		{
 			string[] _string = Regex.Split(_project, "(.+)\\\\(.+)$");
-			RunScript(_string[0], _string[1], true);
+			GetWarnings(RunScript(_string[1], _string[2], true));
 		}
 
-		private void RunScript(string _path, string _name, bool _flag)
+		private string RunScript(string _path, string _name, bool _flag)
 		{
 			string path = _path.Replace(@"\\", @"\");
-			if(_flag){
+			string str = null;
+			if (_flag)
+			{
 				Pull(path);
 			}
-			Clean(path, _name);
-			Build(path, _name);
+			str = Build(path, _name);
+			return str;
 		}
 
-		private void Clean(string _path, string _name){
-			Process process = new Process();
-			process.StartInfo.FileName = @"C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\devenv.com";
-			process.StartInfo.Arguments = $"{_path}\\{_name} /Clean";
-			process.StartInfo.CreateNoWindow = true;
-			process.StartInfo.RedirectStandardInput = true;
-			process.StartInfo.RedirectStandardOutput = true;
-			process.StartInfo.RedirectStandardError = true;
-			process.StartInfo.UseShellExecute = false;
-			process.Start();
-			string str = "";
-			while (!process.HasExited)
-			{
-				str += process.StandardOutput.ReadToEnd();
-			}
-			InfoMessage($"Clean action done: {str}");
-		}
+		//Author: Terry G. Lee, Gordon Hogenson, John Parente, Dennis Lee, Drew Noakes,
+		// Andy Sterland, Mike Jacobs, Genevieve Warren, Mohit Chakraborty, Mike Jones, Saisang Cai
+		//Date: 10.12.2018
+		//Title: Devenv command-line switches
+		//Type: Concept of the tool devenv for building and cleaning project solutions
+		//Url: https://docs.microsoft.com/en-us/visualstudio/ide/reference/devenv-command-line-switches?view=vs-2019
 
-		private void Build(string _path, string _name)
+		private string Build(string _path, string _name)
 		{
+			string devCmd = Directory.Exists(@"C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools") ? @"C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\MSBuild\Current\Bin\MSBuild.exe" : @"C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin\MSBuild.exe";
 			Process process = new Process();
-			process.StartInfo.FileName = @"C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\devenv.com";
-			process.StartInfo.Arguments = $"{_path}\\{_name} /Build";
+			process.StartInfo.FileName = devCmd;
+			process.StartInfo.Arguments = $"{_path}\\{_name} -t:Build";
 			process.StartInfo.CreateNoWindow = true;
 			process.StartInfo.RedirectStandardInput = true;
 			process.StartInfo.RedirectStandardOutput = true;
@@ -121,37 +120,30 @@ namespace UITestingConsole
 			{
 				str += process.StandardOutput.ReadToEnd();
 			}
-			if (!str.Contains("0 failed"))
+			if (!str.Contains("0 Error(s)") && !str.Contains("Počet chyb: 0"))
 			{
 				throw new Exception($"Build action failed: {str}");
 			}
 			InfoMessage($"Build action done: {str}");
+
+			Match split = Regex.Match(str, @"\d [W].*");
+
+			return split.Groups[0].ToString();
 		}
 
-		private void Pull(string _path){
+		private void Pull(string _path)
+		{
 			Process process = new Process();
 			process.StartInfo.WorkingDirectory = _path;
-			process.StartInfo.FileName = "C:\\Windows\\System32\\cmd.exe";
-			process.StartInfo.Arguments = $"git pull";
-			process.StartInfo.CreateNoWindow = true;
-			process.StartInfo.RedirectStandardInput = true;
-			process.StartInfo.RedirectStandardOutput = true;
+			process.StartInfo.FileName = @"C:\Windows\system32\cmd.exe";
 			process.StartInfo.RedirectStandardError = true;
+			process.StartInfo.RedirectStandardOutput = true;
+			process.StartInfo.CreateNoWindow = true;
+			process.StartInfo.Arguments = $"git pull";
 			process.EnableRaisingEvents = true;
 			process.StartInfo.UseShellExecute = false;
 			process.Start();
-			string str = "";
-			string err = "";
-			while (!process.HasExited)
-			{
-				err += process.StandardError.ReadToEnd();
-			}
-			if(err != ""){
-				throw new Exception(err);
-			}else{
-				str += process.StandardOutput.ReadToEnd();
-			}
-			InfoMessage($"Pull action done: {str}");
+			InfoMessage("Pull done");
 		}
 
 		public string GetTestProjectPath(string _projectPath, string _adapterPath)
@@ -170,12 +162,13 @@ namespace UITestingConsole
 
 		private string GetRunSettings()
 		{
-			string path = Directory.GetCurrentDirectory() + "\\runsettings.txt";
+			string path = @"C:\Users\Administrator\Documents\Tools\bin\Debug\runsettings.txt";
 			return path;
 		}
 
 		private void TearDown(SettingObject _object)
 		{
+			CloseRunningSUT(_object.executable);
 			RunSettingFileManager.DeleteCreatedSettingFile();
 		}
 
@@ -183,13 +176,25 @@ namespace UITestingConsole
 		{
 			string[] res1 = Regex.Split(_path, @"\\bin\\");
 			string result = $"{res1[0]}\\TestResults";
-			
+
 			if (!Directory.Exists(result))
 			{
 				InfoMessage($"Creating TestResults directory in: {result}");
 				Directory.CreateDirectory(result);
 			}
 			return result;
+		}
+		
+		private void GetWarnings(string str)
+		{
+			ConsoleManager.settingObject.warnings = str;
+		}
+
+		private void CloseRunningSUT(string appName)
+		{
+			foreach(var process in Process.GetProcessesByName(appName)){
+				process.Kill();
+			}
 		}
 	}
 }
