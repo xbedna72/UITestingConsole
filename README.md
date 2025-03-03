@@ -1,4 +1,6 @@
-This project was made as a practical part of thesis: *GUI TEST DEVELOPMENT SUPPORT TOOL*
+This project was made as a practical part of thesis: *GUI Test Development Support Tool*
+
+**Abstract**
 
 Manual testing of application is very effective, but at the same time very time consuming
 process. This thesis will deal with methods and technologies, which would allow computers
